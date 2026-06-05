@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard | JUPEB Orbit</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#6366F1',
+                            600: '#4F46E5', // Primary
+                            700: '#4338CA',
+                        },
+                        slate: {
+                            25: '#FBFDFF',
+                            50: '#F8FAFC',
+                            100: '#F1F5F9',
+                            200: '#E2E8F0',
+                            600: '#475569',
+                            900: '#0F172A',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; }
+        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .radial-progress { transform: rotate(-90deg); transform-origin: 50% 50%; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .active-tab { color: #4F46E5; border-bottom: 2px solid #4F46E5; }
+    </style>
+</head>
+<body class="text-slate-600 antialiased overflow-x-hidden">
+
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="sticky top-0 w-full h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 z-50 px-4 md:px-8 flex items-center justify-between transition-all">
+        <div class="flex items-center gap-4 md:gap-12">
+            <!-- Brand -->
+            <a href="index.html" class="flex items-center gap-2.5 md:gap-3 group">
+                <div class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100 group-hover:scale-110 transition-transform overflow-hidden">
+                    <img src="logo.png" alt="Orbit Logo" class="w-full h-full object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-display text-lg md:text-xl font-extrabold text-slate-900 tracking-tight leading-none">Orbit</span>
+                    <span class="text-[8px] md:text-[9px] font-black text-indigo-500 uppercase tracking-[0.2em] mt-1">JUPEB Standard</span>
+                </div>
+            </a>
+
+            <!-- Primary Nav (Desktop) -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="dashboard.html" class="flex items-center gap-2 text-sm font-bold text-indigo-600">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                    Dashboard
+                </a>
+                <a href="practice.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Practice Hub</a>
+                <a href="quiz.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Daily Quiz</a>
+                <a href="exam.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Exam Simulator</a>
+                <a href="history.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Performance</a>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-3 md:gap-6">
+            <!-- Stats -->
+            <div class="hidden sm:flex items-center gap-4 border-r border-slate-200 pr-6">
+                <div class="text-right">
+                    <div id="streak-display" class="text-xs font-black text-slate-900 leading-none">-- Day Streak</div>
+                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1 block">Consistency Loop</span>
+                </div>
+                <div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.66 11.5c-.21-.07-.43-.14-.65-.21a1.2 1.2 0 01-.84-1.35c.13-.88.13-1.77.13-2.66 0-.3-.1-.59-.28-.83a.9.9 0 00-.7-.34c-.2 0-.41.08-.57.24l-3.23 3.23c-.15.15-.31.3-.47.44a1.2 1.2 0 01-1.68-.2l-1.04-1.3c-.16-.2-.41-.3-.66-.3-.25 0-.5.1-.66.3l-1.4 1.76c-.2.24-.3.55-.28.86.02.3.14.59.34.81l3.54 3.93c.3.34.72.54 1.17.54h3.76c.45 0 .87-.2 1.17-.54l2.5-2.78a1.2 1.2 0 00.23-1.18z"></path></svg>
+                </div>
+            </div>
+
+            <!-- Profile Dropdown -->
+            <div class="relative group">
+                <button onclick="toggleDropdown()" class="flex items-center gap-2 md:gap-3 md:pl-2 focus:outline-none">
+                    <div class="w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-500 overflow-hidden shadow-sm">
+                        <img id="nav-user-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                    <div class="hidden md:flex flex-col text-left">
+                        <span id="nav-user-name" class="text-xs font-bold text-slate-900 leading-none">--</span>
+                        <span id="nav-user-tagline" class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Candidate</span>
+                    </div>
+                    <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                
+                <!-- Dropdown -->
+                <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-[100] animate-in fade-in slide-in-from-top-2">
+                    <!-- Mobile Links -->
+                    <div class="lg:hidden px-4 py-2 border-b border-slate-50 mb-1">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Navigation</p>
+                        <a href="dashboard.html" class="block py-2 text-sm font-bold text-indigo-600">Dashboard</a>
+                        <a href="practice.html" class="block py-2 text-sm font-bold text-slate-600">Practice Hub</a>
+                        <a href="exam.html" class="block py-2 text-sm font-bold text-slate-600">Exam Simulator</a>
+                        <a href="history.html" class="block py-2 text-sm font-bold text-slate-600">Performance</a>
+                    </div>
+                    
+                    <div class="px-4 py-3 border-b border-slate-50 mb-1">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Academic Session</p>
+                        <p class="text-xs font-bold text-slate-900">2025/2026 Orbit Intake</p>
+                    </div>
+                    <a href="profile.html" class="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        Profile Settings
+                    </a>
+                    <button onclick="handleLogout()" class="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-rose-600 hover:bg-rose-50 w-full text-left transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        Logout Session
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 md:px-6 py-6 md:py-10 space-y-8 md:space-y-12 max-w-7xl">
+
+        <!-- 0. FEATURE ANNOUNCEMENT: FLASH-MASTER MODE -->
+        <section>
+            <div class="bg-indigo-600 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 shadow-2xl shadow-indigo-200 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl group-hover:bg-white/20 transition-all duration-700"></div>
+                
+                <div class="flex-1 relative z-10 text-center md:text-left">
+                    <span class="inline-block px-3 py-1 bg-white/20 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-4">New Upgrade</span>
+                    <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">Master weaknesses with <span class="underline decoration-indigo-300 text-indigo-100">Flash-Master</span></h2>
+                    <p class="text-indigo-100 text-base md:text-lg mb-8 max-w-lg">Convert failed questions into recall flashcards. Clear your bucket 2x faster.</p>
+                    <button onclick="openFlashMaster()" class="w-full sm:w-auto px-8 py-4 bg-white text-indigo-600 rounded-2xl font-black text-sm shadow-xl hover:scale-105 active:scale-95 transition-all">Launch Study Loop</button>
+                </div>
+
+                <div class="w-full md:w-72 relative z-10 flex flex-col gap-4">
+                    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-[10px] font-bold text-white uppercase tracking-widest">Vault Shortcut</span>
+                            <span class="text-white text-xs hidden sm:inline">Press 'V'</span>
+                        </div>
+                        <button onclick="toggleFormulaVault()" class="w-full py-3 bg-indigo-500 hover:bg-indigo-400 text-white rounded-xl text-xs font-black transition-all">Open Formula Vault</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. THE NORTH STAR POINT FORECASTER -->
+        <section>
+            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200 p-8 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col md:flex-row justify-between items-start md:items-center gap-8 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-full bg-indigo-50/20 skew-x-12 translate-x-32"></div>
+
+                <div class="relative z-10">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest bg-indigo-50 px-2 py-0.5 rounded">Admission Forecast</span>
+                    </div>
+                    <div class="flex items-baseline gap-2">
+                        <h2 id="aggregate-display" class="text-5xl font-extrabold text-slate-900 tracking-tighter">12 / 15</h2>
+                        <span class="text-slate-400 font-bold text-lg">Points Tracking</span>
+                    </div>
+                </div>
+
+                <div class="flex-1 max-w-xl w-full relative z-10">
+                    <div class="flex justify-between text-xs font-bold mb-3">
+                        <span id="goal-text" class="text-slate-900">Target Tracking: Loading...</span>
+                        <span class="text-indigo-600">Goal: 13 Points</span>
+                    </div>
+                    <div class="w-full h-4 bg-slate-200/50 rounded-full relative overflow-hidden">
+                        <div id="point-forecast-bar" class="h-full bg-indigo-600 rounded-full w-[0%] shadow-[0_0_15px_rgba(79,70,229,0.3)] transition-all duration-1000"></div>
+                    </div>
+                    <div class="mt-4 bg-amber-50 border border-amber-200/70 rounded-2xl p-4 flex items-center gap-4">
+                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-amber-100">
+                            <span class="text-lg">⚠️</span>
+                        </div>
+                        <p class="text-sm text-amber-800 font-medium leading-relaxed">
+                            <span class="font-bold">Bonus Point Alert:</span> Raising your Chemistry mock score by 5% will prevent a lower boundary drop, securing your automatic +1 JUPEB Bonus Point allocation!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. THE SUBJECT TRIO GRID -->
+        <section id="subject-cards-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Dynamic Subject Cards Injected Here -->
+            <div class="col-span-full py-10 text-center text-slate-400 italic">Syncing your curriculum...</div>
+        </section>
+
+        <!-- 3. THE LIVE WEAKNESS BUCKET REPOSITORY -->
+        <section>
+            <div class="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden">
+                <header class="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-25">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-indigo-100 shadow-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        </div>
+                        <h2 class="font-display text-2xl font-bold text-slate-900">Your Active Weakness Bucket</h2>
+                    </div>
+                    <div class="flex items-center gap-2 px-4 py-2 bg-rose-50 border border-rose-100 rounded-xl">
+                        <div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
+                        <span id="weakness-count" class="text-xs font-extrabold text-rose-600 uppercase tracking-widest">0 Urgent Items to Clear</span>
+                    </div>
+                </header>
+                
+                <div id="weakness-list" class="divide-y divide-slate-100">
+                    <div class="p-12 text-center text-slate-400">Loading your profile...</div>
+                </div>
+                <footer class="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
+                    <p class="text-[11px] text-slate-500 max-w-sm">Items are only cleared after 2 consecutive correct answers on separate practice dates. Systemic mastery is required.</p>
+                    <button onclick="openFlashMaster()" class="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold text-xs shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all">Start Review Loop</button>
+                </footer>
+            </div>
+        </section>
+    </main>
+
+    <!-- 4. FORMULA VAULT SIDEBAR -->
+    <div id="formula-vault" class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl z-[60] translate-x-full transition-transform duration-500 flex flex-col">
+        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+            <div>
+                <h3 class="font-display text-2xl font-bold text-slate-900">Formula Vault</h3>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Recall Library</p>
+            </div>
+            <button onclick="toggleFormulaVault()" class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm hover:bg-rose-50 hover:text-rose-500 transition-all">✕</button>
+        </div>
+        
+        <div class="p-6 border-b border-slate-100">
+            <input type="text" id="formula-search" oninput="searchFormulas()" placeholder="Search formulas (e.g. 'velocity')..." class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium outline-none focus:border-indigo-500 transition-all">
+        </div>
+
+        <div id="formula-content" class="flex-1 overflow-y-auto p-6 space-y-8 hide-scrollbar">
+            <!-- Formulas injected here -->
+        </div>
+    </div>
+
+    <!-- 5. FLASH-MASTER MODAL -->
+    <div id="flash-modal" class="fixed inset-0 z-[100] bg-slate-900/90 backdrop-blur-md hidden flex items-center justify-center p-6">
+        <div class="w-full max-w-2xl bg-white rounded-[3rem] overflow-hidden shadow-2xl flex flex-col min-h-[500px]">
+            <header class="p-8 border-b border-slate-100 flex justify-between items-center">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold italic">FM</div>
+                    <h3 class="font-display text-xl font-bold text-slate-900">Flash-Master Loop</h3>
+                </div>
+                <button onclick="closeFlashMaster()" class="text-slate-400 hover:text-slate-900 font-bold">Close</button>
+            </header>
+
+            <div id="flash-card-container" class="flex-1 p-12 flex flex-col items-center justify-center text-center">
+                <!-- Flashcard content injected here -->
+                <div id="flash-loading" class="text-slate-400 italic">Analyzing your Weakness Bucket...</div>
+            </div>
+
+            <footer id="flash-footer" class="hidden p-8 bg-slate-50 border-t border-slate-100 grid grid-cols-2 gap-4">
+                <button onclick="handleFlashResponse(false)" class="py-4 bg-white border border-rose-200 text-rose-600 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-rose-50 transition-all">Still Weak</button>
+                <button onclick="handleFlashResponse(true)" class="py-4 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">Mastered</button>
+            </footer>
+        </div>
+    </div>
+
+    <!-- FIREBASE & DASHBOARD LOGIC WORKER -->
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { signOut } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+        import { doc, updateDoc, collection, query, getDocs, deleteDoc, onSnapshot, limit } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { FORMULA_DATA } from "./formula-data.js";
+        import { initAuthGuard } from "./auth-guard.js";
+
+        let currentUser = null;
+
+        // 0. INITIALIZE AUTH GUARD
+        initAuthGuard().then(({ user, userData }) => {
+            if (user) {
+                currentUser = user;
+                populateProfileUI(userData);
+                updatePerformanceMetrics(userData);
+                loadWeaknessBucket(user.uid);
+            }
+        });
+
+        async function populateProfileUI(data) {
+            document.getElementById('goal-text').innerText = `Target Tracking: ${data.targetDepartment} at ${data.targetInstitution}`;
+            
+            // Dynamic Subject Cards Injection
+            const container = document.getElementById('subject-cards-container');
+            if (data.combination) {
+                const cardHTMLs = await Promise.all(data.combination.map(async (subject, index) => {
+                    const subLower = subject.toLowerCase();
+                    let years = [];
+                    const commonYears = ["2026", "2025", "2024", "2023", "2022", "2021", "2020"];
+                    
+                    try {
+                        const checks = await Promise.all(commonYears.map(async (year) => {
+                            const qRef = collection(db, "subjects", subLower, "years", year, "questions");
+                            const qSnap = await getDocs(query(qRef, limit(1)));
+                            return !qSnap.empty ? year : null;
+                        }));
+                        years = checks.filter(y => y !== null);
+                    } catch (e) { console.error("Error detecting years for", subject, e); }
+
+                    const yearOptions = years.length > 0 
+                        ? years.map(y => `<option value="${y}">${y}</option>`).join('')
+                        : `<option value="none" disabled selected>No Data Yet</option>`;
+
+                    const defaultYear = years[0] || "2024";
+
+                    return `
+                        <div class="bg-white border border-slate-200 rounded-3xl p-8 hover:shadow-xl hover:shadow-slate-100 transition-all group">
+                            <div class="flex items-start justify-between mb-8">
+                                <div>
+                                    <h3 class="font-display text-xl font-bold text-slate-900 mb-1">${subject}</h3>
+                                    <div class="flex flex-col gap-2 mt-3">
+                                        <label class="text-[9px] font-black text-slate-400 uppercase tracking-widest">Available Years</label>
+                                        <select id="year-select-${index}" onchange="updateLinks(${index}, '${subLower}')" class="bg-slate-50 border border-slate-200 rounded-lg px-2 py-1 text-xs font-bold text-slate-900 outline-none">
+                                            ${yearOptions}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="relative w-16 h-16">
+                                    <svg class="w-full h-full radial-progress">
+                                        <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="6" fill="transparent" class="text-slate-100"></circle>
+                                        <circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="6" fill="transparent" stroke-dasharray="176" stroke-dashoffset="${176 - (176 * (data.mastery?.[subLower] || 0.1))}" class="text-indigo-500"></circle>
+                                    </svg>
+                                    <div class="absolute inset-0 flex items-center justify-center text-[11px] font-extrabold text-slate-900">${Math.round((data.mastery?.[subLower] || 0.1) * 100)}%</div>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-2 gap-3">
+                                <a id="practice-link-${index}" href="practice.html?subject=${subLower}&year=${defaultYear}" class="py-3 px-4 border border-slate-200 rounded-xl text-[10px] font-black text-slate-600 hover:bg-slate-50 transition-all text-center uppercase tracking-tight ${years.length === 0 ? 'pointer-events-none opacity-50' : ''}">Practice Run</a>
+                                <a id="exam-link-${index}" href="exam.html?subject=${subLower}&year=${defaultYear}" class="py-3 px-4 bg-slate-900 text-white rounded-xl text-[10px] font-black hover:bg-indigo-600 transition-all shadow-sm text-center uppercase tracking-tight ${years.length === 0 ? 'pointer-events-none opacity-50' : ''}">Mock Simulator</a>
+                            </div>
+                        </div>
+                    `;
+                }));
+                container.innerHTML = cardHTMLs.join('');
+            }
+        }
+
+        window.updateLinks = function(index, subject) {
+            const year = document.getElementById(`year-select-${index}`).value;
+            document.getElementById(`practice-link-${index}`).href = `practice.html?subject=${subject}&year=${year}`;
+            document.getElementById(`exam-link-${index}`).href = `exam.html?subject=${subject}&year=${year}`;
+        }
+
+        function updatePerformanceMetrics(data) {
+            const currentPoints = data.aggregateScore || 12;
+            const aggregateDisplay = document.getElementById('aggregate-display');
+            if (aggregateDisplay) aggregateDisplay.innerText = `${currentPoints} / 15`;
+            const progressPercent = (currentPoints / 15) * 100;
+            const bar = document.getElementById('point-forecast-bar');
+            if (bar) bar.style.width = `${progressPercent}%`;
+        }
+
+        async function loadWeaknessBucket(uid) {
+            const bucketRef = collection(db, "users", uid, "weaknessBucket");
+            onSnapshot(bucketRef, (snapshot) => {
+                const list = document.getElementById('weakness-list');
+                const countSpan = document.getElementById('weakness-count');
+                if (snapshot.empty) {
+                    list.innerHTML = `<div class="p-12 text-center text-sm text-slate-400">Your bucket is empty! 🎉</div>`;
+                    if (countSpan) countSpan.innerText = "0 Urgent Items to Clear";
+                    return;
+                }
+                if (countSpan) countSpan.innerText = `${snapshot.size} Urgent Items to Clear`;
+                list.innerHTML = "";
+                snapshot.forEach((doc) => {
+                    const item = doc.data();
+                    const div = document.createElement('div');
+                    div.className = "p-6 flex items-center gap-6 hover:bg-slate-25 transition-all";
+                    div.innerHTML = `<div class="flex-1 font-bold text-sm text-slate-900">${item.title}</div><button onclick="clearWeaknessItem('${doc.id}')" class="text-xs font-bold text-indigo-600">Clear</button>`;
+                    list.appendChild(div);
+                });
+            }, (err) => console.error("Bucket sync error:", err));
+        }
+
+        window.clearWeaknessItem = async function(id) {
+            await deleteDoc(doc(db, "users", currentUser.uid, "weaknessBucket", id));
+        }
+
+        window.toggleDropdown = function() {
+            document.getElementById('profile-dropdown').classList.toggle('hidden');
+        }
+
+        window.handleLogout = async function() { await signOut(auth); window.location.href = "index.html"; }
+        
+        // --- 4. FORMULA VAULT LOGIC ---
+        window.searchFormulas = function() {
+            const query = document.getElementById('formula-search').value.toLowerCase();
+            renderFormulas(query);
+        }
+
+        function renderFormulas(filter = "") {
+            const container = document.getElementById('formula-content');
+            container.innerHTML = "";
+            
+            for (const subject in FORMULA_DATA) {
+                const categories = FORMULA_DATA[subject];
+                categories.forEach(cat => {
+                    const filteredFormulas = cat.formulas.filter(f => 
+                        f.name.toLowerCase().includes(filter) || 
+                        cat.topic.toLowerCase().includes(filter)
+                    );
+
+                    if (filteredFormulas.length > 0) {
+                        const section = document.createElement('div');
+                        section.innerHTML = `
+                            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <span class="w-1.5 h-4 bg-indigo-600 rounded-full"></span> ${subject} • ${cat.topic}
+                            </h4>
+                            <div class="space-y-4">
+                                ${filteredFormulas.map(f => `
+                                    <div class="p-5 bg-slate-50 border border-slate-100 rounded-2xl group hover:border-indigo-200 transition-all">
+                                        <div class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-tight">${f.name}</div>
+                                        <div class="text-lg text-slate-900 font-mono mb-2 formula-render">$$${f.latex}$$</div>
+                                        <p class="text-[11px] text-slate-500 italic">${f.description}</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        container.appendChild(section);
+                    }
+                });
+            }
+            if (window.renderMathInElement) renderMathInElement(container);
+        }
+        renderFormulas(); // Initial render
+
+        window.toggleFormulaVault = function() { 
+            document.getElementById('formula-vault').classList.toggle('translate-x-full'); 
+        }
+
+        // --- 5. FLASH-MASTER LOGIC ---
+        let flashBucket = [];
+        let currentFlashIndex = 0;
+
+        window.openFlashMaster = async function() {
+            const modal = document.getElementById('flash-modal');
+            const container = document.getElementById('flash-card-container');
+            const footer = document.getElementById('flash-footer');
+            
+            modal.classList.remove('hidden');
+            container.innerHTML = `<div class="text-slate-400 italic">Analyzing your Weakness Bucket...</div>`;
+            footer.classList.add('hidden');
+
+            const snap = await getDocs(collection(db, "users", currentUser.uid, "weaknessBucket"));
+            flashBucket = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+            if (flashBucket.length === 0) {
+                container.innerHTML = `
+                    <div class="scale-150 mb-6">🎉</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Bucket is Clear!</h3>
+                    <p class="text-slate-500">You've mastered all your tagged weaknesses. Time for a Mock Simulator!</p>
+                `;
+            } else {
+                currentFlashIndex = 0;
+                renderFlashCard();
+                footer.classList.remove('hidden');
+            }
+        }
+
+        window.closeFlashMaster = function() {
+            document.getElementById('flash-modal').classList.add('hidden');
+        }
+
+        function renderFlashCard() {
+            const container = document.getElementById('flash-card-container');
+            const item = flashBucket[currentFlashIndex];
+            
+            container.innerHTML = `
+                <div class="w-full animate-in fade-in zoom-in duration-300">
+                    <span class="px-3 py-1 bg-rose-50 text-rose-600 text-[10px] font-black uppercase tracking-widest rounded-full">Active Weakness</span>
+                    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 mt-6 mb-8 leading-tight">${item.title}</h3>
+                    <div class="p-6 bg-slate-50 rounded-3xl border border-slate-100 text-left">
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Mental Prompt</p>
+                        <p class="text-slate-600 font-medium italic">"Recall the core principle or formula needed to solve this. Flip your mind to see if you can explain the 'Why' behind this topic."</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.handleFlashResponse = async function(mastered) {
+            const item = flashBucket[currentFlashIndex];
+            
+            if (mastered) {
+                // If mastered, remove from bucket
+                await deleteDoc(doc(db, "users", currentUser.uid, "weaknessBucket", item.id));
+                flashBucket.splice(currentFlashIndex, 1);
+            } else {
+                // If still weak, just move to next
+                currentFlashIndex++;
+            }
+
+            if (flashBucket.length === 0 || currentFlashIndex >= flashBucket.length) {
+                document.getElementById('flash-footer').classList.add('hidden');
+                document.getElementById('flash-card-container').innerHTML = `
+                    <div class="scale-150 mb-6">🏁</div>
+                    <h3 class="text-2xl font-bold text-slate-900 mb-2">Session Complete</h3>
+                    <p class="text-slate-500">You've reviewed all items. Consistency leads to mastery.</p>
+                    <button onclick="closeFlashMaster()" class="mt-8 px-8 py-3 bg-slate-900 text-white rounded-2xl font-bold">Return to Cockpit</button>
+                `;
+            } else {
+                renderFlashCard();
+            }
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'v') toggleFormulaVault();
+        });
+    </script>
+</body>
+</html>

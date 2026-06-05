@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Breakfast Quiz | JUPEB Orbit</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: { 50: '#f5f3ff', 600: '#4F46E5', 700: '#4338CA' },
+                        slate: { 50: '#F8FAFC', 100: '#F1F5F9', 200: '#E2E8F0', 400: '#94A3B8', 600: '#475569', 900: '#0F172A' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Plus Jakarta Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <style>
+        .option-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .option-correct { border-color: #10B981 !important; background-color: #ECFDF5 !important; color: #065F46 !important; }
+        .option-incorrect { border-color: #EF4444 !important; background-color: #FEF2F2 !important; color: #991B1B !important; }
+        .progress-segment { height: 6px; flex: 1; border-radius: 99px; background-color: #E2E8F0; }
+        .progress-segment.active { background-color: #4F46E5; }
+    </style>
+</head>
+<body class="bg-white text-slate-600 antialiased min-h-screen flex flex-col">
+
+    <!-- QUIZ HEADER -->
+    <header class="p-6 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-md z-50">
+        <div class="flex items-center gap-4">
+            <a href="dashboard.html" class="p-2 hover:bg-slate-50 rounded-xl transition-all">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+            </a>
+            <div>
+                <h1 class="font-display text-lg font-extrabold text-slate-900">Breakfast Quiz Loop</h1>
+                <p id="quiz-meta" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Question 1 of 5</p>
+            </div>
+        </div>
+        <div id="quiz-progress" class="flex gap-2 w-32 md:w-48">
+            <div class="progress-segment active"></div>
+            <div class="progress-segment"></div>
+            <div class="progress-segment"></div>
+            <div class="progress-segment"></div>
+            <div class="progress-segment"></div>
+        </div>
+    </header>
+
+    <!-- QUIZ CORE -->
+    <main id="quiz-container" class="flex-1 flex flex-col items-center justify-center p-6 max-w-3xl mx-auto w-full">
+        <div id="loading-state" class="text-center py-20">
+            <div class="w-12 h-12 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="font-bold text-slate-400">Curating your morning topics...</p>
+        </div>
+
+        <div id="question-state" class="hidden w-full">
+            <div class="mb-10">
+                <span id="q-subject" class="inline-block px-2 py-1 bg-indigo-50 text-indigo-600 text-[10px] font-black uppercase tracking-widest rounded mb-4">Physics</span>
+                <h2 id="q-text" class="text-2xl md:text-3xl font-bold text-slate-900 leading-snug">
+                    <!-- Question injected here -->
+                </h2>
+            </div>
+
+            <div id="q-options" class="grid grid-cols-1 gap-4 mb-8">
+                <!-- Options injected here -->
+            </div>
+
+            <!-- FEEDBACK TRAY -->
+            <div id="feedback-tray" class="hidden bg-slate-50 border border-slate-100 rounded-3xl p-6 mb-8 animate-fade-in">
+                <div class="flex items-center gap-3 mb-3">
+                    <div id="feedback-icon" class="w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs">✓</div>
+                    <h4 id="feedback-title" class="font-bold text-slate-900">Correct!</h4>
+                </div>
+                <p id="q-explanation" class="text-sm leading-relaxed text-slate-600">
+                    <!-- Explanation injected here -->
+                </p>
+            </div>
+
+            <button id="next-btn" onclick="handleNext()" disabled class="w-full py-5 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-brand-600">
+                Next Question →
+            </button>
+        </div>
+
+        <!-- COMPLETION SCREEN -->
+        <div id="complete-state" class="hidden text-center py-10 w-full animate-fade-in">
+            <div class="w-24 h-24 bg-emerald-50 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-inner">
+                <span class="text-4xl">🚀</span>
+            </div>
+            <h2 class="font-display text-4xl font-extrabold text-slate-900 mb-2">Loop Complete!</h2>
+            <p id="score-text" class="text-slate-500 mb-10">You smashed 4 out of 5 questions. Streak maintained!</p>
+            
+            <div class="bg-slate-50 border border-slate-100 rounded-3xl p-8 mb-10 text-left max-w-sm mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Streak Bonus</span>
+                    <span class="text-xs font-black text-orange-500 uppercase">+1 DAY</span>
+                </div>
+                <div class="text-3xl font-black text-slate-900 flex items-center gap-3">
+                    <span id="streak-count">--</span> <span class="text-orange-500">🔥</span>
+                </div>
+            </div>
+
+            <a href="dashboard.html" class="inline-block px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:-translate-y-1 transition-all">Return to Flight Deck</a>
+        </div>
+    </main>
+
+    <!-- FIREBASE & QUIZ LOGIC -->
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+        import { doc, getDoc, updateDoc, collection, setDoc, addDoc, increment, query, getDocs, limit } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { updateAggregateScore } from "./score-calculator.js";
+
+        let currentUser = null;
+        let userData = null;
+        let quizQuestions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                userData = userDoc.data();
+                initQuiz();
+            } else {
+                window.location.href = "auth.html";
+            }
+        });
+
+        async function initQuiz() {
+            const loading = document.getElementById('loading-state');
+            const qState = document.getElementById('question-state');
+            
+            try {
+                if (!userData.combination || userData.combination.length === 0) {
+                    throw new Error("No subject combination found in profile.");
+                }
+
+                // 1. Sort subjects by mastery to determine weighting
+                // Weights: Lowest Mastery gets 2, Middle gets 2, Highest gets 1
+                const masteryPairs = userData.combination.map(sub => ({
+                    name: sub.toLowerCase(),
+                    score: userData.mastery?.[sub.toLowerCase()] || 0
+                })).sort((a, b) => a.score - b.score);
+
+                const pool = [];
+                
+                // 2. Fetch questions from each subject
+                const commonYears = ["2026", "2025", "2024", "2023", "2022", "2021", "2020"];
+                
+                for (let i = 0; i < masteryPairs.length; i++) {
+                    const sub = masteryPairs[i].name;
+                    const countNeeded = i === 2 ? 1 : 2;
+
+                    // Probe for available years
+                    const yearChecks = await Promise.all(commonYears.map(async (y) => {
+                        const qRef = collection(db, "subjects", sub, "years", y, "questions");
+                        const qSnap = await getDocs(query(qRef, limit(1)));
+                        return !qSnap.empty ? y : null;
+                    }));
+                    const availableYears = yearChecks.filter(y => y !== null);
+                    
+                    if (availableYears.length > 0) {
+                        const latestYear = availableYears[0];
+                        const qRef = collection(db, "subjects", sub, "years", latestYear, "questions");
+                        const qSnap = await getDocs(query(qRef, limit(10)));
+                        const questions = qSnap.docs.map(d => ({ ...d.data(), subjectName: sub.toUpperCase() }));
+                        
+                        const picked = questions.sort(() => Math.random() - 0.5).slice(0, countNeeded);
+                        pool.push(...picked);
+                    }
+                }
+
+                if (pool.length < 5) {
+                    // Fill remaining with a general pool if specific fetches fall short
+                    console.warn("Morning Mix pool under 5. Filling gaps.");
+                }
+
+                quizQuestions = pool.sort(() => Math.random() - 0.5).slice(0, 5);
+                
+                if (quizQuestions.length === 0) throw new Error("No questions available in the cloud.");
+
+                loading.classList.add('hidden');
+                qState.classList.remove('hidden');
+                renderQuestion();
+
+            } catch (e) {
+                console.error("Quiz Init Error:", e);
+                loading.innerHTML = `<div class="text-rose-500 font-bold p-8 bg-rose-50 rounded-2xl border border-rose-100">${e.message}<br><a href="dashboard.html" class="mt-4 inline-block text-indigo-600 underline">Return to Dashboard</a></div>`;
+            }
+        }
+
+        function renderQuestion() {
+            const q = quizQuestions[currentIndex];
+            isAnswered = false;
+            
+            // Meta & UI
+            document.getElementById('quiz-meta').innerText = `Question ${currentIndex + 1} of 5`;
+            document.getElementById('q-subject').innerText = q.subjectName || "General";
+            
+            // Clean LaTeX before rendering
+            const cleanText = q.questionText.replace(/\\,\^/g, '^');
+            document.getElementById('q-text').innerHTML = cleanText;
+            
+            const optionsContainer = document.getElementById('q-options');
+            optionsContainer.innerHTML = q.options.map((opt, i) => {
+                const cleanOpt = opt.replace(/\\,\^/g, '^');
+                return `
+                <button onclick="checkAnswer(${i})" class="option-btn w-full p-5 border-2 border-slate-100 rounded-2xl text-left font-bold hover:border-indigo-200 hover:bg-indigo-50/20">
+                    <span class="inline-block w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 text-center leading-8 text-xs mr-4">${String.fromCharCode(65 + i)}</span>
+                    ${cleanOpt}
+                </button>
+            `}).join('');
+
+            document.getElementById('feedback-tray').classList.add('hidden');
+            document.getElementById('next-btn').disabled = true;
+            
+            // Update progress segments
+            const segments = document.querySelectorAll('.progress-segment');
+            segments.forEach((s, i) => s.classList.toggle('active', i <= currentIndex));
+
+            // Re-render Math
+            if (window.renderMathInElement) renderMathInElement(document.body, { delimiters: [{left: "$", right: "$", display: false}] });
+        }
+
+        window.checkAnswer = function(index) {
+            if (isAnswered) return;
+            isAnswered = true;
+            
+            const q = quizQuestions[currentIndex];
+            const btns = document.querySelectorAll('.option-btn');
+            
+            if (index === q.correctAnswerIndex) {
+                btns[index].classList.add('option-correct');
+                score++;
+                showFeedback(true);
+            } else {
+                btns[index].classList.add('option-incorrect');
+                if (btns[q.correctAnswerIndex]) btns[q.correctAnswerIndex].classList.add('option-correct');
+                showFeedback(false);
+            }
+
+            document.getElementById('next-btn').disabled = false;
+        }
+
+        function showFeedback(isCorrect) {
+            const tray = document.getElementById('feedback-tray');
+            const icon = document.getElementById('feedback-icon');
+            const title = document.getElementById('feedback-title');
+            const exp = document.getElementById('q-explanation');
+
+            tray.classList.remove('hidden');
+            icon.innerText = isCorrect ? '✓' : '✕';
+            icon.className = isCorrect ? 'w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs bg-emerald-500' : 'w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs bg-rose-500';
+            title.innerText = isCorrect ? 'Correct!' : 'Incorrect';
+            
+            // Handle new structure
+            const explanation = quizQuestions[currentIndex].explanation;
+            exp.innerHTML = `
+                <div class="space-y-4">
+                    <div class="font-bold text-indigo-700 italic">"${explanation.coreConcept}"</div>
+                    <div class="text-xs text-slate-500 whitespace-pre-line border-l-2 border-slate-200 pl-4">${explanation.steps}</div>
+                </div>
+            `;
+            
+            if (window.renderMathInElement) renderMathInElement(tray, { delimiters: [{left: "$", right: "$", display: false}] });
+        }
+
+        window.handleNext = function() {
+            currentIndex++;
+            if (currentIndex < quizQuestions.length) {
+                renderQuestion();
+            } else {
+                finishQuiz();
+            }
+        }
+
+        async function finishQuiz() {
+            document.getElementById('question-state').classList.add('hidden');
+            document.getElementById('complete-state').classList.remove('hidden');
+            document.getElementById('score-text').innerText = `You smashed ${score} out of 5 questions. Streak maintained!`;
+            
+            // 1. UPDATE STREAK & DATA
+            try {
+                const userRef = doc(db, "users", currentUser.uid);
+                const userSnap = await getDoc(userRef);
+                const userData = userSnap.data();
+                
+                const lastQuizDate = userData.lastQuizTimestamp ? new Date(userData.lastQuizTimestamp).toDateString() : null;
+                const today = new Date().toDateString();
+
+                const updateData = {
+                    lastQuizTimestamp: new Date().toISOString()
+                };
+
+                if (lastQuizDate !== today) {
+                    updateData.dailyStreak = increment(1);
+                } else {
+                    document.getElementById('score-text').innerText = `You smashed ${score} out of 5 questions. Daily quiz already completed today.`;
+                }
+
+                await updateDoc(userRef, updateData);
+
+                // Fetch new streak for display
+                const updatedDoc = await getDoc(userRef);
+                document.getElementById('streak-count').innerText = updatedDoc.data().dailyStreak || 1;
+
+                // 2. LOG TO HISTORY
+                const histRef = collection(db, "users", currentUser.uid, "examHistory");
+                await addDoc(histRef, {
+                    subject: "Daily Mix",
+                    score: score,
+                    maxScore: 5,
+                    timestamp: new Date().toISOString(),
+                    mode: "Breakfast Quiz",
+                    grade: score >= 4 ? 'A' : (score >= 3 ? 'B' : 'C'),
+                    insight: `Daily rapid-fire engagement complete. Accuracy: ${(score/5)*100}%.`
+                });
+                
+                // 3. UPDATE AGGREGATE SCORE
+                await updateAggregateScore(currentUser.uid);
+            } catch (e) { console.error("Finalize error:", e); }
+        }
+    </script>
+</body>
+</html>

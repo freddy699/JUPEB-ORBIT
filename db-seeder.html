@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Seeder | JUPEB Orbit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-6">
+
+    <div class="max-w-2xl w-full bg-slate-800 rounded-[2.5rem] p-12 shadow-2xl border border-slate-700">
+        <div class="text-center mb-10">
+            <div class="w-20 h-20 bg-indigo-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg shadow-indigo-500/20">
+                <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.58 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.58 4 8 4s8-1.79 8-4M4 7c0-2.21 3.58-4 8-4s8 1.79 8 4m0 5c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg>
+            </div>
+            <h1 class="text-3xl font-black mb-2">JUPEB Orbit Seeder</h1>
+            <p class="text-slate-400">Syncing all subjects (Physics, Mathematics) to Firestore Bank.</p>
+        </div>
+
+        <div id="status-box" class="bg-slate-900/50 rounded-2xl p-6 border border-slate-700 mb-10 min-h-[120px]">
+            <div id="progress-text" class="text-sm font-bold text-slate-500 uppercase tracking-widest mb-4">Ready to initialize</div>
+            <div class="w-full h-2 bg-slate-700 rounded-full overflow-hidden">
+                <div id="progress-bar" class="h-full bg-indigo-600 w-0 transition-all duration-300"></div>
+            </div>
+            <div id="log" class="mt-4 text-xs font-mono text-slate-400 max-h-32 overflow-y-auto space-y-1"></div>
+        </div>
+
+        <button id="seed-btn" onclick="runSeeder()" class="w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-bold shadow-xl shadow-indigo-500/20 transition-all active:scale-95">
+            Begin Cloud Sync
+        </button>
+
+        <p class="mt-6 text-[10px] text-center text-slate-500 uppercase tracking-[0.2em]">Required: Admin Rules must be active in Firebase Console</p>
+    </div>
+
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { doc, setDoc, collection } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { PHYSICS_BANK } from "./physics-data.js";
+        import { MATHEMATICS_BANK } from "./mathematics-data.js";
+
+        window.runSeeder = async function() {
+            const btn = document.getElementById('seed-btn');
+            const log = document.getElementById('log');
+            const bar = document.getElementById('progress-bar');
+            const pText = document.getElementById('progress-text');
+
+            btn.disabled = true;
+            btn.innerText = "Syncing Data...";
+            
+            const ALL_BANKS = [
+                { name: "Physics", data: PHYSICS_BANK },
+                { name: "Mathematics", data: MATHEMATICS_BANK }
+            ];
+
+            let totalSynced = 0;
+            let totalToSync = ALL_BANKS.reduce((acc, bank) => acc + bank.data.length, 0);
+
+            for (const bank of ALL_BANKS) {
+                const entryHeader = document.createElement('div');
+                entryHeader.innerText = `>>> STARTING SYNC: ${bank.name}`;
+                entryHeader.className = "text-indigo-400 font-bold mt-2";
+                log.appendChild(entryHeader);
+
+                for (const q of bank.data) {
+                    try {
+                        const parts = q.id.split('_');
+                        const sub = parts[0];
+                        const year = parts[1];
+
+                        const qRef = doc(db, "subjects", sub, "years", year, "questions", q.id);
+                        await setDoc(qRef, q, { merge: true });
+
+                        totalSynced++;
+                        const percent = (totalSynced / totalToSync) * 100;
+                        bar.style.width = percent + '%';
+                        pText.innerText = `Syncing: ${totalSynced} / ${totalToSync}`;
+                        
+                        const entry = document.createElement('div');
+                        entry.innerText = `[SUCCESS] ${bank.name} - ${q.id}`;
+                        log.appendChild(entry);
+                        log.scrollTop = log.scrollHeight;
+                    } catch (e) {
+                        console.error(e);
+                        const entry = document.createElement('div');
+                        entry.innerText = `[ERROR] Failed ${q.id}: ${e.message}`;
+                        entry.className = "text-rose-500";
+                        log.appendChild(entry);
+                    }
+                }
+            }
+
+            pText.innerText = "Cloud Sync Complete!";
+            pText.className = "text-sm font-bold text-emerald-500 uppercase tracking-widest mb-4";
+            btn.innerText = "Bank Successfully Seeded";
+            btn.className = "w-full py-5 bg-emerald-600 text-white rounded-2xl font-bold opacity-50 cursor-default";
+        }
+    </script>
+</body>
+</html>

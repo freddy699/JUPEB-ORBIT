@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Simulator | JUPEB Orbit</title>
+    <!-- Fonts & Tailwind -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { indigo: { 50: '#f5f3ff', 600: '#4F46E5', 700: '#4338CA' }, slate: { 50: '#F8FAFC', 100: '#F1F5F9', 200: '#E2E8F0', 400: '#94A3B8', 600: '#475569', 900: '#0F172A' } },
+                    fontFamily: { sans: ['Inter', 'sans-serif'], display: ['Plus Jakarta Sans', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <!-- KaTeX -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <style>
+        .nav-btn { width: 32px; height: 32px; display: flex; items-center: center; justify-content: center; font-size: 10px; font-weight: 800; border-radius: 6px; transition: all 0.2s; }
+        .nav-unvisited { background-color: #F1F5F9; color: #94A3B8; }
+        .nav-answered { background-color: #4F46E5; color: #FFFFFF; }
+        .nav-current { border: 2px solid #4F46E5; color: #4F46E5; }
+        .nav-flagged { background-color: #F59E0B; color: #FFFFFF; }
+        .timer-warning { color: #F59E0B; animation: pulse 2s infinite; }
+        .timer-critical { color: #EF4444; animation: pulse 1s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-600 antialiased min-h-screen flex flex-col overflow-hidden">
+
+    <!-- SETUP OVERLAY -->
+    <div id="setup-overlay" class="fixed inset-0 z-[100] bg-slate-900 flex items-center justify-center p-6">
+        <div class="bg-white rounded-[2.5rem] p-10 max-w-md w-full shadow-2xl">
+            <h2 class="font-display text-2xl font-bold text-slate-900 mb-2">Exam Simulator</h2>
+            <p class="text-sm text-slate-500 mb-8">Strict timing. No hints. High-fidelity simulation.</p>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Select Subject</label>
+                    <select id="subject-select" onchange="loadAvailableYears()" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-5 py-3 text-slate-900 font-bold outline-none">
+                        <option value="" disabled selected>Select Subject</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Exam Year</label>
+                    <select id="year-select" class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl px-5 py-3 text-slate-900 font-bold outline-none">
+                        <option value="" disabled selected>Select Year</option>
+                    </select>
+                </div>
+                <div class="p-4 bg-indigo-50 rounded-2xl border border-indigo-100">
+                    <p class="text-[11px] text-indigo-700 font-bold leading-relaxed">
+                        ⚠️ Force Submission: Once started, the exam will automatically submit when the timer hits zero. 
+                    </p>
+                </div>
+                <button id="start-btn" onclick="startExam()" disabled class="w-full py-4 bg-indigo-600 text-white rounded-2xl font-bold shadow-xl hover:bg-indigo-700 transition-all opacity-50 cursor-not-allowed">Enter Exam Room</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOP NAVIGATION BAR -->
+    <nav class="sticky top-0 w-full h-20 bg-white border-b border-slate-200 z-50 px-8 flex items-center justify-between">
+        <div class="flex items-center gap-12">
+            <!-- Brand -->
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100 group-hover:scale-110 transition-transform overflow-hidden">
+                    <img src="logo.png" alt="Orbit Logo" class="w-full h-full object-contain">
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-display text-xl font-extrabold text-slate-900 tracking-tight leading-none">Orbit</span>
+                    <span class="text-[9px] font-black text-indigo-500 uppercase tracking-[0.2em] mt-1">JUPEB Standard</span>
+                </div>
+            </a>
+
+            <!-- Primary Nav -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="dashboard.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Dashboard</a>
+                <a href="practice.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Practice Hub</a>
+                <a href="exam.html" class="flex items-center gap-2 text-sm font-bold text-indigo-600">
+                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
+                    Exam Simulator
+                </a>
+                <a href="history.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Performance</a>
+            </div>
+        </div>
+
+        <div class="flex items-center gap-6">
+            <div class="text-center mr-4">
+                <div id="exam-timer" class="font-mono text-3xl font-black text-slate-900 tracking-tighter leading-none">02:00:00</div>
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Time Remaining</span>
+            </div>
+            
+            <!-- Profile Dropdown -->
+            <div class="relative group">
+                <button onclick="toggleDropdown()" class="flex items-center gap-3 pl-2 focus:outline-none">
+                    <div class="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-500 overflow-hidden shadow-sm">
+                        <img id="nav-user-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="Profile" class="w-full h-full object-cover">
+                    </div>
+                    <div class="hidden md:flex flex-col text-left">
+                        <span id="nav-user-name" class="text-xs font-bold text-slate-900 leading-none">--</span>
+                        <span id="nav-user-tagline" class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Candidate</span>
+                    </div>
+                    <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                
+                <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 z-[100] animate-in fade-in slide-in-from-top-2">
+                    <a href="profile.html" class="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-slate-600 hover:bg-slate-50 hover:text-indigo-600 transition-all">Profile Settings</a>
+                    <button onclick="handleLogout()" class="flex items-center gap-3 px-4 py-2.5 text-sm font-bold text-rose-600 hover:bg-rose-50 w-full text-left transition-all">Logout Session</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 flex overflow-hidden">
+        <!-- Question Area -->
+        <div class="flex-1 p-12 overflow-y-auto bg-white">
+            <div id="q-container" class="max-w-3xl">
+                <div class="flex items-center justify-between mb-10">
+                    <div>
+                        <h1 id="exam-title" class="text-sm font-black text-indigo-600 uppercase tracking-[0.2em] mb-1">JUPEB Simulator</h1>
+                        <span id="q-num-label" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Question 1</span>
+                    </div>
+                    <button onclick="toggleFlag()" id="flag-btn" class="flex items-center gap-2 text-slate-400 hover:text-amber-500 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"></path></svg>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">Flag for Review</span>
+                    </button>
+                </div>
+                <h2 id="q-text" class="text-2xl md:text-3xl font-bold text-slate-900 leading-relaxed mb-12 animate-in fade-in duration-500">Loading content...</h2>
+                <div id="q-options" class="grid grid-cols-1 gap-4"></div>
+                
+                <div class="mt-20 pt-10 border-t border-slate-100 flex justify-between">
+                    <button onclick="confirmSubmit()" class="px-8 py-3 bg-rose-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-rose-100 hover:bg-rose-700 transition-all">Submit Paper</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Sidebar -->
+        <aside class="w-80 bg-slate-50 border-l border-slate-200 p-8 flex flex-col">
+            <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">Question Navigator</h4>
+            <div id="nav-grid" class="grid grid-cols-5 gap-3 mb-10"></div>
+            
+            <div class="mt-auto space-y-4">
+                <div class="flex items-center justify-between text-[10px] font-bold uppercase">
+                    <span class="text-slate-400">Answered</span>
+                    <span id="stat-answered" class="text-slate-900">0 / 0</span>
+                </div>
+                <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+                    <div id="stat-bar" class="h-full bg-indigo-600 w-0 transition-all"></div>
+                </div>
+            </div>
+        </aside>
+    </main>
+
+    <!-- EXAM LOGIC -->
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { signOut } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+        import { collection, getDocs, addDoc, query, limit, doc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { initAuthGuard } from "./auth-guard.js";
+        import { updateAggregateScore } from "./score-calculator.js";
+
+        let questions = [];
+        let currentIndex = 0;
+        let answers = {};
+        let flags = new Set();
+        let timeLeft = 7200; 
+        let timerInterval = null;
+        let currentSubject = "";
+        let currentYear = "";
+        let currentUser = null;
+
+        initAuthGuard().then(({ user, userData }) => {
+            if (user) {
+                currentUser = user;
+                setupSubjectSelector(userData);
+                checkAutoLaunch();
+            }
+        });
+
+        async function setupSubjectSelector(data) {
+            const combination = data.combination || ["physics", "mathematics", "chemistry"];
+            const select = document.getElementById('subject-select');
+            if (select) {
+                select.innerHTML = `<option value="" disabled selected>Select Subject</option>` + 
+                    combination.map(sub => `<option value="${sub.toLowerCase()}">${sub}</option>`).join('');
+            }
+        }
+
+        async function checkAutoLaunch() {
+            const params = new URLSearchParams(window.location.search);
+            const sub = params.get('subject');
+            const year = params.get('year');
+            if (sub && year) {
+                document.getElementById('subject-select').value = sub;
+                await loadAvailableYears();
+                document.getElementById('year-select').value = year;
+                startExam();
+            }
+        }
+
+        window.loadAvailableYears = async function() {
+            const sub = document.getElementById('subject-select').value;
+            const yearSelect = document.getElementById('year-select');
+            yearSelect.innerHTML = `<option value="" disabled selected>Loading Years...</option>`;
+            const commonYears = ["2026", "2025", "2024", "2023", "2022", "2021", "2020"];
+            const available = [];
+            await Promise.all(commonYears.map(async (year) => {
+                const qRef = collection(db, "subjects", sub, "years", year, "questions");
+                const qSnap = await getDocs(query(qRef, limit(1)));
+                if (!qSnap.empty) available.push(year);
+            }));
+            yearSelect.innerHTML = available.length > 0 
+                ? `<option value="" disabled selected>Select Year</option>` + available.sort((a,b) => b-a).map(y => `<option value="${y}">${y}</option>`).join('')
+                : `<option value="" disabled selected>No Exams Available</option>`;
+            checkStartStatus();
+        }
+
+        window.checkStartStatus = function() {
+            const sub = document.getElementById('subject-select').value;
+            const year = document.getElementById('year-select').value;
+            const btn = document.getElementById('start-btn');
+            if (sub && year && year !== "none") {
+                btn.disabled = false;
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+            } else {
+                btn.disabled = true;
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        document.getElementById('year-select').onchange = checkStartStatus;
+
+        window.startExam = async function() {
+            const sub = document.getElementById('subject-select').value;
+            const year = document.getElementById('year-select').value;
+            if(!sub || !year) return;
+            currentSubject = sub;
+            currentYear = year;
+            try {
+                const qRef = collection(db, "subjects", sub, "years", year, "questions");
+                const snap = await getDocs(query(qRef));
+                if (snap.empty) { alert("This exam has no questions."); return; }
+                questions = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                document.getElementById('setup-overlay').classList.add('hidden');
+                document.getElementById('exam-title').innerText = `${sub.toUpperCase()} ${year} Simulation`;
+                initNavigator();
+                renderQuestion();
+                startTimer();
+                updateStats();
+            } catch (e) { console.error(e); }
+        }
+
+        function initNavigator() {
+            const grid = document.getElementById('nav-grid');
+            grid.innerHTML = questions.map((_, i) => `<button id="nav-${i}" onclick="jumpTo(${i})" class="nav-btn nav-unvisited">${i+1}</button>`).join('');
+            updateNavState();
+        }
+
+        function renderQuestion() {
+            const q = questions[currentIndex];
+            document.getElementById('q-num-label').innerText = `Question ${currentIndex + 1}`;
+            document.getElementById('q-text').innerHTML = q.questionText;
+            const options = document.getElementById('q-options');
+            options.innerHTML = q.options.map((opt, i) => `
+                <button onclick="selectOption(${i})" class="w-full p-6 border-2 rounded-2xl transition-all text-left font-bold ${answers[currentIndex] === i ? 'border-indigo-600 bg-indigo-50/50' : 'border-slate-100 hover:border-slate-200'}">
+                    ${opt}
+                </button>
+            `).join('');
+            updateNavState();
+            if (window.renderMathInElement) {
+                renderMathInElement(document.body, { delimiters: [{left: "$$", right: "$$", display: true}, {left: "$", right: "$", display: false}], throwOnError: false });
+            }
+        }
+
+        window.selectOption = (idx) => { answers[currentIndex] = idx; renderQuestion(); updateStats(); };
+        window.jumpTo = (idx) => { currentIndex = idx; renderQuestion(); };
+        window.toggleFlag = () => { if(flags.has(currentIndex)) flags.delete(currentIndex); else flags.add(currentIndex); updateNavState(); };
+        window.handleLogout = async () => { await signOut(auth); window.location.href = "index.html"; };
+
+        function updateNavState() {
+            questions.forEach((_, i) => {
+                const btn = document.getElementById(`nav-${i}`);
+                if (!btn) return;
+                btn.className = "nav-btn";
+                if (i === currentIndex) btn.classList.add('nav-current');
+                else if (flags.has(i)) btn.classList.add('nav-flagged');
+                else if (answers[i] !== undefined) btn.classList.add('nav-answered');
+                else btn.classList.add('nav-unvisited');
+            });
+        }
+
+        function updateStats() {
+            const count = Object.keys(answers).length;
+            document.getElementById('stat-answered').innerText = `${count} / ${questions.length}`;
+            document.getElementById('stat-bar').style.width = `${(count/questions.length)*100}%`;
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                const h = Math.floor(timeLeft / 3600).toString().padStart(2, '0');
+                const m = Math.floor((timeLeft % 3600) / 60).toString().padStart(2, '0');
+                const s = (timeLeft % 60).toString().padStart(2, '0');
+                const timerDisplay = document.getElementById('exam-timer');
+                timerDisplay.innerText = `${h}:${m}:${s}`;
+                if (timeLeft < 900) timerDisplay.className = "font-mono text-3xl font-black tracking-tighter leading-none timer-warning";
+                if (timeLeft < 300) timerDisplay.className = "font-mono text-3xl font-black tracking-tighter leading-none timer-critical";
+                if (timeLeft <= 0) { clearInterval(timerInterval); autoSubmit(true); }
+            }, 1000);
+        }
+
+        window.confirmSubmit = () => { if(confirm("End exam and submit?")) autoSubmit(); };
+
+        async function autoSubmit(forced = false) {
+            clearInterval(timerInterval);
+            let score = 0;
+            const mistakes = [];
+
+            questions.forEach((q, i) => { 
+                if(answers[i] === q.correctAnswerIndex) {
+                    score++; 
+                } else {
+                    mistakes.push(q);
+                }
+            });
+            
+            try {
+                if (currentUser) {
+                    // 1. SAVE TO HISTORY
+                    await addDoc(collection(db, "users", currentUser.uid, "examHistory"), {
+                        subject: currentSubject.toUpperCase(), year: currentYear, score: score, maxScore: questions.length,
+                        timestamp: new Date().toISOString(), mode: forced ? "Timed (Auto)" : "Timed (Manual)",
+                        grade: score/questions.length >= 0.7 ? 'A' : (score/questions.length >= 0.5 ? 'C' : 'F')
+                    });
+
+                    // 2. TRACK MISTAKES IN WEAKNESS BUCKET
+                    for (const q of mistakes) {
+                        if (q.id) {
+                            await setDoc(doc(db, "users", currentUser.uid, "weaknessBucket", q.id), {
+                                title: q.questionText.substring(0, 80) + "...",
+                                topic: q.syllabusTopic || "General",
+                                qId: q.id,
+                                addedAt: new Date().toISOString(),
+                                source: "Exam Simulation"
+                            }, { merge: true });
+                        }
+                    }
+                    
+                    await updateAggregateScore(currentUser.uid);
+                }
+            } catch (e) { console.error("Final submission sequence failed:", e); }
+
+            alert(`Exam Submitted! \nRaw Score: ${score} / ${questions.length} \n${mistakes.length} mistakes added to your Weakness Bucket for review.`);
+            window.location.href = "history.html";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JUPEB Orbit | The Digital Standard for Direct Entry</title>
+    <link rel="icon" type="image/png" href="/logo.png">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#4F46E5">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f4ff',
+                            100: '#e0e9fe',
+                            200: '#c1d3fe',
+                            300: '#92b3fd',
+                            400: '#5c89fa',
+                            500: '#345df6',
+                            600: '#2546eb', // Primary
+                            700: '#1d35d8',
+                            800: '#1e2eaf',
+                            900: '#1e2c8a',
+                            950: '#121a52',
+                        },
+                        accent: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Bricolage Grotesque', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
+                        'premium': '0 20px 50px -12px rgba(0, 0, 0, 0.05)',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #FAFBFF; 
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(37, 70, 235, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.03) 0px, transparent 50%);
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .text-gradient {
+            background: linear-gradient(135deg, #1e2c8a 0%, #2546eb 50%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .math-typeset { font-family: 'Times New Roman', Times, serif; }
+        .grid-pattern {
+            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased overflow-x-hidden">
+
+    <!-- 1. NAVIGATION HEADER -->
+    <header class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl h-16 glass rounded-2xl z-50 flex items-center px-6 shadow-glass transition-all duration-300" id="main-nav">
+        <div class="w-full flex justify-between items-center">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2.5 group cursor-pointer relative z-[60]">
+                <div class="w-9 h-9 bg-white rounded-xl flex items-center justify-center transform group-hover:rotate-[15deg] transition-all duration-300 shadow-lg shadow-brand-200 overflow-hidden">
+                    <img src="logo.png" alt="Orbit Logo" class="w-full h-full object-contain">
+                </div>
+                <span class="font-display text-xl font-bold text-slate-900 tracking-tight">Orbit</span>
+            </a>
+
+            <!-- Nav Links (Desktop) -->
+            <nav class="hidden lg:flex items-center gap-10">
+                <a href="#simulator" class="text-sm font-bold text-slate-500 hover:text-brand-600 transition-colors">Simulator</a>
+                <a href="#features" class="text-sm font-bold text-slate-500 hover:text-brand-600 transition-colors">Features</a>
+                <a href="#analytics" class="text-sm font-bold text-slate-500 hover:text-brand-600 transition-colors">Analytics</a>
+            </nav>
+
+            <!-- CTA (Desktop) -->
+            <div class="flex items-center gap-4 relative z-[60]">
+                <a href="auth.html" class="hidden sm:block text-sm font-bold text-slate-600 hover:text-brand-600 transition-colors">Sign In</a>
+                <a href="auth.html" class="bg-brand-600 hover:bg-brand-700 text-white rounded-xl px-5 py-2 text-sm font-bold shadow-md shadow-brand-200 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                    Get Started
+                </a>
+                
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 focus:outline-none" id="menu-btn">
+                    <span class="w-5 h-0.5 bg-slate-900 transition-all duration-300" id="bar1"></span>
+                    <span class="w-5 h-0.5 bg-slate-900 transition-all duration-300" id="bar2"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed top-20 left-4 right-4 bg-white/90 backdrop-blur-lg border border-slate-200 rounded-2xl p-6 shadow-2xl flex flex-col gap-4 z-40 invisible opacity-0 translate-y-4 transition-all duration-300 lg:hidden">
+        <a href="#simulator" class="text-sm font-bold text-slate-700 hover:text-brand-600">Simulator</a>
+        <a href="#features" class="text-sm font-bold text-slate-700 hover:text-brand-600">Features</a>
+        <a href="#analytics" class="text-sm font-bold text-slate-700 hover:text-brand-600">Analytics</a>
+        <hr class="border-slate-100">
+        <a href="auth.html" class="text-sm font-bold text-slate-700 hover:text-brand-600">Sign In</a>
+    </div>
+
+    <!-- 2. HERO SECTION -->
+    <section class="relative pt-32 sm:pt-48 pb-20 sm:pb-32 px-6 overflow-hidden">
+        <div class="grid-pattern absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)]"></div>
+        
+        <div class="container mx-auto text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-3 py-1 bg-brand-50 border border-brand-100 rounded-full text-[11px] sm:text-[12px] font-black text-brand-600 uppercase tracking-widest mb-8">
+                <span class="flex h-2 w-2 rounded-full bg-brand-600 animate-pulse"></span>
+                The 2026/27 JUPEB Standard
+            </div>
+            
+            <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold text-slate-900 tracking-tight max-w-4xl mx-auto leading-[1.1] mb-8">
+                Secure Your 15 Points with <br class="hidden sm:block"/><span class="text-gradient">AI-Powered</span> Simulations.
+            </h1>
+            
+            <p class="text-lg sm:text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed mb-12">
+                Replace manual past questions with a high-fidelity simulator, AI-powered explanations, and real-time admission forecasting. Built for serious candidates.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="auth.html" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white rounded-2xl px-10 py-5 text-lg font-bold shadow-xl shadow-brand-200/50 transition-all hover:-translate-y-1">
+                    Begin Your Roadmap
+                </a>
+                <a href="#simulator" class="w-full sm:w-auto bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-2xl px-10 py-5 text-lg font-bold transition-all">
+                    Try Live Teaser
+                </a>
+            </div>
+        </div>
+    </section>
+
+            <!-- Social Proof -->
+            <div class="mt-20 flex flex-col items-center gap-6">
+                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Trusted by candidates at leading study centers</p>
+                <div class="flex flex-wrap justify-center gap-10 opacity-40 grayscale contrast-125">
+                    <span class="font-display text-2xl font-black">IBADAN</span>
+                    <span class="font-display text-2xl font-black">LAGOS</span>
+                    <span class="font-display text-2xl font-black">ILORIN</span>
+                    <span class="font-display text-2xl font-black">IFÉ</span>
+                    <span class="font-display text-2xl font-black">BENIN</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. INTERACTIVE SIMULATOR PREVIEW -->
+    <section id="simulator" class="py-24 px-6 relative">
+        <div class="container mx-auto">
+            <div class="max-w-6xl mx-auto">
+                <div class="relative group">
+                    <!-- Glow effect -->
+                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-500 to-accent-600 rounded-[2.5rem] opacity-20 blur-2xl group-hover:opacity-30 transition duration-1000"></div>
+                    
+                    <div class="relative bg-white rounded-3xl border border-slate-200 shadow-premium overflow-hidden flex flex-col lg:flex-row min-h-[640px]">
+                        <!-- Left Panel: The Question Engine -->
+                        <div class="w-full lg:w-[60%] border-r border-slate-100 p-8 md:p-14 overflow-y-auto">
+                            <div class="flex items-center justify-between mb-10">
+                                <div class="flex items-center gap-3">
+                                    <div class="px-3 py-1 bg-brand-50 text-brand-600 text-xs font-bold rounded-lg uppercase tracking-wider">Physics • Module 02</div>
+                                    <span class="text-slate-400 text-xs font-bold">Question 42 of 50</span>
+                                </div>
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-100"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-slate-100"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-brand-500"></div>
+                                </div>
+                            </div>
+
+                            <h3 class="text-2xl md:text-3xl font-bold text-slate-900 leading-[1.3] mb-10 math-typeset">
+                                A particle of mass <span class="italic">m</span> moves in a horizontal circle of radius <span class="italic">r</span> with a constant speed <span class="italic">v</span>. Which of the following expressions represents the centripetal acceleration?
+                            </h3>
+
+                            <div class="space-y-4">
+                                <button class="w-full flex items-center p-5 border-2 border-slate-100 rounded-2xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] hover:shadow-md group/btn">
+                                    <span class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors">A</span>
+                                    <span class="ml-5 text-slate-700 font-semibold math-typeset text-lg">v / r</span>
+                                </button>
+                                <button class="w-full flex items-center p-5 border-2 border-brand-500 bg-brand-50/50 rounded-2xl shadow-sm transition-all duration-300 transform hover:scale-[1.01] hover:shadow-md">
+                                    <span class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-xs font-bold text-white shadow-brand-200">B</span>
+                                    <span class="ml-5 text-slate-900 font-bold math-typeset text-lg">v<sup>2</sup> / r</span>
+                                    <svg class="ml-auto w-6 h-6 text-brand-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                </button>
+                                <button class="w-full flex items-center p-5 border-2 border-slate-100 rounded-2xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] hover:shadow-md group/btn">
+                                    <span class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors">C</span>
+                                    <span class="ml-5 text-slate-700 font-semibold math-typeset text-lg">m v<sup>2</sup> / r</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Intelligent Feedback -->
+                        <div class="w-full lg:w-[40%] bg-slate-50 flex flex-col border-l border-slate-100">
+                            <div class="flex border-b border-slate-200 bg-white">
+                                <button id="tab-explanation" onclick="switchTeaserTab('explanation')" class="flex-1 py-5 text-xs font-black uppercase tracking-[0.2em] text-brand-600 border-b-2 border-brand-600">
+                                    Explanation
+                                </button>
+                                <button id="tab-metrics" onclick="switchTeaserTab('metrics')" class="flex-1 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-600 border-b-2 border-transparent">
+                                    Time Metrics
+                                </button>
+                            </div>
+
+                            <div id="content-explanation" class="p-8 md:p-10 flex-1 overflow-y-auto">
+                                <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-5 mb-8">
+                                    <div class="flex items-center gap-3 mb-2">
+                                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
+                                        <span class="text-[11px] font-black uppercase tracking-widest text-emerald-700">Concept Mastery</span>
+                                    </div>
+                                    <p class="text-sm text-emerald-900 font-semibold leading-relaxed">
+                                        Perfect! You recognized that acceleration is purely kinematic, independent of mass.
+                                    </p>
+                                </div>
+
+                                <div class="space-y-8">
+                                    <div>
+                                        <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Derivation Path</h4>
+                                        <div class="space-y-4">
+                                            <div class="flex gap-4">
+                                                <div class="flex flex-col items-center">
+                                                    <div class="w-6 h-6 rounded-full bg-brand-600 text-white text-[10px] font-bold flex items-center justify-center">1</div>
+                                                    <div class="w-0.5 h-full bg-slate-200 mt-2"></div>
+                                                </div>
+                                                <p class="text-sm text-slate-600 leading-relaxed font-medium pb-4">
+                                                    The change in velocity direction creates a net acceleration vector pointing toward the center.
+                                                </p>
+                                            </div>
+                                            <div class="flex gap-4">
+                                                <div class="flex flex-col items-center">
+                                                    <div class="w-6 h-6 rounded-full bg-slate-200 text-slate-500 text-[10px] font-bold flex items-center justify-center">2</div>
+                                                </div>
+                                                <p class="text-sm text-slate-600 leading-relaxed font-medium">
+                                                    Using circular geometry, <span class="math-typeset">a<sub>c</sub> = lim(&Delta;v/&Delta;t)</span> simplifies to <span class="math-typeset font-bold italic">v<sup>2</sup>/r</span>.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="content-metrics" class="hidden p-8 md:p-10 flex-1 flex flex-col">
+                                <div class="text-center mb-10">
+                                    <div class="text-4xl font-display font-black text-slate-900 mb-2">00:48</div>
+                                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Time Spent on Question</div>
+                                </div>
+
+                                <div class="space-y-6">
+                                    <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
+                                        <div class="flex justify-between items-center mb-3">
+                                            <span class="text-xs font-bold text-slate-500">Class Average</span>
+                                            <span class="text-xs font-black text-slate-900">01:12</span>
+                                        </div>
+                                        <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-brand-500 w-[65%]"></div>
+                                        </div>
+                                    </div>
+                                    <div class="p-5 bg-brand-600 rounded-2xl shadow-lg shadow-brand-200 text-white">
+                                        <div class="text-[10px] font-black uppercase tracking-widest opacity-70 mb-1">Pacing Insight</div>
+                                        <p class="text-sm font-bold leading-relaxed">
+                                            You're 33% faster than your peers on this topic. Consider increasing difficulty.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. THE ORBIT ADVANTAGE (Consolidated Features) -->
+    <section id="features" class="py-24 px-6 bg-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="font-display text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Standardized Excellence.</h2>
+                <p class="text-slate-500 text-lg max-w-2xl mx-auto font-medium">We've deconstructed the JUPEB curriculum into a measurable roadmap for success.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="p-8 border border-slate-100 rounded-3xl hover:border-brand-100 hover:shadow-xl hover:shadow-brand-50/50 transition-all group">
+                    <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-xl mb-3">Weakness Isolation</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Our algorithm identifies recurring errors and converts them into spaced-repetition revision cards.</p>
+                </div>
+                <!-- Feature 2 -->
+                <div class="p-8 border border-slate-100 rounded-3xl hover:border-brand-100 hover:shadow-xl hover:shadow-brand-50/50 transition-all group">
+                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-xl mb-3">Admission Forecasting</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Real-time estimation of your 15-point aggregate based on cumulative mock test analytics.</p>
+                </div>
+                <!-- Feature 3 -->
+                <div class="p-8 border border-slate-100 rounded-3xl hover:border-brand-100 hover:shadow-xl hover:shadow-brand-50/50 transition-all group">
+                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h4 class="font-bold text-slate-900 text-xl mb-3">Simulated Pressure</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed">Toggle into "Exam Atmosphere" mode with enforced time limits and hidden explanations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. FINAL CTA & FOOTER -->
+    <footer class="bg-slate-50 py-20 border-t border-slate-200">
+        <div class="container mx-auto px-6 max-w-6xl">
+            <div class="bg-brand-600 rounded-[2.5rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl shadow-brand-100">
+                <div class="absolute inset-0 grid-pattern opacity-10"></div>
+                <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-6 relative z-10 tracking-tight">Secure Your Admission.</h2>
+                <p class="text-brand-100 text-lg mb-10 max-w-xl mx-auto relative z-10 font-medium">Join 12,000+ candidates using the digital standard in JUPEB preparation.</p>
+                <div class="relative z-10">
+                    <a href="auth.html" class="inline-block bg-white text-brand-600 hover:bg-slate-50 font-black px-12 py-5 rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-xl">
+                        Launch Your Cockpit
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-20 flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center shadow-lg">
+                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <span class="font-display text-xl font-extrabold text-slate-900">Orbit</span>
+                </div>
+                
+                <div class="flex gap-8 text-xs font-bold text-slate-400 uppercase tracking-widest">
+                    <a href="#" class="hover:text-slate-900 transition-colors">Privacy</a>
+                    <a href="#" class="hover:text-slate-900 transition-colors">Terms</a>
+                    <a href="#" class="hover:text-slate-900 transition-colors">Contact</a>
+                    <span class="text-slate-300">© 2026 Orbit Education</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT BEHAVIORS -->
+    <script>
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const bar1 = document.getElementById('bar1');
+            const bar2 = document.getElementById('bar2');
+            
+            if (menu.classList.contains('invisible')) {
+                // Open
+                menu.classList.remove('invisible', 'opacity-0', 'translate-y-4');
+                menu.classList.add('visible', 'opacity-100', 'translate-y-0');
+                bar1.classList.add('rotate-45', 'translate-y-1');
+                bar2.classList.add('-rotate-45', '-translate-y-1');
+            } else {
+                // Close
+                menu.classList.add('invisible', 'opacity-0', 'translate-y-4');
+                menu.classList.remove('visible', 'opacity-100', 'translate-y-0');
+                bar1.classList.remove('rotate-45', 'translate-y-1');
+                bar2.classList.remove('-rotate-45', '-translate-y-1');
+            }
+        }
+
+        function switchTeaserTab(tab) {
+            const tabs = ['explanation', 'metrics'];
+            const contentContainer = document.getElementById('content-explanation').parentElement;
+            
+            // Add a subtle loading effect
+            contentContainer.style.opacity = '0.5';
+            
+            setTimeout(() => {
+                tabs.forEach(t => {
+                    const btn = document.getElementById(`tab-${t}`);
+                    const content = document.getElementById(`content-${t}`);
+                    if (t === tab) {
+                        btn.classList.add('text-brand-600', 'border-brand-600');
+                        btn.classList.remove('text-slate-400', 'border-transparent');
+                        content.classList.remove('hidden');
+                    } else {
+                        btn.classList.add('text-slate-400', 'border-transparent');
+                        btn.classList.remove('text-brand-600', 'border-brand-600');
+                        content.classList.add('hidden');
+                    }
+                });
+                contentContainer.style.opacity = '1';
+            }, 150);
+        }
+
+        function updateProfiler() {
+            const probValue = document.getElementById('prob-value');
+            const probBar = document.getElementById('prob-bar');
+            
+            // Subtle animation for probability shift
+            let target = 85 + Math.floor(Math.random() * 10);
+            probValue.innerText = target + '%';
+            probBar.style.width = target + '%';
+        }
+
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js');
+            });
+        }
+    </script>
+</body>
+</html>

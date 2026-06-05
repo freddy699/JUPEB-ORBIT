@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile | JUPEB Orbit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #FAFBFF; 
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+        }
+        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-xl w-full glass-card p-10 md:p-14 rounded-[3rem] shadow-2xl shadow-indigo-100/50 animate-fade-in relative overflow-hidden">
+        
+        <!-- Background Glow -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 rounded-full blur-3xl -mr-32 -mt-32"></div>
+
+        <div class="relative z-10">
+            <div class="flex items-center gap-6 mb-12">
+                <a href="dashboard.html" class="w-12 h-12 bg-white shadow-sm border border-slate-100 flex items-center justify-center rounded-2xl hover:bg-slate-50 transition-all hover:scale-105 active:scale-95">
+                    <svg class="w-5 h-5 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                </a>
+                <div>
+                    <h1 class="font-display text-3xl font-extrabold text-slate-900 tracking-tight">Edit Profile</h1>
+                    <p class="text-[10px] font-black text-indigo-500 uppercase tracking-widest mt-1">Cockpit Identity Manager</p>
+                </div>
+            </div>
+
+            <div class="space-y-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5">Username</label>
+                        <input id="username" type="text" placeholder="e.g. malvis_orbit" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 text-slate-900 font-bold focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5">Tagline</label>
+                        <input id="tagline" type="text" placeholder="e.g. Aspiring Engineer" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 text-slate-900 font-bold focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all">
+                    </div>
+                </div>
+                
+                <div class="pt-8 border-t border-slate-100">
+                    <div class="mb-6">
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5">Target Institution</label>
+                        <input id="target-uni" type="text" placeholder="e.g. University of Ibadan" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 text-slate-900 font-bold focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2.5">Target Major / Course</label>
+                        <input id="target-major" type="text" placeholder="e.g. Computer Science" class="w-full bg-white border border-slate-200 rounded-2xl px-5 py-3.5 text-slate-900 font-bold focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="pt-10 flex flex-col gap-4">
+                    <button id="save-btn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-2xl shadow-[0_10px_30px_-10px_rgba(79,70,229,0.4)] transition-all hover:scale-[1.01] active:scale-95">
+                        Update My Identity
+                    </button>
+                    <p class="text-center text-[11px] font-bold text-slate-400 uppercase tracking-widest">Changes sync to all leaderboards instantly</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+        let currentUser = null;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                const docSnap = await getDoc(doc(db, "users", user.uid));
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    document.getElementById('username').value = data.username || "";
+                    document.getElementById('tagline').value = data.tagline || "";
+                    document.getElementById('target-uni').value = data.targetInstitution || "";
+                    document.getElementById('target-major').value = data.targetDepartment || "";
+                }
+            } else {
+                window.location.href = "auth.html";
+            }
+        });
+
+        document.getElementById('save-btn').addEventListener('click', async () => {
+            const saveBtn = document.getElementById('save-btn');
+            saveBtn.innerText = "Saving...";
+            
+            try {
+                await updateDoc(doc(db, "users", currentUser.uid), {
+                    username: document.getElementById('username').value,
+                    tagline: document.getElementById('tagline').value,
+                    targetInstitution: document.getElementById('target-uni').value,
+                    targetDepartment: document.getElementById('target-major').value
+                });
+                window.location.href = "dashboard.html";
+            } catch (e) {
+                console.error(e);
+                alert("Error saving profile.");
+                saveBtn.innerText = "Save Profile Changes";
+            }
+        });
+    </script>
+</body>
+</html>

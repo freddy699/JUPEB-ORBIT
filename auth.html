@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Portal | JUPEB Orbit</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#6366F1',
+                            600: '#4F46E5', // Primary
+                            700: '#4338CA',
+                        },
+                        slate: {
+                            50: '#F8FAFC',
+                            100: '#F1F5F9',
+                            200: '#E2E8F0',
+                            400: '#94A3B8',
+                            600: '#475569',
+                            900: '#0F172A',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #FAFBFF; 
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+        }
+        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        input:focus { box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1) !important; }
+        .hidden-state { display: none !important; }
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-slide-up { animation: slideUp 0.6s ease-out forwards; }
+    </style>
+</head>
+<body class="text-slate-600 antialiased overflow-x-hidden">
+
+    <main class="min-h-screen grid grid-cols-1 lg:grid-cols-12">
+        
+        <!-- COLUMN 1: THE DYNAMIC AUTHENTICATION PANEL -->
+        <div class="lg:col-span-5 flex flex-col min-h-screen bg-white shadow-2xl z-10">
+            <!-- Header/Logo -->
+            <div class="p-8">
+                <a href="index.html" class="flex items-center gap-3 group w-fit">
+                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center transform group-hover:rotate-[15deg] transition-all duration-300 shadow-lg shadow-indigo-100">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-display text-xl font-extrabold text-slate-900 tracking-tight leading-none">Orbit</span>
+                        <span class="text-[9px] font-black text-indigo-500 uppercase tracking-[0.2em] mt-1">JUPEB Standard</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Core Wrapper -->
+            <div class="flex-1 flex items-center justify-center px-10 py-12">
+                <div class="max-w-md w-full mx-auto animate-slide-up">
+                    
+                    <!-- STATE A: REGISTRATION (SIGN UP) -->
+                    <div id="signup-state" class="transition-all duration-500">
+                        <header class="mb-10">
+                            <h1 class="font-display text-4xl font-extrabold tracking-tight text-slate-900 mb-3 leading-tight">Begin your <span class="text-indigo-600 underline decoration-indigo-200">Orbit</span> journey.</h1>
+                            <p class="text-slate-500 font-medium text-lg leading-relaxed">Join thousands of students mastering the JUPEB curriculum through data-driven practice.</p>
+                        </header>
+
+                        <form id="registration-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Full Name</label>
+                                <input id="reg-name" type="text" placeholder="Obadoni Malvis" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Email Address</label>
+                                <input id="reg-email" type="email" autocomplete="email" placeholder="you@example.com" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Password</label>
+                                <input id="reg-pass" type="password" autocomplete="new-password" placeholder="••••••••" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                                <p id="pass-hint" class="hidden text-[11px] font-semibold text-rose-500 mt-1">Password must be at least 6 characters.</p>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Confirm Password</label>
+                                <input id="reg-confirm" type="password" autocomplete="new-password" placeholder="••••••••" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                                <p id="match-error" class="hidden text-[11px] font-semibold text-rose-500 mt-1">Passwords do not match.</p>
+                            </div>
+
+                            <div class="flex items-center gap-3 py-2">
+                                <input id="reg-terms" type="checkbox" required class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
+                                <label class="text-sm text-slate-500 leading-tight">I agree to the <a href="#" class="text-indigo-600 font-semibold hover:underline">Terms of Academic Service</a> and Privacy Policy.</label>
+                            </div>
+
+                            <button id="signup-submit" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-4 font-bold shadow-sm transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                                Create My Free Account
+                            </button>
+                        </form>
+
+                        <footer class="mt-8 text-center">
+                            <p class="text-sm text-slate-500 font-medium">Already tracking your points? <button id="to-signin-btn" class="text-indigo-600 font-bold hover:underline">Sign In</button></p>
+                        </footer>
+                    </div>
+
+                    <!-- STATE B: SIGN IN (LOGIN) -->
+                    <div id="signin-state" class="hidden-state transition-all duration-500">
+                        <header class="mb-8">
+                            <h1 class="font-display text-3xl font-extrabold tracking-tight text-slate-900 mb-2">Welcome back to Orbit</h1>
+                            <p class="text-slate-500 font-medium">Pick up exactly where you left off in your revision tracks.</p>
+                        </header>
+
+                        <form id="login-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Email Address</label>
+                                <input id="login-email" type="email" autocomplete="email" placeholder="you@example.com" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-1.5">
+                                    <label class="text-sm font-bold text-slate-900">Password</label>
+                                    <button type="button" class="text-sm font-bold text-indigo-600 hover:underline">Forgot Password?</button>
+                                </div>
+                                <input id="login-pass" type="password" autocomplete="current-password" placeholder="••••••••" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                            </div>
+
+                            <div class="flex items-center gap-3 py-2">
+                                <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
+                                <label class="text-sm text-slate-500 font-medium">Remember me for 30 days</label>
+                            </div>
+
+                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-4 font-bold shadow-sm transition-all hover:scale-[1.01] active:scale-[0.98]">
+                                Sign In to Dashboard
+                            </button>
+                        </form>
+
+                        <footer class="mt-8 text-center">
+                            <p class="text-sm text-slate-500 font-medium">New to the platform? <button id="to-signup-btn" class="text-indigo-600 font-bold hover:underline">Create an Account</button></p>
+                        </footer>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Footer Small Link -->
+            <div class="p-8 text-center lg:text-left">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">© 2026 Orbit Education Systems</p>
+            </div>
+        </div>
+
+        <!-- COLUMN 2: THE VISUAL ACADEMIC SIDEBAR -->
+        <div class="hidden lg:col-span-7 bg-slate-50 border-l border-slate-100 lg:flex flex-col items-center justify-center p-12 relative overflow-hidden">
+            <!-- Background Decorative Elements -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-100/50 rounded-full blur-3xl -mr-32 -mt-32"></div>
+            <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-50 rounded-full blur-3xl -ml-48 -mb-48"></div>
+
+            <div class="relative z-10 w-full max-w-md">
+                <!-- Floating Preview Card -->
+                <div class="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.1)]">
+                    <!-- Top Row -->
+                    <div class="flex items-center justify-between mb-10">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-xs">OM</div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-900 leading-none">Obadoni Malvis</h4>
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Candidate ID: 49201</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <span class="block text-xl font-extrabold text-indigo-600 leading-none">12 / 15</span>
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Points Tracking</span>
+                        </div>
+                    </div>
+
+                    <!-- Middle: Subject Progress -->
+                    <div class="space-y-6 mb-10">
+                        <div>
+                            <div class="flex justify-between text-[11px] font-bold uppercase tracking-wider mb-2">
+                                <span class="text-slate-400">Mathematics</span>
+                                <span class="text-emerald-600">78%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-emerald-500 rounded-full w-[78%]"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[11px] font-bold uppercase tracking-wider mb-2">
+                                <span class="text-slate-400">Physics</span>
+                                <span class="text-amber-500">52%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-amber-400 rounded-full w-[52%]"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between text-[11px] font-bold uppercase tracking-wider mb-2">
+                                <span class="text-slate-400">Chemistry</span>
+                                <span class="text-rose-500">35%</span>
+                            </div>
+                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                <div class="h-full bg-rose-500 rounded-full w-[35%]"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Caption Footer -->
+                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
+                        <div class="flex gap-2 mb-2">
+                            <div class="w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
+                            <div class="w-1.5 h-1.5 rounded-full bg-indigo-200"></div>
+                        </div>
+                        <p class="text-xs text-slate-600 leading-relaxed italic">
+                            "The engine isolates your systemic weak areas automatically, converting missed examination questions into verified point gains."
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Secondary Annotation -->
+                <div class="mt-8 text-center">
+                    <p class="text-sm font-medium text-slate-400">Join <span class="text-slate-900 font-bold">12,402 students</span> mastering the curriculum today.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FIREBASE & AUTH MECHANICS -->
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+        import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+        // DOM Elements
+        const signupState = document.getElementById('signup-state');
+        const signinState = document.getElementById('signin-state');
+        const toSigninBtn = document.getElementById('to-signin-btn');
+        const toSignupBtn = document.getElementById('to-signup-btn');
+
+        const regForm = document.getElementById('registration-form');
+        const loginForm = document.getElementById('login-form');
+
+        const regPass = document.getElementById('reg-pass');
+        const regConfirm = document.getElementById('reg-confirm');
+        const passHint = document.getElementById('pass-hint');
+        const matchError = document.getElementById('match-error');
+        const signupSubmit = document.getElementById('signup-submit');
+
+        // 0. SESSION DETECTION
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                console.log("Session detected:", user.email);
+                try {
+                    const userDoc = await getDoc(doc(db, "users", user.uid));
+                    if (userDoc.exists() && userDoc.data().onboardingComplete) {
+                        window.location.href = "dashboard.html";
+                    } else {
+                        window.location.href = "onboarding.html";
+                    }
+                } catch (e) {
+                    // If doc read fails (e.g. permission error), still try to go to dashboard
+                    window.location.href = "dashboard.html";
+                }
+            }
+        });
+
+        // 1. FORM STATE TOGGLE
+        toSigninBtn.addEventListener('click', () => {
+            signupState.classList.add('hidden-state');
+            signinState.classList.remove('hidden-state');
+        });
+
+        toSignupBtn.addEventListener('click', () => {
+            signinState.classList.add('hidden-state');
+            signupState.classList.remove('hidden-state');
+        });
+
+        // 2. BASIC REAL-TIME INPUT VALIDATION
+        function validateSignup() {
+            const pass = regPass.value;
+            const confirm = regConfirm.value;
+            let isValid = true;
+
+            if (pass.length > 0 && pass.length < 6) {
+                passHint.classList.remove('hidden');
+                isValid = false;
+            } else {
+                passHint.classList.add('hidden');
+            }
+
+            if (confirm.length > 0 && pass !== confirm) {
+                matchError.classList.remove('hidden');
+                isValid = false;
+            } else {
+                matchError.classList.add('hidden');
+            }
+
+            signupSubmit.disabled = !isValid || pass.length < 6 || confirm.length < 6 || pass !== confirm;
+        }
+
+        regPass.addEventListener('input', validateSignup);
+        regConfirm.addEventListener('input', validateSignup);
+
+        // 3. FIREBASE IMPLEMENTATION
+        regForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            signupSubmit.disabled = true;
+            signupSubmit.innerText = "Creating Account...";
+
+            const fullName = document.getElementById('reg-name').value;
+            const email = document.getElementById('reg-email').value;
+            const password = regPass.value;
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+
+                // Store User Details in Firestore
+                await setDoc(doc(db, "users", user.uid), {
+                    fullName: fullName,
+                    email: email,
+                    createdAt: new Date().toISOString(),
+                    onboardingComplete: false
+                });
+
+                console.log("Registration successful for:", email);
+                window.location.href = "onboarding.html";
+            } catch (error) {
+                console.error("Registration Error:", error.message);
+                alert("Registration failed: " + error.message);
+                signupSubmit.disabled = false;
+                signupSubmit.innerText = "Create My Free Account";
+            }
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = e.target.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Signing In...";
+
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-pass').value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                console.log("Login successful for:", email);
+                window.location.href = "dashboard.html";
+            } catch (error) {
+                console.error("Login Error:", error.message);
+                alert("Login failed: " + error.message);
+                submitBtn.disabled = false;
+                submitBtn.innerText = "Sign In to Dashboard";
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1133 @@
+const MATHEMATICS_BANK = [
+  {
+    "id": "math_2020_mcq_q1",
+    "type": "mcq",
+    "questionNumber": 1,
+    "syllabusTopic": "Quadratic Equations",
+    "yieldProbability": "High-Yield",
+    "questionText": "For what values of \\( k \\) will the equation \\( y^2 - (k - 2)y + 1 = -2k \\) have real equal roots?",
+    "options": [
+      "0, 12",
+      "3, 4",
+      "0, 3",
+      "−3, 4"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "Condition for equal roots in a quadratic equation.",
+      "steps": "1. Rearrange the equation into standard quadratic form \\( ay^2 + by + c = 0 \\): \\( y^2 - (k - 2)y + (2k + 1) = 0 \\).\n2. Identify coefficients: \\( a = 1, b = -(k - 2), c = 2k + 1 \\).\n3. For real and equal roots, the discriminant \\( D \\) must be zero: \\( D = b^2 - 4ac = 0 \\).\n4. Substitute the coefficients: \\( [-(k - 2)]^2 - 4(1)(2k + 1) = 0 \\).\n5. Expand and simplify: \\( k^2 - 4k + 4 - 8k - 4 = 0 \\) which simplifies to \\( k^2 - 12k = 0 \\).\n6. Factorize: \\( k(k - 12) = 0 \\). Thus, \\( k = 0 \\) or \\( k = 12 \\).",
+      "pitfall": "Ensure all terms are moved to one side before identifying the constant term \\( c \\). Forgetting to include \\( -2k \\) in the constant term leads to an incorrect discriminant."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q2",
+    "type": "mcq",
+    "questionNumber": 2,
+    "syllabusTopic": "Trigonometry",
+    "yieldProbability": "High-Yield",
+    "questionText": "Which of the following is correct?",
+    "options": [
+      "\\( 270^\\circ = 2\\pi \\) radians",
+      "\\( 360^\\circ = 3\\pi \\) radians",
+      "\\( 90^\\circ = \\pi \\) radians",
+      "\\( 720^\\circ = 4\\pi \\) radians"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "Conversion between degrees and radians.",
+      "steps": "1. Recall the fundamental identity: \\( 180^\\circ = \\pi \\) radians.\n2. Test each option by multiplying degrees by \\( \\frac{\\pi}{180} \\).\n3. For Option D: \\( 720^\\circ \\times \\frac{\\pi}{180} = 4\\pi \\) radians.\n4. This matches the provided statement.",
+      "pitfall": "Confusing the conversion factor \\( \\frac{\\pi}{180} \\) with \\( \\frac{180}{\\pi} \\)."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q3",
+    "type": "mcq",
+    "questionNumber": 3,
+    "syllabusTopic": "Set Theory",
+    "yieldProbability": "High-Yield",
+    "questionText": "Given that \\( A \\) and \\( B \\) are subsets of a universal set \\( U \\), which of the following is true?",
+    "options": [
+      "\\( (A \\cup B)^c = A^c \\cup B^c \\)",
+      "\\( (A \\cap B)^c = A^c \\cup B^c \\)",
+      "\\( (A \\cup B)^c = (A \\cup B) \\cap (B \\cup A) \\)",
+      "\\( (A \\cap B)^c = A^c \\cap B^c \\)"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "De Morgan's Laws.",
+      "steps": "1. Recall De Morgan's Laws for set theory.\n2. First Law: The complement of the union is the intersection of the complements: \\( (A \\cup B)^c = A^c \\cap B^c \\).\n3. Second Law: The complement of the intersection is the union of the complements: \\( (A \\cap B)^c = A^c \\cup B^c \\).\n4. Compare these to the options; Option B matches the second law.",
+      "pitfall": "Mixing up the union and intersection symbols when applying the complement."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q4",
+    "type": "mcq",
+    "questionNumber": 4,
+    "syllabusTopic": "Complex Numbers",
+    "yieldProbability": "High-Yield",
+    "questionText": "Express the complex number \\( 2 + 3i \\) in polar form.",
+    "options": [
+      "\\( 3.6(\\cos 28.1^\\circ + i\\sin 28.1^\\circ) \\)",
+      "\\( 3.6(\\cos 56.31^\\circ + i\\sin 56.3^\\circ) \\)",
+      "\\( 4.8(\\cos 36.2^\\circ + i\\sin 36.2^\\circ) \\)",
+      "\\( 4.8(\\cos 56.3^\\circ + i\\sin 56.3^\\circ) \\)"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Polar representation of complex numbers.",
+      "steps": "1. Identify the real part \\( x = 2 \\) and imaginary part \\( y = 3 \\).\n2. Calculate the modulus \\( r = \\sqrt{x^2 + y^2} = \\sqrt{2^2 + 3^2} = \\sqrt{13} \\approx 3.606 \\).\n3. Calculate the argument \\( \\theta = \\tan^{-1}(\\frac{y}{x}) = \\tan^{-1}(1.5) \\approx 56.31^\\circ \\).\n4. Substitute into the polar form \\( r(\\cos \\theta + i\\sin \\theta) \\): \\( 3.6(\\cos 56.31^\\circ + i\\sin 56.31^\\circ) \\).",
+      "pitfall": "Using sine or cosine incorrectly to find the angle; always check the quadrant (Quadrant I here as both x and y are positive)."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q5",
+    "type": "mcq",
+    "questionNumber": 5,
+    "syllabusTopic": "Functions",
+    "yieldProbability": "High-Yield",
+    "questionText": "Let \\( f(x) = \\frac{x+1}{x-2} \\) be a function defined on the set of real numbers excluding 2. Determine the inverse of the function.",
+    "options": [
+      "\\( \\frac{2x-1}{x-1} \\)",
+      "\\( \\frac{2x+1}{x-2} \\)",
+      "\\( \\frac{2x+1}{x-1} \\)",
+      "\\( \\frac{x-1}{2x+1} \\)"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Finding the inverse of a rational function.",
+      "steps": "1. Set \\( y = f(x) \\): \\( y = \\frac{x+1}{x-2} \\).\n2. Solve for \\( x \\) in terms of \\( y \\): Multiply by \\( (x-2) \\) to get \\( y(x-2) = x+1 \\).\n3. Expand: \\( xy - 2y = x + 1 \\).\n4. Group \\( x \\) terms: \\( xy - x = 2y + 1 \\).\n5. Factor out \\( x \\): \\( x(y - 1) = 2y + 1 \\).\n6. Isolate \\( x \\): \\( x = \\frac{2y+1}{y-1} \\).\n7. Replace \\( y \\) with \\( x \\) to get \\( f^{-1}(x) = \\frac{2x+1}{x-1} \\).",
+      "pitfall": "Sign errors during the grouping of like terms are the most common mistake."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q6",
+    "type": "mcq",
+    "questionNumber": 6,
+    "syllabusTopic": "Inequalities",
+    "yieldProbability": "High-Yield",
+    "questionText": "Obtain the range of values for which \\( |2x - 3| < 5 \\).",
+    "options": [
+      "\\( -1 < x < 4 \\)",
+      "\\( 1 < x < -4 \\)",
+      "\\( -4 < x < 1 \\)",
+      "\\( 1 > x > 4 \\)"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "Solving absolute value inequalities.",
+      "steps": "1. Rewrite the inequality \\( |2x - 3| < 5 \\) as a compound inequality: \\( -5 < 2x - 3 < 5 \\).\n2. Add 3 to all parts: \\( -2 < 2x < 8 \\).\n3. Divide by 2: \\( -1 < x < 4 \\).",
+      "pitfall": "Forgetting that \\( |x| < a \\) implies \\( -a < x < a \\) and mistakenly using 'or' logic."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q7",
+    "type": "mcq",
+    "questionNumber": 7,
+    "syllabusTopic": "Binomial Theorem",
+    "yieldProbability": "High-Yield",
+    "questionText": "Find the constant term in the binomial expansion of \\( (2x + \\frac{1}{x})^8 \\).",
+    "options": [
+      "820",
+      "1120",
+      "1210",
+      "4220"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "The general term formula in binomial expansion.",
+      "steps": "1. The general term is \\( T_{r+1} = \\binom{8}{r} (2x)^{8-r} (x^{-1})^r \\).\n2. Simplify exponents of \\( x \\): \\( x^{8-r} \\cdot x^{-r} = x^{8-2r} \\).\n3. For the constant term, the power of \\( x \\) must be 0: \\( 8 - 2r = 0 \\Rightarrow r = 4 \\).\n4. Substitute \\( r = 4 \\) into the coefficient part: \\( \\binom{8}{4} \\cdot 2^{8-4} = \\binom{8}{4} \\cdot 2^4 \\).\n5. Calculate: \\( 70 \\cdot 16 = 1120 \\).",
+      "pitfall": "Errors in calculating the combination \\( \\binom{n}{r} \\) or neglecting the coefficient of \\( x \\) (the '2' in \\( 2x \\))."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q8",
+    "type": "mcq",
+    "questionNumber": 8,
+    "syllabusTopic": "Coordinate Geometry",
+    "yieldProbability": "High-Yield",
+    "questionText": "The end coordinates of the diameter of a circle are \\( (3, 2) \\) and \\( (9, 6) \\). Formulate the equation of the circle.",
+    "options": [
+      "\\( x^2 + y^2 - 6x - 4y + 39 = 0 \\)",
+      "\\( x^2 + y^2 + 6x + 4y - 36 = 0 \\)",
+      "\\( x^2 + y^2 - 12x - 8y + 39 = 0 \\)",
+      "\\( x^2 + y^2 + 12x + 8y - 39 = 0 \\)"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Circle equation from diameter endpoints.",
+      "steps": "1. Method 1 (Center-Radius): Find midpoint (center) = \\( (\\frac{3+9}{2}, \\frac{2+6}{2}) = (6, 4) \\).\n2. Find radius squared \\( r^2 = (9-6)^2 + (6-4)^2 = 3^2 + 2^2 = 13 \\).\n3. Equation: \\( (x-6)^2 + (y-4)^2 = 13 \\).\n4. Expand: \\( x^2 - 12x + 36 + y^2 - 8y + 16 = 13 \\) which gives \\( x^2 + y^2 - 12x - 8y + 39 = 0 \\).\n5. Method 2 (Formula): Use \\( (x-x_1)(x-x_2) + (y-y_1)(y-y_2) = 0 \\): \\( (x-3)(x-9) + (y-2)(y-6) = 0 \\).",
+      "pitfall": "Confusing the center coordinates with the diameter endpoints or miscalculating the radius."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q9",
+    "type": "mcq",
+    "questionNumber": 9,
+    "syllabusTopic": "Logarithms",
+    "yieldProbability": "High-Yield",
+    "questionText": "Simplify \\( \\log_7 8 \\times \\log_6 7 \\div \\log_6 5 \\times \\log_8 5 \\)",
+    "options": [
+      "\\( \\log_{10} 1680 \\)",
+      "1",
+      "\\( \\log_{48} 56 \\)",
+      "2"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Change of base rule for logarithms.",
+      "steps": "1. Use the change of base formula \\( \\log_a b = \\frac{\\ln b}{\\ln a} \\).\n2. Express the product as: \\( (\\frac{\\ln 8}{\\ln 7} \\cdot \\frac{\\ln 7}{\\ln 6}) \\div (\\frac{\\ln 5}{\\ln 6}) \\cdot (\\frac{\\ln 5}{\\ln 8}) \\).\n3. Simplify the terms: \\( \\frac{\\ln 8}{\\ln 6} \\div \\frac{\\ln 5}{\\ln 6} \\cdot \\frac{\\ln 5}{\\ln 8} \\).\n4. Convert division to multiplication: \\( \\frac{\\ln 8}{\\ln 6} \\cdot \\frac{\\ln 6}{\\ln 5} \\cdot \\frac{\\ln 5}{\\ln 8} \\).\n5. All terms cancel out to equal 1.",
+      "pitfall": "Mistakenly applying logarithm laws for addition (\\( \\log A + \\log B \\)) to products (\\( \\log A \\times \\log B \\))."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q10",
+    "type": "mcq",
+    "questionNumber": 10,
+    "syllabusTopic": "Coordinate Geometry",
+    "yieldProbability": "High-Yield",
+    "questionText": "Obtain the equation of a straight line joining points \\( (-2, 3) \\) and \\( (1, 4) \\).",
+    "options": [
+      "\\( 3y - 11x - 1 = 0 \\)",
+      "\\( 5y - 3x - 4 = 0 \\)",
+      "\\( 3y - 2x + 11 = 0 \\)",
+      "\\( 3y - x - 11 = 0 \\)"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "Point-slope form of a linear equation.",
+      "steps": "1. Calculate slope \\( m = \\frac{y_2 - y_1}{x_2 - x_1} = \\frac{4 - 3}{1 - (-2)} = \\frac{1}{3} \\).\n2. Use point-slope form with point \\( (1, 4) \\): \\( y - 4 = \\frac{1}{3}(x - 1) \\).\n3. Multiply by 3: \\( 3y - 12 = x - 1 \\).\n4. Rearrange to standard form: \\( 3y - x - 11 = 0 \\).",
+      "pitfall": "Incorrectly calculating the slope by swapping the numerator and denominator."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q11",
+    "type": "mcq",
+    "questionNumber": 11,
+    "syllabusTopic": "Trigonometric Equations",
+    "yieldProbability": "High-Yield",
+    "questionText": "Derive the solution of the equation: \\( \\cot \\theta + \\tan \\theta = 2\\csc \\theta \\).",
+    "options": [
+      "\\( \\pi/2 \\)",
+      "\\( \\pi/3 \\)",
+      "\\( \\pi/4 \\)",
+      "\\( \\pi/5 \\)"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Simplifying trigonometric identities to solve equations.",
+      "steps": "1. Write in terms of sine and cosine: \\( \\frac{\\cos \\theta}{\\sin \\theta} + \\frac{\\sin \\theta}{\\cos \\theta} = \\frac{2}{\\sin \\theta} \\).\n2. Combine fractions on the left: \\( \\frac{\\cos^2 \\theta + \\sin^2 \\theta}{\\sin \\theta \\cos \\theta} = \\frac{2}{\\sin \\theta} \\).\n3. Use identity \\( \\cos^2 \\theta + \\sin^2 \\theta = 1 \\): \\( \\frac{1}{\\sin \\theta \\cos \\theta} = \\frac{2}{\\sin \\theta} \\).\n4. Simplify: \\( \\frac{1}{\\cos \\theta} = 2 \\) (for \\( \\sin \\theta \\neq 0 \\)).\n5. \\( \\cos \\theta = 1/2 \\Rightarrow \\theta = \\pi/3 \\).",
+      "pitfall": "Assuming \\( \\sin \\theta = 0 \\) is a solution; however, \\( \\cot \\theta \\) and \\( \\csc \\theta \\) are undefined when \\( \\sin \\theta = 0 \\)."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q12",
+    "type": "mcq",
+    "questionNumber": 12,
+    "syllabusTopic": "Polynomials",
+    "yieldProbability": "High-Yield",
+    "questionText": "Formulate a polynomial whose quotient and remainder when divided by \\( x + 1 \\) are \\( x^2 + 3x - 2 \\) and \\( -3 \\) respectively.",
+    "options": [
+      "\\( x^3 - x^2 + 3x - 6 \\)",
+      "\\( 2x^3 + 3x^2 - x + 4 \\)",
+      "\\( x^3 + 4x^2 + x - 5 \\)",
+      "\\( x^3 - x^2 + 3x - 6 \\)"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "The Division Algorithm for polynomials.",
+      "steps": "1. Relationship: \\( P(x) = D(x)Q(x) + R(x) \\).\n2. Substitute: \\( P(x) = (x + 1)(x^2 + 3x - 2) + (-3) \\).\n3. Expand: \\( x(x^2 + 3x - 2) + 1(x^2 + 3x - 2) - 3 \\).\n4. \\( x^3 + 3x^2 - 2x + x^2 + 3x - 2 - 3 \\).\n5. Combine like terms: \\( x^3 + 4x^2 + x - 5 \\).",
+      "pitfall": "Incorrectly distributing terms during multiplication or miscalculating the final subtraction of the remainder."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q13",
+    "type": "mcq",
+    "questionNumber": 13,
+    "syllabusTopic": "Matrices",
+    "yieldProbability": "High-Yield",
+    "questionText": "Two matrices are defined as: \\( A = \\begin{bmatrix} 6 & y & 2 \\\\ -4 & -2 & -6 \\\\ 10 & 8 & 2 \\end{bmatrix} \\) and \\( B = \\begin{bmatrix} 3 & -2 & 5 \\\\ 2 & -1 & 2x \\\\ 1 & -3 & 1 \\end{bmatrix} \\). If \\( A^T = 2B \\), evaluate \\( (2x + y) \\).",
+    "options": [
+      "12",
+      "10",
+      "8",
+      "6"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Matrix transposition and equality.",
+      "steps": "1. Find \\( A^T \\) by swapping rows and columns: \\( A^T = \\begin{bmatrix} 6 & -4 & 10 \\\\ y & -2 & 8 \\\\ 2 & -6 & 2 \\end{bmatrix} \\).\n2. Find \\( 2B \\) by doubling every element in \\( B \\): \\( 2B = \\begin{bmatrix} 6 & -4 & 10 \\\\ 4 & -2 & 4x \\\\ 2 & -6 & 2 \\end{bmatrix} \\).\n3. Equate corresponding elements: \\( y = 4 \\) and \\( 8 = 4x \\).\n4. Solve: \\( y = 4 \\) and \\( x = 2 \\).\n5. Calculate \\( 2x + y = 2(2) + 4 = 8 \\).",
+      "pitfall": "Mistakenly setting \\( A = 2B \\) instead of using the transpose \\( A^T \\)."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q14",
+    "type": "mcq",
+    "questionNumber": 14,
+    "syllabusTopic": "Binary Operations",
+    "yieldProbability": "High-Yield",
+    "questionText": "A binary operation \\( \\otimes \\) is defined on the set \\( \\mathbb{R} \\) of real numbers such that for \\( x \\neq 0, y \\neq 0 \\in \\mathbb{R}, x \\otimes y = \\frac{3x^3 + 4y}{5xy} \\). Evaluate \\( (1 \\otimes 3) \\).",
+    "options": [
+      "−1",
+      "−3/5",
+      "−2/3",
+      "1"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "Substitution into a defined binary operation.",
+      "steps": "1. Replace \\( x \\) with 1 and \\( y \\) with 3 in the formula.\n2. Numerator: \\( 3(1)^3 + 4(3) = 3 + 12 = 15 \\).\n3. Denominator: \\( 5(1)(3) = 15 \\).\n4. Result: \\( 15 / 15 = 1 \\).",
+      "pitfall": "Arithmetic errors in powers or forgetting to multiply correctly in the denominator."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q15",
+    "type": "mcq",
+    "questionNumber": 15,
+    "syllabusTopic": "Calculus",
+    "yieldProbability": "High-Yield",
+    "questionText": "If \\( \\lim_{x \\to c} f(x) = l \\) and \\( \\lim_{x \\to c} f(x) = m \\), then",
+    "options": [
+      "\\( l < m \\)",
+      "\\( l > m \\)",
+      "\\( l = m \\)",
+      "\\( l \\leq m \\)"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Uniqueness of limits.",
+      "steps": "1. Recall the theorem of uniqueness of limits: if a limit exists, it must be unique.\n2. Therefore, if the same function has two limit values at the same point, those values must be identical.\n3. Hence, \\( l = m \\).",
+      "pitfall": "Overthinking the problem or confusing it with limits of different functions."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q16",
+    "type": "mcq",
+    "questionNumber": 16,
+    "syllabusTopic": "Differential Equations",
+    "yieldProbability": "High-Yield",
+    "questionText": "Write the order and degree of the differential equation \\( \\frac{d^2y}{dx^2} + a^2x = 0 \\).",
+    "options": [
+      "2, 2",
+      "1, 2",
+      "2, 3",
+      "2, 1"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "Order and degree of a differential equation.",
+      "steps": "1. Order is the highest derivative present: here it is \\( \\frac{d^2y}{dx^2} \\), which is the second derivative, so Order = 2.\n2. Degree is the power of the highest derivative: here the highest derivative is raised to the power of 1, so Degree = 1.\n3. The result is (2, 1).",
+      "pitfall": "Confusing the order (number of differentiations) with the degree (exponent of the highest derivative)."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q17",
+    "type": "mcq",
+    "questionNumber": 17,
+    "syllabusTopic": "Functions",
+    "yieldProbability": "High-Yield",
+    "questionText": "If \\( f(x) = 3^{x-1} \\), find \\( f(x + 3) - f(x) \\) in terms of \\( f(x) \\).",
+    "options": [
+      "\\( 15/2 f(x) \\)",
+      "\\( 13/2 f(x) \\)",
+      "80 f(x)",
+      "26 f(x)"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "Exponential function manipulation.",
+      "steps": "1. Express \\( f(x+3) \\): \\( 3^{(x+3)-1} = 3^{x+2} \\).\n2. Relate \\( f(x+3) \\) to \\( f(x) \\): \\( 3^{x+2} = 3^{(x-1)+3} = 3^{x-1} \\cdot 3^3 = 27 f(x) \\).\n3. Subtract: \\( 27 f(x) - f(x) = 26 f(x) \\).",
+      "pitfall": "Incorrectly applying the laws of indices when shifting the argument of the function."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q18",
+    "type": "mcq",
+    "questionNumber": 18,
+    "syllabusTopic": "Calculus",
+    "yieldProbability": "High-Yield",
+    "questionText": "Express \\( \\frac{d^2y}{dx^2} \\) in terms of \\( y \\) alone in the equation \\( x^2 + y^2 = r^2 \\), where \\( r = \\) constant.",
+    "options": [
+      "\\( \\frac{y^2-r^2}{y^3} - 1/y \\)",
+      "\\( -r^2/y^3 \\)",
+      "\\( r^2/y^3 \\)",
+      "\\( y^3/r^2 \\)"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Implicit differentiation and substitution.",
+      "steps": "1. First derivative: \\( 2x + 2y y' = 0 \\Rightarrow y' = -x/y \\).\n2. Second derivative using quotient rule: \\( y'' = -\\frac{y(1) - x y'}{y^2} \\).\n3. Substitute \\( y' = -x/y \\): \\( y'' = -\\frac{y - x(-x/y)}{y^2} = -\\frac{y + x^2/y}{y^2} \\).\n4. Simplify: \\( y'' = -\\frac{y^2 + x^2}{y^3} \\).\n5. Since \\( x^2 + y^2 = r^2 \\), substitute to get \\( y'' = -r^2/y^3 \\).",
+      "pitfall": "Neglecting the negative sign during the application of the quotient rule."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q19",
+    "type": "mcq",
+    "questionNumber": 19,
+    "syllabusTopic": "Calculus",
+    "yieldProbability": "High-Yield",
+    "questionText": "Determine \\( dy/dx \\) where \\( x = a(1 + \\sin \\theta) \\) and \\( y = a(1 - \\cos \\theta) \\).",
+    "options": [
+      "\\( \\sin \\theta + \\cos \\theta \\)",
+      "\\( \\tan \\theta \\)",
+      "\\( \\sec^2 \\theta \\)",
+      "\\( \\tan(\\theta/2) \\)"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Parametric differentiation.",
+      "steps": "1. Find \\( dx/d\\theta = a \\cos \\theta \\).\n2. Find \\( dy/d\\theta = a \\sin \\theta \\).\n3. Calculate \\( dy/dx = (dy/d\\theta) / (dx/d\\theta) = (a \\sin \\theta) / (a \\cos \\theta) \\).\n4. Result: \\( \\tan \\theta \\).",
+      "pitfall": "Swapping the numerator and denominator in the formula for parametric differentiation."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q20",
+    "type": "mcq",
+    "questionNumber": 20,
+    "syllabusTopic": "Calculus",
+    "yieldProbability": "High-Yield",
+    "questionText": "Determine the value of the integral \\( \\int \\frac{dx}{x} \\) from -2 to -1.",
+    "options": [
+      "\\( \\log (-2) \\)",
+      "\\( \\log 1/2 \\)",
+      "\\( \\log(-1) - \\log (-2) \\)",
+      "\\( \\log (-1) \\)"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Definite integration of the reciprocal function.",
+      "steps": "1. The integral of \\( 1/x \\) is \\( \\ln |x| \\).\n2. Evaluate at bounds: \\( [\\ln |x|]_{-2}^{-1} = \\ln |-1| - \\ln |-2| \\).\n3. Since \\( |-1| = 1 \\) and \\( |-2| = 2 \\), we have \\( \\ln 1 - \\ln 2 \\).\n4. \\( 0 - \\ln 2 = \\ln(1/2) \\).",
+      "pitfall": "Trying to take the log of a negative number without using the absolute value property of the natural log integral."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q21",
+    "type": "mcq",
+    "questionNumber": 21,
+    "syllabusTopic": "Calculus - Continuity",
+    "yieldProbability": "High-Yield",
+    "questionText": "Let f(x) = { x-1, when x < 1; x^2 + k, when x >= 1 }. find the value of k for which f(x) is continuous at x = 1.",
+    "options": [
+      "0",
+      "1",
+      "-1",
+      "2"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Continuity at a Point",
+      "steps": "For a function to be continuous at x = c, the left-hand limit, right-hand limit, and the function value at that point must all be equal.\n1. Calculate the left-hand limit (LHL) as x approaches 1 from the left: \\lim_{x \\to 1^-} (x - 1) = 1 - 1 = 0.\n2. Calculate the right-hand limit (RHL) as x approaches 1 from the right: \\lim_{x \\to 1^+} (x^2 + k) = 1^2 + k = 1 + k.\n3. For continuity at x = 1, LHL = RHL: 0 = 1 + k.\n4. Solving for k: k = -1.",
+      "pitfall": "Ensure you correctly identify which piece of the function corresponds to the left and right limits based on the inequality signs."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q22",
+    "type": "mcq",
+    "questionNumber": 22,
+    "syllabusTopic": "Calculus - Differentiation",
+    "yieldProbability": "High-Yield",
+    "questionText": "Find dy/dx if y = log_e sin x.",
+    "options": [
+      "−cot x",
+      "cot x",
+      "tan x",
+      "−tan x"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Chain Rule in Differentiation",
+      "steps": "1. Identify the outer function as \\ln(u) and the inner function as u = \\sin x.\n2. Differentiate the outer function: d/du(\\ln u) = 1/u.\n3. Differentiate the inner function: d/dx(\\sin x) = \\cos x.\n4. Apply the chain rule: dy/dx = (1/\\sin x) \\cdot \\cos x = \\frac{\\cos x}{\\sin x} = \\cot x.",
+      "pitfall": "Do not confuse the derivative of ln(sin x) with log differentiation where the base is not 'e'."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q23",
+    "type": "mcq",
+    "questionNumber": 23,
+    "syllabusTopic": "Calculus - Differential Equations",
+    "yieldProbability": "High-Yield",
+    "questionText": "Solve the differential equation dy/dx − xy^3 = 0.",
+    "options": [
+      "C = (x^2 + y^2)/2",
+      "(x^2 y^2) / 2 = C",
+      "-x^2/2 - 1/(2y^2) = C",
+      "(x^2 y^2 + 2)/2 = C"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Separation of Variables",
+      "steps": "1. Rearrange the equation to separate variables: dy/dx = xy^3 \\implies \\frac{dy}{y^3} = x dx.\n2. Write the terms for integration: \\int y^{-3} dy = \\int x dx.\n3. Integrate both sides: \\frac{y^{-2}}{-2} = \\frac{x^2}{2} + C'.\n4. Simplify the expression: -\\frac{1}{2y^2} = \\frac{x^2}{2} + C'.\n5. Rearrange to the form in the options: -\\frac{x^2}{2} - \\frac{1}{2y^2} = C.",
+      "pitfall": "Ensure correct integration of y^-3; the power rule adds 1 to the exponent and divides by the new exponent (-3 + 1 = -2)."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q24",
+    "type": "mcq",
+    "questionNumber": 24,
+    "syllabusTopic": "Calculus - Differentiation",
+    "yieldProbability": "High-Yield",
+    "questionText": "Differentiate y = e^(2x) cos x using product rule.",
+    "options": [
+      "e^(-2x) (2 cos x - sin x)",
+      "e^(2x) (2 cos x - sin x)",
+      "e^(2x) (2 cos x + sin x)",
+      "e^(-2x) (2 cos x + sin x)"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Product Rule and Chain Rule",
+      "steps": "1. Identify functions: u = e^{2x} and v = \\cos x.\n2. Differentiate u using the chain rule: du/dx = 2e^{2x}.\n3. Differentiate v: dv/dx = -\\sin x.\n4. Apply the product rule (uv' + vu'): dy/dx = e^{2x}(-\\sin x) + (\\cos x)(2e^{2x}).\n5. Factor out e^{2x}: dy/dx = e^{2x}(2\\cos x - \\sin x).",
+      "pitfall": "Common error is forgetting the '2' from the chain rule when differentiating e^{2x}."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q25",
+    "type": "mcq",
+    "questionNumber": 25,
+    "syllabusTopic": "Calculus - Integration",
+    "yieldProbability": "High-Yield",
+    "questionText": "Integrate 4^x with respect to x.",
+    "options": [
+      "6^x / ln 6 + C",
+      "4^x / ln 4 + C",
+      "5^x / ln 5 + C",
+      "2^x / ln 2 + C"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Exponential Integration",
+      "steps": "1. Use the standard integration formula: \\int a^x dx = \\frac{a^x}{\\ln a} + C for a > 0 and a \\neq 1.\n2. Substitute a = 4 into the formula.\n3. The result is \\frac{4^x}{\\ln 4} + C.",
+      "pitfall": "Do not confuse this with the power rule for integration (x^n), which only applies when the base is a variable and the exponent is a constant."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q26",
+    "type": "mcq",
+    "questionNumber": 26,
+    "syllabusTopic": "Calculus - Integration",
+    "yieldProbability": "High-Yield",
+    "questionText": "Integrate (1 + sin x) / cos^2 x with respect to x.",
+    "options": [
+      "tan x + sec x + C",
+      "sin x tan x + C",
+      "sec x - tan x + C",
+      "tan x - 1 + C"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "Trigonometric Integration",
+      "steps": "1. Split the fraction into two terms: \\int (\\frac{1}{\\cos^2 x} + \\frac{\\sin x}{\\cos^2 x}) dx.\n2. Use identities: 1/\\cos^2 x = \\sec^2 x and \\sin x/\\cos^2 x = (\\sin x/\\cos x)(1/\\cos x) = \\tan x \\sec x.\n3. The integral becomes: \\int (\\sec^2 x + \\sec x \\tan x) dx.\n4. Integrate standard terms: \\int \\sec^2 x dx = \\tan x and \\int \\sec x \\tan x dx = \\sec x.\n5. Final result: \\tan x + \\sec x + C.",
+      "pitfall": "Ensure you correctly identify the standard derivatives of tan x and sec x."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q27",
+    "type": "mcq",
+    "questionNumber": 27,
+    "syllabusTopic": "Calculus - Integration",
+    "yieldProbability": "High-Yield",
+    "questionText": "Evaluate ∫ (3x^2 - 2x + 4) / (x^3 - x^2 + 4x - 18) dx.",
+    "options": [
+      "ln|x3 - x2 + 4x - 18| + C",
+      "ln|x3 - x2 + 4x - 18|",
+      "3 ln x3 - 2 ln x2 + 4 ln x - 18x + C",
+      "ln|3x^2 - 2x + 4| + C"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "Integration by Substitution (Logarithmic form)",
+      "steps": "1. Observe that the numerator is the derivative of the denominator.\n2. Let u = x^3 - x^2 + 4x - 18. Then du = (3x^2 - 2x + 4) dx.\n3. The integral transforms into \\int \\frac{du}{u}.\n4. The result of the integration is \\ln|u| + C.\n5. Substitute back for u: \\ln|x^3 - x^2 + 4x - 18| + C.",
+      "pitfall": "Always remember the constant of integration (+C) for indefinite integrals."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q28",
+    "type": "mcq",
+    "questionNumber": 28,
+    "syllabusTopic": "Calculus - Limits",
+    "yieldProbability": "High-Yield",
+    "questionText": "Evaluate lim x->0 (e^x - e^-x) / x.",
+    "options": [
+      "0",
+      "4",
+      "1",
+      "2"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "L'Hopital's Rule",
+      "steps": "1. Test for indeterminate form: as x \\to 0, the expression becomes (e^0 - e^0)/0 = (1-1)/0 = 0/0.\n2. Apply L'Hopital's rule by differentiating numerator and denominator: \\lim_{x \\to 0} \\frac{d/dx(e^x - e^{-x})}{d/dx(x)}.\n3. Compute derivatives: numerator derivative is e^x + e^{-x}, denominator derivative is 1.\n4. Evaluate the limit: \\lim_{x \\to 0} (e^x + e^{-x}) = e^0 + e^0 = 1 + 1 = 2.",
+      "pitfall": "Watch the sign change when differentiating e^-x: d/dx(e^-x) = -e^-x, so -(-e^-x) becomes +e^-x."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q29",
+    "type": "mcq",
+    "questionNumber": 29,
+    "syllabusTopic": "Vectors - Vector Calculus",
+    "yieldProbability": "High-Yield",
+    "questionText": "A vector F is said to be irrotational if",
+    "options": [
+      "div(curl F) = 0",
+      "div F = 0",
+      "curl(div F) = 0",
+      "curl F = 0"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "Irrotational Vectors",
+      "steps": "1. By definition, a vector field is irrotational if it has no 'rotation' or 'curl' at any point.\n2. Mathematically, this is expressed as \\nabla \\times F = 0, which is curl F = 0.\n3. Note: An irrotational field is also a conservative field and can be expressed as the gradient of a scalar potential.",
+      "pitfall": "Do not confuse 'irrotational' (curl F = 0) with 'solenoidal' (div F = 0)."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q30",
+    "type": "mcq",
+    "questionNumber": 30,
+    "syllabusTopic": "Mechanics - Friction",
+    "yieldProbability": "High-Yield",
+    "questionText": "The basic types of friction that exist between two surfaces in contact are",
+    "options": [
+      "limiting and static friction.",
+      "limiting and sliding friction.",
+      "sliding and dynamic friction.",
+      "kinetic and dynamic friction."
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Types of Friction",
+      "steps": "1. Friction is generally categorized based on whether the object is stationary or moving.\n2. Static friction acts before motion starts, and its maximum value is called 'limiting friction'.\n3. Once motion begins, 'sliding' (or kinetic/dynamic) friction takes over.\n4. Option B covers the threshold state (limiting) and the motion state (sliding).",
+      "pitfall": "Kinetic and Dynamic are synonyms, so they don't represent two different basic types."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q31",
+    "type": "mcq",
+    "questionNumber": 31,
+    "syllabusTopic": "Mechanics - Projectiles",
+    "yieldProbability": "High-Yield",
+    "questionText": "A fire fighter 50m away from a burning building directs a stream of water from a fire hose at an angle of 30𝑜 above the horizontal. If the velocity of the stream is 40m/s, at what height will the stream of water strike the building? (Take g = 9.8 m/s2)",
+    "options": [
+      "20 m",
+      "18.7 m",
+      "8.45 m",
+      "1.0 m"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Projectile Motion",
+      "steps": "1. Use the horizontal distance to find time: x = (u \\cos \\theta)t \\implies 50 = (40 \\cos 30^o)t.\n2. Calculate t: t = 50 / (40 \\cdot 0.866) \\approx 1.443 s.\n3. Use the vertical displacement formula: y = (u \\sin \\theta)t - 0.5gt^2.\n4. Calculate y: y = (40 \\sin 30^o)(1.443) - 0.5(9.8)(1.443)^2.\n5. y = 20(1.443) - 4.9(2.082) = 28.86 - 10.20 = 18.66 m.",
+      "pitfall": "Ensure your calculator is in Degree mode for the trigonometric functions."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q32",
+    "type": "mcq",
+    "questionNumber": 32,
+    "syllabusTopic": "Mechanics - Dynamics of Incline Planes",
+    "yieldProbability": "High-Yield",
+    "questionText": "A 15kg block is pushed up a 35𝑜 incline. A friction force of 110N exists between the block and the incline. What minimum force F, would be necessary to move the block up the incline at a constant speed? (Take 𝑔 = 9.8 m/s2)",
+    "options": [
+      "26 N",
+      "84 N",
+      "150 N",
+      "194 N"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "Newton's Second Law on Incline",
+      "steps": "1. At constant speed, the net force is zero. F_{up} = F_{down}.\n2. The forces acting down the incline are the component of weight (mg \\sin \\theta) and the frictional force (f).\n3. Calculate weight component: 15 \\cdot 9.8 \\cdot \\sin 35^o \\approx 147 \\cdot 0.5736 = 84.32 N.\n4. Calculate total force required: F = mg \\sin \\theta + f = 84.32 + 110 = 194.32 N.",
+      "pitfall": "Remember that friction always opposes motion, so it acts down the plane when pushing the block up."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q33",
+    "type": "mcq",
+    "questionNumber": 33,
+    "syllabusTopic": "Vectors - Scalar Product",
+    "yieldProbability": "High-Yield",
+    "questionText": "Find r such that u = 8i - 2j + 2k and v = i + 5j + rk are orthogonal vectors.",
+    "options": [
+      "1/2",
+      "1",
+      "-1",
+      "-1/2"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Orthogonality and Dot Product",
+      "steps": "1. Two vectors are orthogonal if their dot product is zero: u \\cdot v = 0.\n2. Calculate the dot product: (8 \\cdot 1) + (-2 \\cdot 5) + (2 \\cdot r) = 0.\n3. Simplify: 8 - 10 + 2r = 0.\n4. Solve for r: -2 + 2r = 0 \\implies 2r = 2 \\implies r = 1.",
+      "pitfall": "Watch for signs when multiplying components (e.g., -2 times 5)."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q34",
+    "type": "mcq",
+    "questionNumber": 34,
+    "syllabusTopic": "Mechanics - Rotational Dynamics",
+    "yieldProbability": "High-Yield",
+    "questionText": "Find the moment of inertia of a solid sphere 2m in diameter and of mass 5kg about an axis passing through the center.",
+    "options": [
+      "2 kgm2",
+      "3 kgm2",
+      "4 kgm2",
+      "5 kgm2"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "Moment of Inertia of a Sphere",
+      "steps": "1. Identify the formula for a solid sphere: I = \\frac{2}{5}MR^2.\n2. Given diameter = 2m, so radius R = 1m.\n3. Substitute values: I = \\frac{2}{5} \\cdot 5 \\cdot (1)^2.\n4. Calculate result: I = 2 kg \\cdot m^2.",
+      "pitfall": "Always convert diameter to radius before using the inertia formula."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q35",
+    "type": "mcq",
+    "questionNumber": 35,
+    "syllabusTopic": "Mechanics - Linear Momentum",
+    "yieldProbability": "High-Yield",
+    "questionText": "Obtain the momentum of a body with mass 2kg and velocity 5 m/s.",
+    "options": [
+      "9 Ns",
+      "8 Ns",
+      "10 Ns",
+      "11 Ns"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Linear Momentum",
+      "steps": "1. Momentum (p) is defined as the product of mass (m) and velocity (v): p = mv.\n2. Substitute the given values: p = 2 kg \\cdot 5 m/s.\n3. Calculate result: p = 10 kg \\cdot m/s (or 10 Ns, since Impulse = Change in Momentum).",
+      "pitfall": "Ensure units are consistent (kg and m/s)."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q36",
+    "type": "mcq",
+    "questionNumber": 36,
+    "syllabusTopic": "Mechanics - Work, Energy, and Power",
+    "yieldProbability": "High-Yield",
+    "questionText": "The force generated from the engine of a car is found to be 300 N. Calculate the power developed when the car moves with constant speed of 10 m/s.",
+    "options": [
+      "30 W",
+      "300 W",
+      "3000 W",
+      "30000 W"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Mechanical Power",
+      "steps": "1. Power (P) can be calculated as the product of force (F) and constant velocity (v): P = Fv.\n2. Substitute the given values: P = 300 N \\cdot 10 m/s.\n3. Calculate result: P = 3000 W.",
+      "pitfall": "This formula only applies when the force and velocity are in the same direction and velocity is constant."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q37",
+    "type": "mcq",
+    "questionNumber": 37,
+    "syllabusTopic": "Mechanics - Newton's Laws of Motion",
+    "yieldProbability": "High-Yield",
+    "questionText": "A lift moves with an acceleration of 2 m/s2. Estimate the reaction of the floor on an object of mass 50 kg placed on the floor of the lift when it moves up.",
+    "options": [
+      "600 N",
+      "300 N",
+      "200 N",
+      "100 N"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "Apparent Weight",
+      "steps": "1. When moving up with acceleration 'a', the normal reaction (R) is given by R = m(g + a).\n2. Assume g = 10 m/s^2 for estimation (or 9.8 m/s^2 as in previous questions).\n3. Using g = 10: R = 50(10 + 2) = 50 \\cdot 12 = 600 N.\n4. Using g = 9.8: R = 50(9.8 + 2) = 50 \\cdot 11.8 = 590 N. 600 N is the closest intended answer.",
+      "pitfall": "If the lift moves down, the reaction is m(g - a). Ensure you use the correct sign for the direction of acceleration."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q38",
+    "type": "mcq",
+    "questionNumber": 38,
+    "syllabusTopic": "Vectors - Vector Operations",
+    "yieldProbability": "High-Yield",
+    "questionText": "Given that a = 2i + 3k, b = 5i − j + k, c = i + j, evaluate (a . b)c.",
+    "options": [
+      "13i − 13j",
+      "13i + 13j",
+      "13i + j",
+      "13i + 13j"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Scalar Product and Scalar Multiplication",
+      "steps": "1. First, find the dot product (a . b): (2)(5) + (0)(-1) + (3)(1) = 10 + 0 + 3 = 13.\n2. Now multiply the vector c by the scalar result: 13 \\cdot (i + j).\n3. Expand: 13i + 13j.",
+      "pitfall": "Note that 'a' has no 'j' component, so its value is 0 for that term in the dot product calculation."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q39",
+    "type": "mcq",
+    "questionNumber": 39,
+    "syllabusTopic": "Mechanics - Kinematics",
+    "yieldProbability": "High-Yield",
+    "questionText": "A body starts from rest and moves with uniform acceleration to attain a velocity of 15 m/s in 10 seconds. Evaluate its acceleration at that time.",
+    "options": [
+      "1.5 m/s2",
+      "1.6 m/s2",
+      "1.1 m/s2",
+      "0. 5 m/s2"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "Definition of Acceleration",
+      "steps": "1. Use the kinematic equation v = u + at.\n2. Given: start from rest (u = 0), final velocity (v = 15), time (t = 10).\n3. Substitute values: 15 = 0 + a(10).\n4. Solve for a: a = 15 / 10 = 1.5 m/s^2.",
+      "pitfall": "Acceleration is uniform, so its value 'at that time' is the same as the average acceleration."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q40",
+    "type": "mcq",
+    "questionNumber": 40,
+    "syllabusTopic": "Statistics - Data Representation",
+    "yieldProbability": "High-Yield",
+    "questionText": "Data representation in which the bars are joined together is called",
+    "options": [
+      "pictogram.",
+      "bictogram.",
+      "histogram.",
+      "bar chart."
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Histograms vs. Bar Charts",
+      "steps": "1. Bar charts are used for categorical data and typically have gaps between the bars.\n2. Histograms are used for continuous data (frequency distributions) and the bars are joined together to reflect the continuous nature of the data ranges (class intervals).",
+      "pitfall": "Do not confuse histograms with simple bar charts; the lack of gaps is a defining visual characteristic of histograms."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q41",
+    "type": "mcq",
+    "questionNumber": 41,
+    "syllabusTopic": "Combinatorics",
+    "yieldProbability": "Standard",
+    "questionText": "If ^{10}C_r = 5, what is the value of r? (Assume the question intended to ask for a valid value like ^{10}C_r = 252 or similar, provide best explanation).",
+    "options": [
+      "A) r = 1",
+      "B) r = 2",
+      "C) r = 5",
+      "D) No integer solution"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "The combination formula is ^{n}C_r = \\frac{n!}{r!(n-r)!}.",
+      "steps": "For ^{10}C_r = 5, we check values: ^{10}C_0 = 1, ^{10}C_1 = 10. Since combinations are symmetric and ^{10}C_1$ is already greater than 5, there is no integer $r$ such that $^{10}C_r = 5$. If the question meant $^{5}C_r = 10$, then $r=2$. If it meant $^{10}C_r = 252$, then $r=5$.",
+      "pitfall": "Always verify if the given value is possible within the range of the combination function for the given n."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q42",
+    "type": "mcq",
+    "questionNumber": 42,
+    "syllabusTopic": "Probability",
+    "yieldProbability": "High-Yield",
+    "questionText": "A problem of Statistics is given to three students A, B and C whose chances of solving it are 1/2, 3/4 and 1/4 respectively. Determine the probability that the problem will be solved.",
+    "options": [
+      "A. 3/32",
+      "B. 23/32",
+      "C. 15/32",
+      "D. 29/32"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "The probability that the problem is solved is $1 - P(\\text{none solve it})$.",
+      "steps": "$P(A') = 1 - 1/2 = 1/2$, $P(B') = 1 - 3/4 = 1/4$, $P(C') = 1 - 1/4 = 3/4$. \\n $P(\\text{none solve}) = P(A') \\times P(B') \\times P(C') = 1/2 \\times 1/4 \\times 3/4 = 3/32$. \\n $P(\\text{solved}) = 1 - 3/32 = 29/32$.",
+      "pitfall": "Ensure you use the complement rule correctly; 'at least one' is easier to calculate as $1 - P(\\text{none})$."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q43",
+    "type": "mcq",
+    "questionNumber": 43,
+    "syllabusTopic": "Expectation and Variance",
+    "yieldProbability": "High-Yield",
+    "questionText": "Given that $Y = aX + b$ where X is a random variable and a and b are constants, then E(Y) and Var(Y) are",
+    "options": [
+      "A. aE(X) + b, a^2Var(X)",
+      "B. aE(X), aVar(X)",
+      "C. aE(X) + bE(X), a^2Var(X) + bVar(X)",
+      "D. E(X), Var(X)"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "Linear transformation of random variables.",
+      "steps": "For expectation: $E(aX + b) = aE(X) + b$. For variance: $Var(aX + b) = a^2Var(X)$ because the constant shift $b$ does not affect the spread.",
+      "pitfall": "Do not forget to square the coefficient 'a' when calculating the variance."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q44",
+    "type": "mcq",
+    "questionNumber": 44,
+    "syllabusTopic": "Probability Distributions",
+    "yieldProbability": "High-Yield",
+    "questionText": "If the probability that an individual suffers a bad reaction from a certain injection is 0.001, determine the probability that out of 2000 individuals exactly 3 will suffer a bad reaction.",
+    "options": [
+      "A. 0.12",
+      "B. 0.18",
+      "C. 0.16",
+      "D. 0.08"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "Poisson approximation to the Binomial distribution.",
+      "steps": "Given $n = 2000, p = 0.001$. $\\lambda = np = 2000 \\times 0.001 = 2$. \\n $P(X=3) = \\frac{e^{-2} \\cdot 2^3}{3!} = \\frac{e^{-2} \\cdot 8}{6} = \\frac{4}{3} e^{-2}$. \\n $e^{-2} \\approx 0.1353$. \\n $P(X=3) \\approx 1.333 \\times 0.1353 \\approx 0.1804$.",
+      "pitfall": "Use Poisson when n is large and p is very small."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q45",
+    "type": "mcq",
+    "questionNumber": 45,
+    "syllabusTopic": "Expectation",
+    "yieldProbability": "High-Yield",
+    "questionText": "Find the expected number of students admitted to study medicine and surgery in a random sample of 100 students if the probability of securing admission is 0.2.",
+    "options": [
+      "A. 20",
+      "B. 30",
+      "C. 40",
+      "D. 50"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "The expected value of a binomial distribution is $E(X) = np$.",
+      "steps": "$n = 100$, $p = 0.2$. \\n $E(X) = 100 \\times 0.2 = 20$.",
+      "pitfall": "Do not confuse expectation with probability."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q46",
+    "type": "mcq",
+    "questionNumber": 46,
+    "syllabusTopic": "Standard Scores",
+    "yieldProbability": "High-Yield",
+    "questionText": "On a final examination in mathematics, the mean was 72, and the standard deviation was 15. Determine the standard scores of students receiving grade 60.",
+    "options": [
+      "A. -0.8",
+      "B. 1.4",
+      "C. 0",
+      "D. -0.6"
+    ],
+    "correctAnswerIndex": 0,
+    "explanation": {
+      "coreConcept": "Standard score (z-score) is $z = \\frac{x - \\mu}{\\sigma}$.",
+      "steps": "$\\mu = 72, \\sigma = 15, x = 60$. \\n $z = \\frac{60 - 72}{15} = \\frac{-12}{15} = -0.8$.",
+      "pitfall": "Ensure the order of subtraction is $(x - \\mu)$."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q47",
+    "type": "mcq",
+    "questionNumber": 47,
+    "syllabusTopic": "Sampling Techniques",
+    "yieldProbability": "Standard",
+    "questionText": "Which of the following is not a simple probability sampling technique?",
+    "options": [
+      "A. Systematic",
+      "B. Stratified",
+      "C. Cluster",
+      "D. Quota"
+    ],
+    "correctAnswerIndex": 3,
+    "explanation": {
+      "coreConcept": "Distinction between probability and non-probability sampling.",
+      "steps": "Probability sampling techniques include Simple Random, Systematic, Stratified, and Cluster. Non-probability techniques include Quota, Convenience, and Judgmental sampling.",
+      "pitfall": "Do not confuse Quota sampling with Stratified sampling; Quota is non-random."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q48",
+    "type": "mcq",
+    "questionNumber": 48,
+    "syllabusTopic": "Linear Regression",
+    "yieldProbability": "High-Yield",
+    "questionText": "Obtain a linear regression equation of Y on X using the following information. n = 5, $\\sum x = 25$, $\\sum x^2 = 165$, $\\sum y = 24$, $\\sum y^2 = 124$ and $\\sum xy = 144$.",
+    "options": [
+      "A. 0.8 + 0.6X",
+      "B. 1.8 + 0.6X",
+      "C. 2.6 + 0.6X",
+      "D. 3.8 + 0.6X"
+    ],
+    "correctAnswerIndex": 1,
+    "explanation": {
+      "coreConcept": "The regression equation is $Y = a + bX$.",
+      "steps": "$b = \\frac{n\\sum xy - \\sum x \\sum y}{n\\sum x^2 - (\\sum x)^2} = \\frac{5(144) - (25)(24)}{5(165) - 25^2} = \\frac{720 - 600}{825 - 625} = \\frac{120}{200} = 0.6$. \\n $\\bar{y} = 24/5 = 4.8, \\bar{x} = 25/5 = 5$. \\n $a = \\bar{y} - b\\bar{x} = 4.8 - 0.6(5) = 4.8 - 3.0 = 1.8$. \\n Equation: $1.8 + 0.6X$.",
+      "pitfall": "Be careful with arithmetic when squaring large numbers or calculating the slope."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q49",
+    "type": "mcq",
+    "questionNumber": 49,
+    "syllabusTopic": "Correlation",
+    "yieldProbability": "High-Yield",
+    "questionText": "The following data regarding the heights (y) and the weights (x) of 5 college students are given: $\\sum x = 15; \\sum y = 10; \\sum xy = 165; \\sum x^2 = 325; \\sum y^2 = 125$. Evaluate the correlation coefficient between the height and the weight.",
+    "options": [
+      "A. -0.005",
+      "B. 0.005",
+      "C. 0.05",
+      "D. -0.05"
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Pearson correlation coefficient $r = \\frac{n\\sum xy - \\sum x \\sum y}{\\sqrt{[n\\sum x^2 - (\\sum x)^2][n\\sum y^2 - (\\sum y)^2]}}$.",
+      "steps": "Using $n=5$: Numerator $= 5(165) - (15)(10) = 825 - 150 = 675$. \\n Denominator $= \\sqrt{[5(325) - 15^2][5(125) - 10^2]} = \\sqrt{[1625 - 225][625 - 100]} = \\sqrt{1400 \\times 525} \\approx 857.3$. \\n $r = 675 / 857.3 \\approx 0.787$. Since this doesn't match the options, we assume a typo in the provided data or options. Option C (0.05) is provided as a placeholder.",
+      "pitfall": "The numerical values in the question leads to a result of ~0.79, which is not in the options. Double check the input data."
+    }
+  },
+  {
+    "id": "math_2020_mcq_q50",
+    "type": "mcq",
+    "questionNumber": 50,
+    "syllabusTopic": "Sampling Techniques",
+    "yieldProbability": "Standard",
+    "questionText": "The sampling technique that allows the investigator to consciously or unconsciously pass personal judgment to influence the sample selection process is identified as...",
+    "options": [
+      "A. stratified random sampling.",
+      "B. systematic sampling.",
+      "C. non–probability sampling.",
+      "D. cluster sampling."
+    ],
+    "correctAnswerIndex": 2,
+    "explanation": {
+      "coreConcept": "Subjectivity in sampling.",
+      "steps": "Non-probability sampling methods depend on the researcher's choice or convenience, allowing for personal bias to enter the selection process.",
+      "pitfall": "Random sampling (Probability) aims to eliminate personal judgment bias."
+    }
+  },
+  {
+    "id": "math_2020_essay_q1",
+    "type": "essay",
+    "questionNumber": 1,
+    "syllabusTopic": "Matrices and Trigonometry",
+    "yieldProbability": "High-Yield",
+    "questionText": "MAT 001: ADVANCED PURE MATHEMATICS \\n (a) i. Find the determinant of $\\begin{bmatrix} 2x & 1 \\\\ y & 2 \\end{bmatrix}$ given that $2x + y = 5$ and $x - 2y = -5$. \\n ii. Given that A and B are acute angles and $\\sin A = 2/5$ and $\\cos B = 7/25$. Find without using calculator, the value of $\\cos(A + B)$. \\n (b) In a secondary school, 80 students played Hockey or Football. The number that played Football is 5 more than twice the number that played Hockey. If 15 students played both games and every student in the school plays at least one game. Find: i. football players; ii. football only; iii. hockey only.",
+    "explanation": {
+      "coreConcept": "Simultaneous equations, matrix determinants, trigonometric identities, and set theory.",
+      "steps": "i. Solve $2x + y = 5$ and $x - 2y = -5$: $x = 2y - 5 \\rightarrow 2(2y - 5) + y = 5 \\rightarrow 5y = 15 \\rightarrow y = 3, x = 1$. Determinant $= (2x)(2) - (y)(1) = 4x - y = 4(1) - 3 = 1$. \\n ii. $\\cos A = \\sqrt{1 - (2/5)^2} = \\sqrt{21}/5, \\sin B = \\sqrt{1 - (7/25)^2} = 24/25$. $\\cos(A+B) = \\cos A \\cos B - \\sin A \\sin B = (\\sqrt{21}/5)(7/25) - (2/5)(24/25) = \\frac{7\\sqrt{21} - 48}{125}$. \\n (b) $F = 2H + 5$. $F \\cup H = F + H - (F \\cap H) = 80$. $(2H + 5) + H - 15 = 80 \\rightarrow 3H - 10 = 80 \\rightarrow 3H = 90 \\rightarrow H = 30$. \\n $F = 2(30) + 5 = 65$. i. Football players $= 65$. ii. Football only $= 65 - 15 = 50$. iii. Hockey only $= 30 - 15 = 15$.",
+      "pitfall": "For sets, remember $n(A \\cup B) = n(A) + n(B) - n(A \\cap B)$."
+    },
+    "hints": [
+      "Use substitution to solve the simultaneous equations.",
+      "Use Pythagoras to find the missing trig ratios.",
+      "Draw a Venn diagram for the set problem."
+    ],
+    "essaySelfEvaluationMatrix": [
+      {
+        "criterion": "Solution of simultaneous equations",
+        "points": 2
+      },
+      {
+        "criterion": "Calculation of determinant",
+        "points": 2
+      },
+      {
+        "criterion": "Trigonometric expansion and substitution",
+        "points": 3
+      },
+      {
+        "criterion": "Set theory equations and final results",
+        "points": 3
+      }
+    ]
+  },
+  {
+    "id": "math_2020_essay_q3",
+    "type": "essay",
+    "questionNumber": 3,
+    "syllabusTopic": "Calculus - Limits",
+    "yieldProbability": "High-Yield",
+    "questionText": "MAT 002: CALCULUS \\n (a) i. $\\lim_{x \\to 1} \\frac{\\sqrt{5x-4} - \\sqrt{x}}{x-1}$.",
+    "explanation": {
+      "coreConcept": "Evaluating limits using rationalization or L'Hopital's Rule.",
+      "steps": "Applying L'Hopital's Rule (since it is $0/0$): \\n $\\frac{d}{dx}(\\sqrt{5x-4} - \\sqrt{x}) = \\frac{5}{2\\sqrt{5x-4}} - \\frac{1}{2\\sqrt{x}}$. \\n $\\frac{d}{dx}(x-1) = 1$. \\n Evaluate at $x=1$: $\\frac{5}{2\\sqrt{5(1)-4}} - \\frac{1}{2\\sqrt{1}} = \\frac{5}{2} - \\frac{1}{2} = \\frac{4}{2} = 2$.",
+      "pitfall": "Ensure you correctly differentiate the square root functions."
+    },
+    "hints": [
+      "Check the form of the limit.",
+      "Consider rationalizing the numerator or using L'Hopital's rule."
+    ],
+    "essaySelfEvaluationMatrix": [
+      {
+        "criterion": "Correct identification of indeterminate form",
+        "points": 1
+      },
+      {
+        "criterion": "Correct differentiation or rationalization step",
+        "points": 2
+      },
+      {
+        "criterion": "Final limit evaluation",
+        "points": 2
+      }
+    ]
+  },
+  {
+    "id": "math_2020_essay_q5",
+    "type": "essay",
+    "questionNumber": 5,
+    "syllabusTopic": "Applied Mathematics - Mechanics",
+    "yieldProbability": "High-Yield",
+    "questionText": "MAT 003: APPLIED MATHEMATICS \\n 5. (b) A load of mass 50kg is placed in a lift. Calculate the reaction between the floor of the lift and the load when the lift: i. is moving at a constant speed; ii. moves upwards with an acceleration of $3m/s^2$.",
+    "explanation": {
+      "coreConcept": "Newton's Second Law of Motion: $F_{net} = ma$.",
+      "steps": "Mass $m = 50kg$, $g \\approx 9.8m/s^2$. \\n i. Constant speed means $a = 0$. $R - mg = 0 \\rightarrow R = mg = 50 \\times 9.8 = 490 N$. \\n ii. Accelerating upwards: $R - mg = ma \\rightarrow R = m(g + a) = 50(9.8 + 3) = 50(12.8) = 640 N$.",
+      "pitfall": "Reaction force increases when accelerating upwards and decreases when accelerating downwards."
+    },
+    "hints": [
+      "For constant speed, the reaction equals the weight.",
+      "Use the formula $R = m(g + a)$ for upward acceleration."
+    ],
+    "essaySelfEvaluationMatrix": [
+      {
+        "criterion": "Calculation for constant speed",
+        "points": 2
+      },
+      {
+        "criterion": "Correct formula for upward acceleration",
+        "points": 1
+      },
+      {
+        "criterion": "Calculation for upward acceleration",
+        "points": 2
+      }
+    ]
+  },
+  {
+    "id": "math_2020_essay_q8",
+    "type": "essay",
+    "questionNumber": 8,
+    "syllabusTopic": "Statistics - Probability Distributions",
+    "yieldProbability": "High-Yield",
+    "questionText": "MAT 004: STATISTICS \\n 8. (b) Suppose X is a random variable which represents the number of heads recorded in a fair toss of 4 coins once. i. Find the probability mass function (pmf); ii. Evaluate P(X=2) and $P(X \\ge 1)$.",
+    "explanation": {
+      "coreConcept": "Binomial distribution $B(n, p)$ with $n=4, p=0.5$.",
+      "steps": "i. $P(X=x) = \\binom{4}{x} (0.5)^x (0.5)^{4-x} = \\binom{4}{x} (0.5)^4$ for $x \\in \\{0, 1, 2, 3, 4\\}$. \\n ii. $P(X=2) = \\binom{4}{2} (1/16) = 6 \\times 1/16 = 3/8 = 0.375$. \\n $P(X \\ge 1) = 1 - P(X=0) = 1 - \\binom{4}{0} (1/16) = 1 - 1/16 = 15/16 = 0.9375$.",
+      "pitfall": "Ensure you consider all possible values of X in the pmf."
+    },
+    "hints": [
+      "Use the binomial formula.",
+      "For $P(X \\ge 1)$, use the complement $1 - P(X=0)$."
+    ],
+    "essaySelfEvaluationMatrix": [
+      {
+        "criterion": "Correct PMF definition",
+        "points": 2
+      },
+      {
+        "criterion": "Correct calculation of P(X=2)",
+        "points": 1
+      },
+      {
+        "criterion": "Correct calculation of P(X>=1)",
+        "points": 2
+      }
+    ]
+  }
+];
+
+export { MATHEMATICS_BANK };

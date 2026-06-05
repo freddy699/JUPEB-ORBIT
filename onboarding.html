@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Setup | JUPEB Orbit</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        indigo: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            600: '#4F46E5', // Primary
+                            700: '#4338CA',
+                        },
+                        slate: {
+                            50: '#F8FAFC',
+                            100: '#F1F5F9',
+                            200: '#E2E8F0',
+                            400: '#94A3B8',
+                            600: '#475569',
+                            900: '#0F172A',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #FAFBFF; 
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+        }
+        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .wizard-step { display: none; }
+        .wizard-step.active { display: block; animation: slideIn 0.5s ease-out; }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .subject-card.selected {
+            border-color: #4F46E5;
+            background-color: #f5f3ff;
+            box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.1);
+            transform: translateY(-4px);
+        }
+        .subject-card.selected .icon-wrapper {
+            background-color: #ffffff;
+            color: #4F46E5;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+    </style>
+</head>
+<body class="text-slate-600 antialiased min-h-screen flex items-center justify-center p-6">
+
+    <div class="max-w-2xl w-full mx-auto">
+        <!-- Brand Header -->
+        <div class="flex justify-center mb-10">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100 group-hover:scale-110 transition-transform">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-display text-xl font-extrabold text-slate-900 tracking-tight leading-none">Orbit</span>
+                    <span class="text-[9px] font-black text-indigo-500 uppercase tracking-[0.2em] mt-1">Onboarding Control</span>
+                </div>
+            </a>
+        </div>
+
+        <!-- Wizard Card -->
+        <div class="glass-card shadow-2xl shadow-indigo-100/50 rounded-[3rem] p-8 md:p-16 overflow-hidden relative">
+            
+            <!-- Background Glow -->
+            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-50/50 rounded-full blur-3xl -mr-32 -mt-32"></div>
+
+            <!-- Step Indicator -->
+            <div class="flex items-center justify-between mb-16 relative z-10">
+                <div class="absolute top-1/2 left-0 w-full h-1 bg-slate-100 -translate-y-1/2 z-0 rounded-full"></div>
+                <div id="progress-bar" class="absolute top-1/2 left-0 w-0 h-1 bg-indigo-600 -translate-y-1/2 z-0 transition-all duration-700 rounded-full shadow-[0_0_10px_rgba(79,70,229,0.5)]"></div>
+                
+                <div class="relative z-10 flex flex-col items-center">
+                    <div id="dot-1" class="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center text-sm font-black transition-all shadow-lg shadow-indigo-100">1</div>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-3">Profile</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div id="dot-2" class="w-10 h-10 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center text-sm font-black transition-all">2</div>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-3">Subjects</span>
+                </div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div id="dot-3" class="w-10 h-10 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center text-sm font-black transition-all">3</div>
+                    <span class="text-[9px] font-black text-slate-400 uppercase tracking-widest mt-3">Target</span>
+                </div>
+            </div>
+
+            <!-- STEP 1: INITIAL PROFILE IDENTITY -->
+            <div id="step-1" class="wizard-step active">
+                <header class="mb-8">
+                    <h1 class="font-display text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Let's personalize your cockpit</h1>
+                    <p class="text-slate-500 leading-relaxed">Set up your public identity details to display on your daily learning leaderboards.</p>
+                </header>
+
+                <div class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-bold text-slate-900 mb-2">Choose a username</label>
+                        <input id="username" type="text" placeholder="e.g., Obadoni Malvis" class="w-full bg-white border border-slate-200 rounded-xl h-12 px-4 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-900 mb-2">Your primary focus</label>
+                        <input id="tagline" type="text" placeholder="e.g., Aspiring Full-Stack Developer" class="w-full bg-white border border-slate-200 rounded-xl h-12 px-4 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all">
+                    </div>
+                </div>
+
+                <div class="mt-12 flex justify-end">
+                    <button onclick="nextStep()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-4 rounded-xl shadow-sm transition-all hover:translate-x-1 active:scale-95">
+                        Continue to Subject Selection →
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 2: THE JUPEB TRIO SELECTION MATRIX -->
+            <div id="step-2" class="wizard-step">
+                <header class="mb-8">
+                    <h1 class="font-display text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Lock in your subject combination</h1>
+                    <p class="text-slate-500 leading-relaxed">Select exactly 3 core subjects. The engine self-configures your diagnostic datasets and mock papers around this specific trio.</p>
+                </header>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
+                    <button onclick="toggleSubject('Mathematics')" class="subject-card group p-6 border-2 border-slate-100 rounded-2xl flex flex-col items-center text-center transition-all hover:border-indigo-200 hover:bg-slate-25">
+                        <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-white transition-all">
+                            <span class="text-xl">🧮</span>
+                        </div>
+                        <span class="font-bold text-slate-900 mb-1">Mathematics</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Calculus, Algebra</span>
+                    </button>
+                    <button onclick="toggleSubject('Physics')" class="subject-card group p-6 border-2 border-slate-100 rounded-2xl flex flex-col items-center text-center transition-all hover:border-indigo-200 hover:bg-slate-25">
+                        <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-white transition-all">
+                            <span class="text-xl">⚡</span>
+                        </div>
+                        <span class="font-bold text-slate-900 mb-1">Physics</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Mechanics, Waves</span>
+                    </button>
+                    <button onclick="toggleSubject('Chemistry')" class="subject-card group p-6 border-2 border-slate-100 rounded-2xl flex flex-col items-center text-center transition-all hover:border-indigo-200 hover:bg-slate-25">
+                        <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-white transition-all">
+                            <span class="text-xl">🧪</span>
+                        </div>
+                        <span class="font-bold text-slate-900 mb-1">Chemistry</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Organic, Kinetics</span>
+                    </button>
+                    <button onclick="toggleSubject('Biology')" class="subject-card group p-6 border-2 border-slate-100 rounded-2xl flex flex-col items-center text-center transition-all hover:border-indigo-200 hover:bg-slate-25">
+                        <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-white transition-all">
+                            <span class="text-xl">🧬</span>
+                        </div>
+                        <span class="font-bold text-slate-900 mb-1">Biology</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Cell, Genetics</span>
+                    </button>
+                    <button onclick="toggleSubject('Government')" class="subject-card group p-6 border-2 border-slate-100 rounded-2xl flex flex-col items-center text-center transition-all hover:border-indigo-200 hover:bg-slate-25">
+                        <div class="w-12 h-12 bg-slate-50 rounded-xl flex items-center justify-center mb-4 group-hover:bg-white transition-all">
+                            <span class="text-xl">🏛️</span>
+                        </div>
+                        <span class="font-bold text-slate-900 mb-1">Government</span>
+                        <span class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Theory, Relations</span>
+                    </button>
+                </div>
+
+                <div id="selection-nudge" class="hidden flex items-center gap-3 p-4 bg-amber-50 border border-amber-200 rounded-xl mb-8">
+                    <span class="text-sm">⚠️</span>
+                    <p class="text-xs font-bold text-amber-800 leading-tight">JUPEB combinations require exactly 3 registered subject tracks to calculate point metrics safely.</p>
+                </div>
+
+                <div class="mt-12 flex justify-between">
+                    <button onclick="prevStep()" class="text-slate-500 font-bold px-8 py-4 rounded-xl hover:text-slate-900 transition-all">
+                        ← Back
+                    </button>
+                    <button id="step-2-next" onclick="nextStep()" disabled class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold px-8 py-4 rounded-xl shadow-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                        Continue to Target Goals →
+                    </button>
+                </div>
+            </div>
+
+            <!-- STEP 3: TARGET INSTITUTION & CUT-OFF ALIGNER -->
+            <div id="step-3" class="wizard-step">
+                <header class="mb-8">
+                    <h1 class="font-display text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Where is your dream destination?</h1>
+                    <p class="text-slate-500 leading-relaxed">We map your mock test raw analytics against historical direct-entry admission thresholds.</p>
+                </header>
+
+                <div class="space-y-6">
+                    <div class="relative">
+                        <label class="block text-sm font-bold text-slate-900 mb-2">Type your target university</label>
+                        <input id="target-uni" type="text" placeholder="e.g., University of Ibadan" list="uni-list" class="w-full bg-white border border-slate-200 rounded-xl h-12 px-4 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all">
+                        <datalist id="uni-list">
+                            <option value="University of Ibadan">
+                            <option value="University of Lagos (UNILAG)">
+                            <option value="University of Benin">
+                            <option value="Obafemi Awolowo University (OAU)">
+                        </datalist>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-bold text-slate-900 mb-2">Select your major / course</label>
+                        <input id="target-major" type="text" placeholder="e.g., Software Engineering" class="w-full bg-white border border-slate-200 rounded-xl h-12 px-4 text-slate-900 placeholder-slate-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none transition-all">
+                    </div>
+
+                    <div class="bg-slate-25 border border-slate-200/60 p-5 rounded-2xl flex justify-between items-center">
+                        <div class="flex items-center gap-3">
+                            <div class="w-2 h-2 rounded-full bg-indigo-500"></div>
+                            <span class="text-sm font-medium text-slate-600">Historical Target Cut-off:</span>
+                        </div>
+                        <span class="font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg text-sm">13 / 15 Points Required</span>
+                    </div>
+                </div>
+
+                <div class="mt-12 flex flex-col gap-3">
+                    <button onclick="handleSubmit()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl shadow-[0_10px_30px_-10px_rgba(79,70,229,0.4)] transition-all hover:scale-[1.01] active:scale-95">
+                        🚀 Finalize & Launch My Flight Deck
+                    </button>
+                    <button onclick="prevStep()" class="text-slate-400 font-bold py-2 rounded-xl text-xs hover:text-slate-600 transition-all uppercase tracking-widest">
+                        ← Revisit Subject Combinations
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <p class="mt-8 text-center text-[11px] font-bold text-slate-400 uppercase tracking-[0.2em]">Orbit Onboarding Control • v2.0</p>
+    </div>
+
+    <!-- FIREBASE & WIZARD FLOW ACTIONS -->
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+        import { doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+        let currentStep = 1;
+        const totalSteps = 3;
+        let selectedSubjects = [];
+        let currentUser = null;
+
+        // 0. AUTH GUARD
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUser = user;
+                console.log("Onboarding authenticated user:", user.email);
+                
+                // Optional: Check if already completed
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                if (userDoc.exists() && userDoc.data().onboardingComplete) {
+                    window.location.href = "dashboard.html";
+                }
+            } else {
+                console.log("No user detected, redirecting to auth portal...");
+                window.location.href = "auth.html";
+            }
+        });
+
+        // 1. Progress Navigation
+        window.updateProgress = function() {
+            const progressBar = document.getElementById('progress-bar');
+            const percent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            progressBar.style.width = percent + '%';
+
+            for (let i = 1; i <= totalSteps; i++) {
+                const dot = document.getElementById('dot-' + i);
+                if (i <= currentStep) {
+                    dot.classList.add('bg-indigo-600', 'text-white');
+                    dot.classList.remove('bg-slate-100', 'text-slate-400');
+                } else {
+                    dot.classList.remove('bg-indigo-600', 'text-white');
+                    dot.classList.add('bg-slate-100', 'text-slate-400');
+                }
+            }
+        }
+
+        window.nextStep = function() {
+            if (currentStep < totalSteps) {
+                document.getElementById('step-' + currentStep).classList.remove('active');
+                currentStep++;
+                document.getElementById('step-' + currentStep).classList.add('active');
+                updateProgress();
+            }
+        }
+
+        window.prevStep = function() {
+            if (currentStep > 1) {
+                document.getElementById('step-' + currentStep).classList.remove('active');
+                currentStep--;
+                document.getElementById('step-' + currentStep).classList.add('active');
+                updateProgress();
+            }
+        }
+
+        // 2. Subject Selection Matrix Logic
+        window.toggleSubject = function(subject) {
+            const cards = document.querySelectorAll('.subject-card');
+            const nudge = document.getElementById('selection-nudge');
+            const nextBtn = document.getElementById('step-2-next');
+            
+            if (selectedSubjects.includes(subject)) {
+                selectedSubjects = selectedSubjects.filter(s => s !== subject);
+            } else {
+                if (selectedSubjects.length < 3) {
+                    selectedSubjects.push(subject);
+                }
+            }
+
+            cards.forEach(card => {
+                const name = card.querySelector('span.font-bold').innerText;
+                if (selectedSubjects.includes(name)) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+
+            if (selectedSubjects.length === 3) {
+                nudge.classList.add('hidden');
+                nextBtn.disabled = false;
+            } else {
+                nudge.classList.remove('hidden');
+                nextBtn.disabled = true;
+            }
+        }
+
+        // 3. Final Submission
+        window.handleSubmit = async function() {
+            if (!currentUser) return;
+
+            const finalizeBtn = document.querySelector('button[onclick="handleSubmit()"]');
+            finalizeBtn.disabled = true;
+            finalizeBtn.innerText = "Saving Profile...";
+
+            const profileData = {
+                username: document.getElementById('username').value,
+                tagline: document.getElementById('tagline').value,
+                combination: selectedSubjects,
+                targetInstitution: document.getElementById('target-uni').value,
+                targetDepartment: document.getElementById('target-major').value,
+                onboardingComplete: true,
+                setupTimestamp: new Date().toISOString()
+            };
+
+            try {
+                await updateDoc(doc(db, "users", currentUser.uid), profileData);
+                console.log("Profile successfully updated in Firestore.");
+                window.location.href = "dashboard.html";
+            } catch (error) {
+                console.error("Error updating profile:", error.message);
+                alert("Failed to save profile: " + error.message);
+                finalizeBtn.disabled = false;
+                finalizeBtn.innerText = "🚀 Finalize & Launch My Flight Deck";
+            }
+        }
+    </script>
+</body>
+</html>

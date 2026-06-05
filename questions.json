@@ -1,0 +1,1251 @@
+[
+{
+"id": "economics_2025_mcq_q1",
+"type": "mcq",
+"questionNumber": 1,
+"syllabusTopic": "National Income Accounting",
+"yieldProbability": "High-Yield",
+"questionText": "One of the following reduces the level of economic activities within an economy.",
+"options": [
+"A. Investment.",
+"B. Savings.",
+"C. Pensions.",
+"D. Exports."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "In the circular flow of income, leakages reduce the total income and expenditure within an economy, while injections increase it.",
+"steps": "1. Injections ($J$) into the circular flow include investment ($I$), government spending ($G$), and exports ($X$). These increase economic activity.\n2. Leakages or withdrawals ($W$) include savings ($S$), taxation ($T$), and imports ($M$). These withdraw funds from the active circular flow.\n3. Among the options, Savings ($B$) represents a direct leakage that reduces the current level of aggregate consumption and economic activity.",
+"pitfall": "Students often confuse pensions with a direct injection; however, standard personal savings directly reduce immediate consumption expenditure."
+},
+"hints": [
+"Consider the circular flow model of income.",
+"Identify which option represents a leakage/withdrawal rather than an injection.",
+"Look for the choice that takes money out of active household consumption spending."
+]
+},
+{
+"id": "economics_2025_mcq_q2",
+"type": "mcq",
+"questionNumber": 2,
+"syllabusTopic": "Introduction to Economics",
+"yieldProbability": "High-Yield",
+"questionText": "Households and firms are the primary focus of",
+"options": [
+"A. household econometrics analysis.",
+"B. Macroeconomics.",
+"C. Microeconomics.",
+"D. firm level economics."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "Microeconomics studies the behavior of individual decision-making units within an economy, primarily households and firms.",
+"steps": "1. Microeconomics isolates individual economic agents to analyze resource allocation and price determination.\n2. Households act as consumers and resource suppliers, while firms act as producers.\n3. Macroeconomics, by contrast, examines economy-wide aggregates like inflation and GDP.",
+"pitfall": "Do not choose 'firm level economics' just because firms are mentioned; microeconomics is the formal standard term encompassing both households and firms."
+},
+"hints": [
+"Think about the branch of economics that deals with small, individual units.",
+"Contrast economy-wide aggregates with individual decision-makers.",
+"The prefix meaning 'small' or 'individual' provides the answer."
+]
+},
+{
+"id": "economics_2025_mcq_q3",
+"type": "mcq",
+"questionNumber": 3,
+"syllabusTopic": "Introduction to Economics",
+"yieldProbability": "High-Yield",
+"questionText": "The production possibility curve demonstrates basically the phenomenon of",
+"options": [
+"A. scarcity.",
+"B. needs.",
+"C. scale of preference.",
+"D. resource."
+],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "The Production Possibility Curve (PPC) visually illustrates the constraint of scarce resources and the trade-offs an economy must make.",
+"steps": "1. A PPC shows the maximum combinations of two goods an economy can produce given fixed resources and technology.\n2. The boundary exists because resources are limited, which directly demonstrates the concept of scarcity.\n3. Points outside the curve are unattainable due to this scarcity.",
+"pitfall": "While the PPC involves choice and trade-offs, its foundational existence is rooted directly in the fundamental problem of scarcity."
+},
+"hints": [
+"Why is the curve a boundary that you cannot cross with current resources?",
+"Consider the foundational economic problem of limited resources.",
+"An unattainable point outside the frontier exists because of this concept."
+]
+},
+{
+"id": "economics_2025_mcq_q4",
+"type": "mcq",
+"questionNumber": 4,
+"syllabusTopic": "Economic Growth and Development",
+"yieldProbability": "High-Yield",
+"questionText": "A country enjoying a steady annual increase in per capita income is said to be experiencing",
+"options": [
+"A. technological growth.",
+"B. industrial growth.",
+"C. economic growth.",
+"D. increased growth."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "Economic growth is defined quantitatively as a sustained increase in an economy's real output or real per capita income over time.",
+"steps": "1. Per capita income is calculated as $\text{Total Income} / \text{Total Population}$.\n2. A steady upward trend in this quantitative indicator signifies an expansion of national productive output.\n3. This formal quantitative expansion is designated as economic growth.",
+"pitfall": "Do not confuse economic growth with economic development; development implies structural qualitative improvements, whereas per capita income increase is the classic metric for growth."
+},
+"hints": [
+"Focus on the standard term used for a purely quantitative increase in national income metrics.",
+"Distinguish between qualitative structural shifts and simple numeric expansion.",
+"It represents a positive change in real GDP per person."
+]
+},
+{
+"id": "economics_2025_mcq_q5",
+"type": "mcq",
+"questionNumber": 5,
+"syllabusTopic": "Economic Systems",
+"yieldProbability": "Standard",
+"questionText": "Which of these is an economic system built upon the system of loaning a loyal person land in return for taxes and military services?",
+"options": [
+"A. Capitalism.",
+"B. Militarism.",
+"C. Mixed economic system.",
+"D. Feudalism."
+],
+"correctAnswerIndex": 3,
+"explanation": {
+"coreConcept": "Feudalism is a historical economic and social system centered on land tenure granted by a lord to vassals in exchange for loyalty, labor, taxes, and military service.",
+"steps": "1. Analyze the system details: land distribution by a central authority or lord, reciprocal military duties, and agricultural taxes.\n2. Capitalism relies on private capital ownership; mixed systems combine state and private elements.\n3. This specific medieval agrarian hierarchy defines Feudalism.",
+"pitfall": "Avoid selecting 'Militarism' simply because military service is mentioned; militarism is an ideology, not a land-based economic system."
+},
+"hints": [
+"Recall pre-industrial, medieval European socio-economic structures.",
+"The system is heavily defined by lords, vassals, and fiefs (land).",
+"Think of the historical system that preceded modern capitalism."
+]
+},
+{
+"id": "economics_2025_mcq_q6",
+"type": "mcq",
+"questionNumber": 6,
+"syllabusTopic": "Market Failure and Government Intervention",
+"yieldProbability": "High-Yield",
+"questionText": "Goods which can be enjoyed by all in a society are called",
+"options": [
+"A. normal goods.",
+"B. substitute goods.",
+"C. public goods.",
+"D. intermediate goods."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "Public goods are characterized by non-excludability and non-rivalry, meaning their consumption by one individual does not reduce availability to others, and no one can be effectively excluded.",
+"steps": "1. If a good can be enjoyed collectively by everyone without diminishing any individual's share, it exhibits non-rivalry.\n2. When individuals cannot be barred from its benefits, it exhibits non-excludability.\n3. These two distinct properties define a public good.",
+"pitfall": "Do not confuse public goods with normal goods; normal goods are private commodities whose demand increases as consumer income rises."
+},
+"hints": [
+"Think about items like streetlights, national defense, or public parks.",
+"These goods suffer from the 'free-rider' problem because no one can be left out.",
+"The name reflects that they are provided for the general populace."
+]
+},
+{
+"id": "economics_2025_mcq_q7",
+"type": "mcq",
+"questionNumber": 7,
+"syllabusTopic": "National Income Accounting",
+"yieldProbability": "High-Yield",
+"questionText": "When there are no leakages out of a two-sector circular income flow,",
+"options": [
+"A. Output = Savings = Expenditure.",
+"B. Expenditure = Output = Transfers.",
+"C. Savings = Output = Investment.",
+"D. Output = Income = Expenditure."
+],
+"correctAnswerIndex": 3,
+"explanation": {
+"coreConcept": "In a basic closed two-sector economy with no leakages or injections, the total value of production matches total income generated and total aggregate spending.",
+"steps": "1. The two sectors are households and firms.\n2. Households spend all their earned income on goods produced by firms without saving ($S = 0$), taxing ($T = 0$), or importing ($M = 0$).\n3. Therefore, national product (Output) equals total payments to factors (Income), which equals total consumption (Expenditure).",
+"pitfall": "Ensure you do not select options containing Savings or Investment as equals to output, because if savings exist, a leakage is present."
+},
+"hints": [
+"In a simple closed loop where households spend everything they earn, what identities hold?",
+"The three core methods of measuring national income yield the exact same value.",
+"Look for the identity that equates production, income, and spending."
+]
+},
+{
+"id": "economics_2025_mcq_q8",
+"type": "mcq",
+"questionNumber": 8,
+"syllabusTopic": "Public Finance",
+"yieldProbability": "High-Yield",
+"questionText": "Which of the following describes a document containing statements of intended expenditures and expected revenues of government within a particular period?",
+"options": [
+"A. A development budget.",
+"B. A surplus budget.",
+"C. A national budget.",
+"D. An exigency budget."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "A government or national budget is a formal financial statement estimating planned public expenditures and anticipated revenues over a specified fiscal year.",
+"steps": "1. Identify the core components mentioned: public revenue streams (taxes) and expenditure outlays.\n2. The overarching, comprehensive document that contains these estimates for a country is the national budget.\n3. Surplus, deficit, or development budgets represent specific types or subsets of this broad instrument.",
+"pitfall": "Avoid choosing 'surplus budget' because a surplus is merely a state where revenue exceeds spending, not the definition of the document itself."
+},
+"hints": [
+"What is the general term for the financial blueprint presented annually by the government?",
+"It acts as the primary tool of fiscal policy for a nation.",
+"Think of the macro-level term for a state financial plan."
+]
+},
+{
+"id": "economics_2025_mcq_q9",
+"type": "mcq",
+"questionNumber": 9,
+"syllabusTopic": "Market Structures",
+"yieldProbability": "High-Yield",
+"questionText": "The demand curve of a perfectly competitive firm is perfectly elastic while that of a monopolist is",
+"options": [
+"A. upward sloping.",
+"B. downward sloping.",
+"C. a straight line.",
+"D. curved."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "A monopolist faces the entire market demand curve, which slopes downward, meaning the firm must lower its price to sell additional units of output.",
+"steps": "1. Under perfect competition, firms are price takers, yielding a horizontal ($E_d = \\infty$) demand curve.\n2. A monopolist is a price maker and represents the entire industry.\n3. Because consumers buy less at higher prices according to the law of demand, the monopolist's demand curve slopes downward from left to right.",
+"pitfall": "Be careful not to assume that because a monopolist is powerful, they can force an upward-sloping demand curve; they are still constrained by consumer willingness to pay."
+},
+"hints": [
+"Consider the relationship between price and quantity demanded for a single supplier market.",
+"How do ordinary market demand curves behave?",
+"To sell more output, a monopolist must lower the price."
+]
+},
+{
+"id": "economics_2025_mcq_q10",
+"type": "mcq",
+"questionNumber": 10,
+"syllabusTopic": "National Income Accounting",
+"yieldProbability": "High-Yield",
+"questionText": "Personal disposable income can also be expressed as the sum of households\u2019 expenditure on",
+"options": [
+"A. consumption and savings.",
+"B. savings and tax.",
+"C. investment and depreciation.",
+"D. consumption and exports."],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "Personal Disposable Income ($Y_d$) is the net income available to households after direct taxes are deducted, which can either be consumed or saved.",
+"steps": "1. The basic identity for disposable income is $Y_d = Y - T$, where $Y$ is personal income and $T$ is direct tax.\n2. Once individuals possess this net income, they can allocate it to immediate consumption ($C$) or defer it as savings ($S$).\n3. Thus, $Y_d = C + S$.",
+"pitfall": "Do not include tax in the final allocation expression; taxes are subtracted to arrive at disposable income in the first place."
+},
+"hints": [
+"What can you do with your take-home pay after taxes have already been taken out?",
+"You can either spend it now or keep it for later.",
+"Identify the two variables that capture current spending and deferred spending."
+]
+},
+{
+"id": "economics_2025_mcq_q11",
+"type": "mcq",
+"questionNumber": 11,
+"syllabusTopic": "Consumer Behavior",
+"yieldProbability": "Standard",
+"questionText": "The law of diminishing marginal utility will fail in the case of",
+"options": [
+"A. novelty and variety in consumption.",
+"B. homogenous products.",
+"C. fixed income and prices of goods.",
+"D. continuity in consumption."
+],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "The law of diminishing marginal utility assumes standard, continuous consumption of identical units of a good; changing the nature or introducing variety breaks this assumption.",
+"steps": "1. The law states that as additional identical units of a commodity are consumed continuously, the extra satisfaction decreases.\n2. If variety, novelty, or a change in tastes is introduced, each new experience can yield higher or non-diminishing satisfaction.\n3. Therefore, introduction of variety violates the homogeneity assumption, causing the law to fail.",
+"pitfall": "Students sometimes choose 'continuity in consumption', but continuity is actually a strict prerequisite requirement for the law to hold true, not a reason for failure."
+},
+"hints": [
+"Look for an option that violates the standard assumptions of identical goods and steady tastes.",
+"What happens if each subsequent item consumed is uniquely different or exciting?",
+"Novel experiences can temporarily cause marginal utility to increase rather than fall."
+]
+},
+{
+"id": "economics_2025_mcq_q12",
+"type": "mcq",
+"questionNumber": 12,
+"syllabusTopic": "Public Finance",
+"yieldProbability": "High-Yield",
+"questionText": "In 2022, the Buhari Administration escalated the stock of national debt and was unable to offset same by increasing tax revenue. Economists refer to the action of the government as",
+"options": [
+"A. external borrowing.",
+"B. budget financing.",
+"C. deficit financing.",
+"D. debt rescheduling."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "Deficit financing occurs when a government intentionally spends more than its current revenues, bridging the fiscal gap through borrowing or debt expansion.",
+"steps": "1. The problem states that expenditure/debt increased while tax revenues were insufficient to cover it.\n2. This creates a budget deficit where $G > T$.\n3. Funding this net operational gap through loans and compounding national debt stock is defined as deficit financing.",
+"pitfall": "While it involves borrowing, 'deficit financing' is the specific systemic macroeconomic practice of running and funding unbalanced budgets."
+},
+"hints": [
+"What term describes funding a fiscal gap when government expenditures exceed revenues?",
+"Think about what type of budget is created when revenue is lower than spending.",
+"The answer includes the word used for a shortfall."
+]
+},
+{
+"id": "economics_2025_mcq_q13",
+"type": "mcq",
+"questionNumber": 13,
+"syllabusTopic": "Theory of Consumption",
+"yieldProbability": "High-Yield",
+"questionText": "Workers who saved all through their work life are most likely to dis-save as",
+"options": [
+"A. pensioners.",
+"B. wage earners.",
+"C. shareholders.",
+"D. entrepreneurs."
+],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "According to the Life-Cycle Hypothesis, individuals accumulate savings during their active working years and run down those savings (dis-save) during retirement.",
+"steps": "1. Active earners generate steady stream wages and save to maintain consumption levels later.\n2. Upon retirement, income drops drastically or ceases completely.\n3. Retired individuals draw down accumulated assets; these retired individuals are called pensioners.",
+"pitfall": "Do not choose 'shareholders' because holding shares represents active asset ownership rather than a stage of life characterized by net consumption from old savings."
+},
+"hints": [
+"Think about the lifecycle theory of consumption and savings.",
+"When do people stop earning wages but continue consuming resources?",
+"What name is given to retired workers living off their accumulated provisions?"
+]
+},
+{
+"id": "economics_2025_mcq_q14",
+"type": "mcq",
+"questionNumber": 14,
+"syllabusTopic": "Introduction to Economics",
+"yieldProbability": "High-Yield",
+"questionText": "Choices in economics are made as a result of",
+"options": [
+"A. human attitudes.",
+"B. laisez faire.",
+"C. scarce resources.",
+"D. abundant resources."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "Because resources are finite (scarce) and human wants are unlimited, agents are forced to make choices and sacrifice alternatives.",
+"steps": "1. If resources were infinite or abundant, all wants could be satisfied simultaneously without choice.\n2. Scarcity means that choosing one option necessitates foregoing another (opportunity cost).\n3. Hence, scarce resources are the fundamental cause of economic choice.",
+"pitfall": "Abundant resources would eliminate the necessity of choice entirely, making it the incorrect driver."
+},
+"hints": [
+"Why can you not buy everything you want at the store?",
+"Consider the basic definition of the fundamental economic problem.",
+"Choices must be made because means are limited."
+]
+},
+{
+"id": "economics_2025_mcq_q15",
+"type": "mcq",
+"questionNumber": 15,
+"syllabusTopic": "Population and Labor Economics",
+"yieldProbability": "Standard",
+"questionText": "A growing working-age population provides opportunities for economic growth by",
+"options": [
+"A. reducing the birth rate.",
+"B. increasing the number of potential entrants into the labour force.",
+"C. increasing the rate of unemployment.",
+"D. increasing supply of goods and services."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "A expanding working-age demographic naturally expands the labor supply potential, creating a demographic dividend if properly utilized.",
+"steps": "1. The working-age bracket (usually ages 15-64) forms the base pool for manpower.\n2. Growth in this sub-population directly swells the volume of potential entrants into the active labor force.\n3. This structural change offers an productive asset base to drive economic expansion.",
+"pitfall": "Do not select 'increasing supply of goods and services' directly, because a growing population only offers the *opportunity* through labor supply; output increases only if they are successfully employed."
+},
+"hints": [
+"What pool does the working-age population feed directly?",
+"Think of the supply of workers in an economy.",
+"More working-age citizens mean a larger potential workforce."
+]
+},
+{
+"id": "economics_2025_mcq_q16",
+"type": "mcq",
+"questionNumber": 16,
+"syllabusTopic": "National Income Determination",
+"yieldProbability": "High-Yield",
+"questionText": "The largest proportion of aggregate expenditure in the macroeconomic analysis of Keynes is",
+"options": [
+"A. investment.",
+"B. government.",
+"C. consumption.",
+"D. foreign sector."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "In Keynesian aggregate demand ($AD = C + I + G + (X - M)$), private consumption expenditure typically constitutes the dominant and largest component.",
+"steps": "1. Examine the components of expenditures: Consumption ($C$), Investment ($I$), Government Spending ($G$), and Net Exports ($X - M$).\n2. Empirically and theoretically within basic models, household consumption represents the largest single fraction of GDP utilization.\n3. Therefore, Consumption ($C$) is the correct choice.",
+"pitfall": "Do not select investment; although investment is highly volatile and key to fluctuations, it is smaller in absolute volume than consumption."
+},
+"hints": [
+"Which component of $GDP = C + I + G + NX$ accounts for standard daily household purchases?",
+"It is the most stable and massive block of total expenditures in a typical economy.",
+"Think of consumer spending."
+]
+},
+{
+"id": "economics_2025_mcq_q17",
+"type": "mcq",
+"questionNumber": 17,
+"syllabusTopic": "International Trade",
+"yieldProbability": "High-Yield",
+"questionText": "The ratio of a country\u2019s import and export prices is called",
+"options": [
+"A. balance of payment.",
+"B. exchange rate.",
+"C. terms of trade.",
+"D. real exchange rate."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "Terms of Trade (TOT) measures the relative price of a nation's exports compared to its imports, expressed as a ratio or index.",
+"steps": "1. The formula for terms of trade is: $\text{TOT} = (P_x / P_m) \times 100$, where $P_x$ is the index of export prices and $P_m$ is the index of import prices.\n2. This explicitly matches the concept of a ratio between export and import prices.\n3. Therefore, it defines the terms of trade.",
+"pitfall": "Do not confuse this with the exchange rate, which is the price of one currency in terms of another, rather than a ratio of commodity price indexes."
+},
+"hints": [
+"Look for the term that relates export price indices to import price indices.",
+"It shows how many units of imports a country can purchase per unit of exports.",
+"The term contains the word 'trade'."
+]
+},
+{
+"id": "economics_2025_mcq_q18",
+"type": "mcq",
+"questionNumber": 18,
+"syllabusTopic": "International Economic Integration",
+"yieldProbability": "High-Yield",
+"questionText": "The ECOWAS Treaty was signed in the year",
+"options": [
+"A. 1975",
+"B. 1978",
+"C. 1984",
+"D. 1986"
+],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "The Economic Community of West African States (ECOWAS) was formally established via the Treaty of Lagos on May 28, 1975.",
+"steps": "1. ECOWAS was founded to promote economic integration across West Africa.\n2. The historical signing event by the founding heads of state occurred in Lagos, Nigeria.\n3. The exact calendar year of this foundational treaty is 1975.",
+"pitfall": "Do not confuse the founding date (1975) with subsequent structural revisions or treaties such as the revised ECOWAS treaty of 1993."
+},
+"hints": [
+"This event happened in the mid-1970s.",
+"It occurred exactly fifteen years after Nigeria gained independence.",
+"The correct year ends in a five."
+]
+},
+{
+"id": "economics_2025_mcq_q19",
+"type": "mcq",
+"questionNumber": 19,
+"syllabusTopic": "Market Structures",
+"yieldProbability": "High-Yield",
+"questionText": "One of the following does not depict a type of market structure.",
+"options": [
+"A. Perfect competition.",
+"B. Imperfect competition.",
+"C. Monopolistic competition.",
+"D. Oligopolistic competition."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "Market structures are specific categories classification based on characteristics like participant numbers and product differentiation; 'imperfect competition' is a broad umbrella term rather than a singular distinct structure.",
+"steps": "1. Perfect competition, monopolistic competition, monopoly, and oligopoly are distinct, specifically modeled market structures.\n2. 'Imperfect competition' is a generalized classification category that encompasses monopolistic competition, oligopoly, and monopoly altogether.\n3. Therefore, it does not depict an individual individual type of market structure on its own compared to the other specific forms.",
+"pitfall": "Ensure you read carefully; while imperfect competition exists as an analytical concept, the options contain three precise operational structures and one general classification category."
+},
+"hints": [
+"Identify the choice that is a broad, generic category instead of a distinct, specific market layout.",
+"Three options name specific structures with clear behavior rules.",
+"The outlier acts as an umbrella grouping for non-perfect markets."
+]
+},
+{
+"id": "economics_2025_mcq_q20",
+"type": "mcq",
+"questionNumber": 20,
+"syllabusTopic": "Introduction to Economics",
+"yieldProbability": "High-Yield",
+"questionText": "Macroeconomics deals with the behavior of",
+"options": [
+"A. aggregates in the economy.",
+"B. individuals in the economy.",
+"C. monopolies in the economy.",
+"D. oligopolies in the economy."
+],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "Macroeconomics is the branch of economics that studies the behavior, structure, and performance of an economy as a whole using aggregate variables.",
+"steps": "1. Macroeconomics focuses on large-scale variables such as total national output (GDP), comprehensive inflation, and system-wide unemployment.\n2. These massive system-wide combinations are termed economic aggregates.\n3. Thus, it deals directly with economy-wide aggregates.",
+"pitfall": "Do not select 'individuals' or specific market types like 'monopolies', as those fall strictly within the scope of microeconomics."
+},
+"hints": [
+"What does the prefix 'macro-' indicate?",
+"Consider the focus on the total, combined performance of the whole system.",
+"Look for the word that means total or collection of units."
+]
+},
+{
+"id": "economics_2025_mcq_q21",
+"type": "mcq",
+"questionNumber": 21,
+"syllabusTopic": "National Income Determination",
+"yieldProbability": "High-Yield",
+"questionText": "A major factor that determines the size of the multiplier is the",
+"options": [
+"A. average propensity to consume.",
+"B. aggregate consumption level.",
+"C. marginal propensity to consume.",
+"D. marginal propensity to save."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "The simple multiplier ($k$) depends directly on the marginal propensity to consume ($MPC$) or marginal propensity to save ($MPS$). However, within standard options context, MPC acts as the direct behavioral parameter.",
+"steps": "1. The mathematical formula for the simple multiplier is $k = \frac{1}{1 - MPC}$.\n2. Alternatively, since $1 - MPC = MPS$, it can be written as $k = \frac{1}{MPS}$.\n3. In standard text evaluation, the direct marginal psychological choice to spend from extra income ($MPC$) determines how much income recirculates at each step.",
+"pitfall": "Note that while both MPC and MPS influence it, MPC is traditionally identified as the positive driving determinant of recirculation chain magnitude in multiple choice variants if both appear, though $k=1/MPS$ is its simplest inverse relation."
+},
+"hints": [
+"Recall the multiplier formula: $k = 1 / (1 - \text{behavioral coefficient})$.",
+"Which option represents the marginal change in consumption when income changes?",
+"The propensity to spend extra income determines the chain reaction power."
+]
+},
+{
+"id": "economics_2025_mcq_q22",
+"type": "mcq",
+"questionNumber": 22,
+"syllabusTopic": "Economic Growth and Development",
+"yieldProbability": "High-Yield",
+"questionText": "A combination of high-level economic growth, reduction in poverty, reduction in unemployment, and income inequality refers to",
+"options": [
+"A. development.",
+"B. societal growth.",
+"C. societal development.",
+"D. economic development."
+],
+"correctAnswerIndex": 3,
+"explanation": {
+"coreConcept": "Economic development is a multi-dimensional process involving major structural, qualitative, and institutional changes alongside quantitative growth.",
+"steps": "1. Pure economic growth only tracks real GDP expansion.\n2. When growth is accompanied by systemic reductions in poverty, unemployment, and inequality, it targets welfare improvements.\n3. This broad multidimensional transformation is defined as economic development.",
+"pitfall": "Avoid picking 'economic growth' because growth can occur without any reduction in poverty or income inequality."
+},
+"hints": [
+"Identify the broad term that incorporates both structural welfare improvements and economic growth.",
+"It represents a qualitative upgrade in the standard of living, not just a quantitative increase in GDP.",
+"The term combines economic concepts with structural advancement."
+]
+},
+{
+"id": "economics_2025_mcq_q23",
+"type": "mcq",
+"questionNumber": 23,
+"syllabusTopic": "International Economic Integration",
+"yieldProbability": "High-Yield",
+"questionText": "One of the following is not the rationale for regional integration.",
+"options": [
+"A. Promoting production specialization among nations.",
+"B. Stimulating increased trading activities among the regions.",
+"C. Increasing the variety of goods available to citizens within the regions.",
+"D. Undermining economic growth and development among the regions."
+],
+"correctAnswerIndex": 3,
+"explanation": {
+"coreConcept": "Regional integration seeks to improve cooperation, market size, and growth; it never aims to weaken or hurt economic development.",
+"steps": "1. Analyze positive goals: specialization ($A$), trade stimulation ($B$), and market variety ($C$) are all standard benefits.\n2. Option $D$ states 'undermining economic growth', which means destroying or weakening development.\n3. This is a negative outcome, making it the correct 'NOT' option.",
+"pitfall": "Read carefully to spot the word 'undermining', which indicates a negative effect contrary to standard policy goals."
+},
+"hints": [
+"Identify the option that presents a negative outcome or bad consequence.",
+"Integration aims to help, not harm, participating member states.",
+"Look for the word that means to weaken or damage."
+]
+},
+{
+"id": "economics_2025_mcq_q24",
+"type": "mcq",
+"questionNumber": 24,
+"syllabusTopic": "Theory of Consumption",
+"yieldProbability": "High-Yield",
+"questionText": "The marginal propensity to save is described as the ratio of change in desired level of savings to the change in",
+"options": [
+"A. real income.",
+"B. disposable income.",
+"C. consumption.",
+"D. investment."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "The Marginal Propensity to Save ($MPS$) is defined explicitly as the fraction of an incremental change in disposable income that is directed toward savings.",
+"steps": "1. The formal formula is $MPS = \frac{\\Delta S}{\\Delta Y_d}$.\n2. Here, $\\Delta S$ represents the change in savings.\n3. $\\Delta Y_d$ represents the change in disposable income (income after taxes).",
+"pitfall": "Do not confuse disposable income with total real income or investment; individuals save out of their available take-home pay."
+},
+"hints": [
+"What income metric represents net pay after direct taxes?",
+"Recall the formula for $MPS$: $\\Delta S / \\Delta ?$.",
+"It represents income that is available to be split between spending and saving."
+]
+},
+{
+"id": "economics_2025_mcq_q25",
+"type": "mcq",
+"questionNumber": 25,
+"syllabusTopic": "Economic Growth and Development",
+"yieldProbability": "High-Yield",
+"questionText": "Economic growth is said to be meaningful if it",
+"options": [
+"A. accommodates the accelerator model of investment.",
+"B. leads only to a country\u2019s domestic production cost reduction.",
+"C. leads to improvement in the condition of living of the people over time.",
+"D. leads to improvement in local technology only."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "Quantitative economic growth is truly meaningful to society only when it translates into qualitative welfare improvements and better living conditions for citizens.",
+"steps": "1. Growth merely tracks absolute increases in output value.\n2. If output increases but standard of living degrades, growth fails its socio-economic purpose.\n3. Meaningful growth must deliver tangible welfare improvements to the populace over time.",
+"pitfall": "Be cautious of options containing 'only', which typically overly restrict the multi-faceted positive impacts of economic progress."
+},
+"hints": [
+"What is the ultimate human goal of expanding national production?",
+"Consider the direct connection between national income and human welfare.",
+"Look for the option that emphasizes real improvement in daily life for the population."
+]
+},
+{
+"id": "economics_2025_mcq_q26",
+"type": "mcq",
+"questionNumber": 26,
+"syllabusTopic": "Introductory Statistics for Economics",
+"yieldProbability": "High-Yield",
+"questionText": "The mean deviation for the set of numbers (30, 50, 80, 90 and 10) is",
+"options": [
+"A. 20.4",
+"B. 26.4",
+"C. 30.0",
+"D. 25.5"
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "Mean deviation measures the average absolute difference between each data value and the arithmetic mean of the dataset.",
+"steps": "1. Calculate the arithmetic mean ($\bar{x}$):\n$\bar{x} = \frac{30 + 50 + 80 + 90 + 10}{5} = \frac{260}{5} = 52$\n2. Find absolute deviations from the mean ($|x - \bar{x}|$):\n$|30 - 52| = 22$\n$|50 - 52| = 2$\n$|80 - 52| = 28$\n$|90 - 52| = 38$\n$|10 - 52| = 42$\n3. Sum the absolute deviations:\n$\\sum |x - \bar{x}| = 22 + 2 + 28 + 38 + 42 = 132$\n4. Divide by total observations ($n = 5$):\n$\text{Mean Deviation} = \frac{132}{5} = 26.4$",
+"pitfall": "Remember to take absolute values; ignoring signs or accidentally failing to take absolute values will cause calculation errors."
+},
+"hints": [
+"First, find the arithmetic average (mean) of the five values.",
+"Find the absolute positive distance of each number from that mean.",
+"Add up those distances and divide by 5."
+]
+},
+{
+"id": "economics_2025_mcq_q27",
+"type": "mcq",
+"questionNumber": 27,
+"syllabusTopic": "Introductory Statistics for Economics",
+"yieldProbability": "High-Yield",
+"questionText": "The standard deviation for the set of numbers (30, 50, 80, 90 and 10) is",
+"options": [
+"A. 30",
+"B. 40",
+"C. 35",
+"D. 27"
+],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "Standard deviation is calculated as the square root of the mean of squared deviations from the arithmetic mean.",
+"steps": "1. From the mean $\bar{x} = 52$, compute squared deviations $(x - \bar{x})^2$:\n$(30 - 52)^2 = (-22)^2 = 484$\n$(50 - 52)^2 = (-2)^2 = 4$\n$(80 - 52)^2 = (28)^2 = 784$\n$(90 - 52)^2 = (38)^2 = 1444$\n$(10 - 52)^2 = (-42)^2 = 1764$\n2. Sum the squared values:\n$\\sum (x - \bar{x})^2 = 484 + 4 + 784 + 1444 + 1764 = 4480$\n3. For population/standard textbook variance parameter framework, divide by $n = 5$:\n$\text{Variance} = \frac{4480}{5} = 896$\n4. Take the square root:\n$\text{Standard Deviation} = \\sqrt{896} \\approx 29.93$, which rounds perfectly to 30.",
+"pitfall": "Ensure you square the differences *before* adding them up, rather than squaring the sum of differences."
+},
+"hints": [
+"Square the deviation values calculated in the previous problem.",
+"Find the mean of those squared values.",
+"Take the square root of your result and round to the nearest whole integer."
+]
+},
+{
+"id": "economics_2025_mcq_q28",
+"type": "mcq",
+"questionNumber": 28,
+"syllabusTopic": "Introductory Statistics for Economics",
+"yieldProbability": "High-Yield",
+"questionText": "The variance of the set of numbers (30, 50, 80, 90 and 10) is",
+"options": [
+"A. 800",
+"B. 900",
+"C. 1600",
+"D. 1000"
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "Variance is the average of the squared deviations from the arithmetic mean, which is equivalent to the square of the standard deviation.",
+"steps": "1. Using previous steps, $\bar{x} = 52$ and the sum of squared deviations is $\\sum (x - \bar{x})^2 = 4480$.\n2. Compute population variance: $\\sigma^2 = \frac{4480}{5} = 896$.\n3. Given standard test rounding options, $896$ maps directly to its closest rounded integer value of $900$ ($30^2$).",
+"pitfall": "Do not divide by $n-1$ unless sample variance is specified; standard introductory questions typically utilize population parameter formulas with clean rounded choices."
+},
+"hints": [
+"Variance is simply the square of the standard deviation value.",
+"From the previous question, the unrounded standard deviation was $\\sqrt{896}$.",
+"Look for the closest clean choice near 896."
+]
+},
+{
+"id": "economics_2025_mcq_q29",
+"type": "mcq",
+"questionNumber": 29,
+"syllabusTopic": "International Trade",
+"yieldProbability": "High-Yield",
+"questionText": "If the Naira\u2019s exchange rate against the US dollar strengthens,",
+"options": [
+"A. imports will become more expensive and domestic goods cheaper.",
+"B. domestic goods will become more attractive than foreign goods.",
+"C. imports will become cheaper and domestic goods more expensive.",
+"D. the US dollar will become scarce."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "Currency appreciation or strengthening increases its purchasing power abroad, making foreign imports cheaper while making domestic goods relatively more expensive to foreigners.",
+"steps": "1. A stronger Naira means you need fewer Naira to purchase one US Dollar.\n2. This lowers the local currency cost of importing goods from the United States.\n3. Conversely, domestic goods become costlier in foreign currency terms, making imports cheaper relative to domestic alternatives.",
+"pitfall": "Do not assume strengthening makes domestic goods more competitive; it actually makes domestic exports more expensive abroad."
+},
+"hints": [
+"If your home currency is stronger, you can buy more foreign goods with the same amount of money.",
+"What happens to the price tag of a foreign shoe when the exchange rate improves?",
+"Imports become less costly while domestic products look pricier relative to foreign options."
+]
+},
+{
+"id": "economics_2025_mcq_q30",
+"type": "mcq",
+"questionNumber": 30,
+"syllabusTopic": "International Trade",
+"yieldProbability": "High-Yield",
+"questionText": "A favorable movement in terms of trade means that the average export prices must have",
+"options": [
+"A. risen relative to average import prices.",
+"B. risen relative to average export prices.",
+"C. fallen relative to average export prices.",
+"D. fallen relative to average import prices."
+],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "A favorable terms of trade movement occurs when export prices rise faster than import prices, allowing a country to acquire more imports for the same volume of exports.",
+"steps": "1. Recall $\text{Terms of Trade} = \frac{P_x}{P_m} \times 100$.\n2. For the value of this fraction to increase (favorable change), the numerator ($P_x$, export prices) must increase relative to the denominator ($P_m$, import prices).\n3. Therefore, export prices must have risen relative to import prices.",
+"pitfall": "Be careful with language; option D suggests a fall relative to imports, which would be an unfavorable movement."
+},
+"hints": [
+"Think about selling goods at a higher relative value compared to what you buy.",
+"Look at the Terms of Trade formula: price of exports over price of imports.",
+"To get a positive outcome, the price of what you sell must go up relative to what you buy."
+]
+},
+{
+"id": "economics_2025_mcq_q31",
+"type": "mcq",
+"questionNumber": 31,
+"syllabusTopic": "International Trade",
+"yieldProbability": "High-Yield",
+"questionText": "International trade can be restricted in all the following ways EXCEPT",
+"options": [
+"A. imposing import duties.",
+"B. removing import duties.",
+"C. imposing embargo on imports.",
+"D. introducing import quotas."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "Trade protectionism uses tariffs, quotas, and embargoes to restrict trade, whereas liberalization acts to remove barriers and encourage trade flow.",
+"steps": "1. Imposing duties ($A$), embargoes ($C$), and quotas ($D$) are explicit commercial policy barriers that limit inbound trade volumes.\n2. Removing import duties ($B$) reduces trade barriers, facilitating free trade rather than restricting it.\n3. Therefore, removing duties is the exception.",
+"pitfall": "Read trade questions carefully to distinguish between terms like 'imposing' (adding) and 'removing' (taking away) barriers."
+},
+"hints": [
+"Look for the option that represents trade liberalization or opening up a market.",
+"Three options act as active roadblocks to foreign goods.",
+"Taking away a tax makes it easier for foreign goods to enter."
+]
+},
+{
+"id": "economics_2025_mcq_q32",
+"type": "mcq",
+"questionNumber": 32,
+"syllabusTopic": "Introduction to Economics",
+"yieldProbability": "Standard",
+"questionText": "Donbay Nigeria Ltd is a firm that produces plastic tables and chairs. It is owned by a popular family in the South Western part of Nigeria. Donbay Nigeria Ltd is part of the",
+"options": [
+"A. primary sector.",
+"B. tertiary sector.",
+"C. public sector.",
+"D. private sector."
+],
+"correctAnswerIndex": 3,
+"explanation": {
+"coreConcept": "Businesses owned, funded, and managed by private individuals or families rather than the government belong to the private sector.",
+"steps": "1. The question notes that the firm is owned by a private family.\n2. This rules out the public sector, which belongs to government bodies.\n3. Private family ownership maps directly to the definition of the private sector.",
+"pitfall": "Do not confuse sector classification by ownership (public vs. private) with sector classification by production stage (primary, secondary, tertiary)."
+},
+"hints": [
+"Focus on the ownership description: 'owned by a popular family'.",
+"Is this business run by the government or by private citizens?",
+"Private individuals run entities within this specific sector."
+]
+},
+{
+"id": "economics_2025_mcq_q33",
+"type": "mcq",
+"questionNumber": 33,
+"syllabusTopic": "National Income Accounting",
+"yieldProbability": "High-Yield",
+"questionText": "The components of national income that tend to increase the amount of planned expenditure on domestic goods and services are called",
+"options": [
+"A. stocks.",
+"B. injections.",
+"C. withdrawals.",
+"D. leakages."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "Injections are autonomous additions to the circular flow of income that increase aggregate expenditure on domestic production.",
+"steps": "1. Injections add spending power directly into the circular loop.\n2. They consist of Investment, Government spending, and Exports.\n3. These components increase overall planned spending on a nation's output, defining an injection.",
+"pitfall": "Avoid choosing withdrawals or leakages, which achieve the exact opposite effect by draining funds out of domestic spending."
+},
+"hints": [
+"What term describes adding or pushing new spending streams into the circular economy flow?",
+"Think of the opposite of a leakage.",
+"This action boosts overall aggregate demand."
+]
+},
+{
+"id": "economics_2025_mcq_q34",
+"type": "mcq",
+"questionNumber": 34,
+"syllabusTopic": "Economic Growth and Development",
+"yieldProbability": "High-Yield",
+"questionText": "Economic development is hindered by all of the following EXCEPT",
+"options": [
+"A. political instability.",
+"B. low level of technology.",
+"C. low level of income.",
+"D. high level of income."
+],
+"correctAnswerIndex": 3,
+"explanation": {
+"coreConcept": "High income levels provide capital, enhance saving capability, and support investment, serving as a catalyst rather than a barrier to economic development.",
+"steps": "1. Instability ($A$), primitive tech ($B$), and pervasive poverty ($C$) are classic structural bottlenecks that block development.\n2. High income ($D$) generates investment capital and improves living standards.\n3. Thus, high income does not hinder development; it accelerates it.",
+"pitfall": "Pay close attention to the word 'EXCEPT' to avoid selecting a factor that is a well-known barrier."
+},
+"hints": [
+"Look for a factor that is positive and helpful for an economy.",
+"Which option would actually help a nation build infrastructure and improve welfare?",
+"Abundant financial resource status acts as an engine for progress."
+]
+},
+{
+"id": "economics_2025_mcq_q35",
+"type": "mcq",
+"questionNumber": 35,
+"syllabusTopic": "Economic Growth and Development",
+"yieldProbability": "Standard",
+"questionText": "Technological progress in an economy tends to be",
+"options": [
+"A. less labor intensive and more capital intensive.",
+"B. more labor intensive and more capital intensive.",
+"C. less labor intensive and less capital intensive.",
+"D. more labor intensive and less capital intensive."
+],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "Modern technological progress generally substitutes advanced machinery and automated processes for basic manual labor, shifting production methods toward capital intensity.",
+"steps": "1. Modern tech innovation introduces automation, software, and industrial machinery.\n2. This system reduces the absolute headcount of physical laborers required per unit of output (less labor-intensive).\n3. It demands higher investment in advanced equipment tools (more capital-intensive).",
+"pitfall": "While some specific labor-saving innovations exist, the broad historical arc of industrial tech progress leans towards capital deepening."
+},
+"hints": [
+"Think about automated factories using robots instead of assembly line workers.",
+"Does new technology require more workers or more advanced machinery?",
+"It reduces human muscle reliance and increases equipment reliance."
+]
+},
+{
+"id": "economics_2025_mcq_q36",
+"type": "mcq",
+"questionNumber": 36,
+"syllabusTopic": "Economic Growth and Development",
+"yieldProbability": "High-Yield",
+"questionText": "Nigeria experienced an increase in real national and per capita income between 1999 and 2014, implying that Nigeria experienced",
+"options": [
+"A. economic development.",
+"B. income development.",
+"C. economic growth.",
+"D. sustainable development."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "An increase in purely quantitative metrics like real national income and GDP per capita over time constitutes economic growth.",
+"steps": "1. The trend describes numeric rises in real income indexes.\n2. No qualitative updates regarding inequality, health, or poverty reductions are given in the premise.\n3. Hence, this scenario strictly satisfies the formal definition of economic growth.",
+"pitfall": "Do not assume structural development occurred based solely on income growth, as growth can happen without broader societal development."
+},
+"hints": [
+"Focus purely on the numbers: 'increase in real national and per capita income'.",
+"What is the exact term for an expansion in quantitative economic output metrics?",
+"It focuses on output volume size rather than structural equality."
+]
+},
+{
+"id": "economics_2025_mcq_q37",
+"type": "mcq",
+"questionNumber": 37,
+"syllabusTopic": "Theory of Demand",
+"yieldProbability": "High-Yield",
+"questionText": "Which of these describes a situation when there are alternative services or products a customer can choose from?",
+"options": [
+"A. Derived demand.",
+"B. Competitive demand.",
+"C. Complementary demand.",
+"D. Composite demand."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "Competitive demand describes products that serve as substitutes for one another, where choosing one satisfies the consumer's need instead of the other.",
+"steps": "1. When goods act as direct alternatives (e.g., Milo and Ovaltine), they compete for the consumer's budget.\n2. An increase in the demand for one reduces the demand for its alternative substitute.\n3. This structural market relationship defines competitive demand.",
+"pitfall": "Do not select composite demand; composite demand refers to a single good that has multiple alternative uses (like structural timber or steel)."
+},
+"hints": [
+"Think about substitute products that compete against each other for your purchase.",
+"If you buy Pepsi instead of Coca-Cola, what type of market relationship is shown?",
+"The term reflects that the goods are in competition."
+]
+},
+{
+"id": "economics_2025_mcq_q38",
+"type": "mcq",
+"questionNumber": 38,
+"syllabusTopic": "Introduction to Economics",
+"yieldProbability": "High-Yield",
+"questionText": "The production possibility curve",
+"options": [
+"A. is convex to the origin.",
+"B. is parallel to the Y axis.",
+"C. is concave to the origin.",
+"D. slopes upward from left to right."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "The standard Production Possibility Curve (PPC) is bowed outward (concave to the origin) due to the law of increasing opportunity costs.",
+"steps": "1. Resources are not perfectly adaptable to producing all goods.\n2. As you shift production from Good X to Good Y, you must sacrifice increasingly larger amounts of Good X.\n3. This increasing opportunity cost gives the frontier curve its classic concave shape.",
+"pitfall": "Avoid picking 'convex to the origin'; indifference curves are typically convex, whereas production possibility frontiers are typically concave."
+},
+"hints": [
+"What is the typical geometric shape of a standard PPC boundary?",
+"It is bowed outward away from the 0,0 intersection corner point.",
+"This specific curvature matches the term for an inward-hollowed shape relative to the outside."
+]
+},
+{
+"id": "economics_2025_mcq_q39",
+"type": "mcq",
+"questionNumber": 39,
+"syllabusTopic": "Market Failure and Government Intervention",
+"yieldProbability": "High-Yield",
+"questionText": "Government intervention occurs in business activity to forestall all of the following EXCEPT",
+"options": [
+"A. eliminating market failure.",
+"B. encouraging market failure.",
+"C. regulating monopoly power.",
+"D. improving market infrastructure."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "Governments intervene to correct or prevent economic problems; they never deliberately intervene to encourage market failure.",
+"steps": "1. Regulating monopolies ($C$) and upgrading infrastructure ($D$) are positive public policy actions.\n2. Eliminating market failure ($A$) is a core goal of intervention.\n3. Intentionally 'encouraging market failure' ($B$) is harmful, making it the correct exception choice.",
+"pitfall": "Watch out for double negatives like 'forestall' combined with 'EXCEPT'. The question is asking what governments do *not* try to prevent or fix."
+},
+"hints": [
+"What outcome would a state planner always want to avoid creating?",
+"Look for the option that describes creating an inefficient, broken market condition.",
+"The government steps in to stop market failures, not promote them."
+]
+},
+{
+"id": "economics_2025_mcq_q40",
+"type": "mcq",
+"questionNumber": 40,
+"syllabusTopic": "National Income Accounting",
+"yieldProbability": "High-Yield",
+"questionText": "A potential measure of economic welfare that takes cognizance of changes in population size is the",
+"options": [
+"A. GDP per capita.",
+"B. GDP.",
+"C. NNP.",
+"D. GDP deflator."
+],
+"correctAnswerIndex": 0,
+"explanation": {
+"coreConcept": "Gross Domestic Product (GDP) per capita adjusts total economic output for population size, providing a better metric for individual economic welfare tracking.",
+"steps": "1. Absolute GDP ($B$) ignores total population headcount completely.\n2. GDP per capita divides total output by population: $\text{Per Capita Output} = \frac{\text{GDP}}{\text{Population}}$.\n3. This calculation factor directly accounts for changes in population size.",
+"pitfall": "Do not select 'GDP deflator'; the deflator is an inflation adjustment tool for prices, not a population adjustment tool."
+},
+"hints": [
+"Which economic indicator explicitly divides total output by the headcount of the population?",
+"The term meaning 'per head' provides the answer.",
+"It helps compare the average economic output share per individual citizen."
+]
+},
+{
+"id": "economics_2025_mcq_q41",
+"type": "mcq",
+"questionNumber": 41,
+"syllabusTopic": "Money and Banking",
+"yieldProbability": "High-Yield",
+"questionText": "The total cash in a typical economy is either held by the banks or the",
+"options": [
+"A. government.",
+"B. central bank.",
+"C. world bank.",
+"D. public."
+],
+"correctAnswerIndex": 3,
+"explanation": {
+"coreConcept": "The currency component of the money supply fluctuates directly between bank vaults as reserves and circulation within the hands of the non-bank public.",
+"steps": "1. Total liquid currency consists of physical cash notes and coins.\n2. This cash sits either inside commercial banking vaults or circulates outside the financial institutions.\n3. Cash outside the banking system is held by households and firms, collectively called the non-bank public.",
+"pitfall": "Avoid picking 'central bank' because currency held inside the central bank has not yet been issued into active circulating supply."
+},
+"hints": [
+"Think about the two main locations where active physical cash can be found.",
+"If money is not inside a commercial bank vault, who is holding it in their wallets and cash registers?",
+"Look for the term that represents the general citizenry and private businesses."
+]
+},
+{
+"id": "economics_2025_mcq_q42",
+"type": "mcq",
+"questionNumber": 42,
+"syllabusTopic": "International Trade",
+"yieldProbability": "High-Yield",
+"questionText": "The theory of comparative advantage analyses the possibility of mutually beneficial trade between countries using",
+"options": [
+"A. rate of specialization.",
+"B. relative resource endowment.",
+"C. cost of production in both countries.",
+"D. opportunity cost of production in both countries."
+],
+"correctAnswerIndex": 3,
+"explanation": {
+"coreConcept": "David Ricardo's theory of comparative advantage states that countries should specialize based on who has the lower opportunity cost for a given product.",
+"steps": "1. Adam Smith's absolute advantage focused on raw input costs.\n2. Ricardo advanced this by looking at relative trade-offs within each country.\n3. The relative cost ratio of producing one good over another defines opportunity cost, which is the foundational basis of comparative advantage.",
+"pitfall": "Do not select 'absolute cost of production' ($C$) as that describes the earlier theory of absolute advantage."
+},
+"hints": [
+"What economic concept measures what you must sacrifice to produce another unit of a good?",
+"David Ricardo based his trade theory on relative rather than absolute costs.",
+"The answer includes the term for a forgone alternative."
+]
+},
+{
+"id": "economics_2025_mcq_q43",
+"type": "mcq",
+"questionNumber": 43,
+"syllabusTopic": "Theory of Consumption",
+"yieldProbability": "High-Yield",
+"questionText": "The relevant concept which shows by how much expenditure on consumption will increase, given a unit increase in income is the",
+"options": [
+"A. average propensity to consume.",
+"B. marginal propensity to consume.",
+"C. autonomous consumption level.",
+"D. propensity to consume."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "The Marginal Propensity to Consume (MPC) measures the change in consumption spending that results from an incremental change in income.",
+"steps": "1. The mathematical definition is $MPC = \frac{\\Delta C}{\\Delta Y}$.\n2. This formula isolates the ratio of a change in consumption to a change in income.\n3. A 'unit increase in income' translates mathematically to setting $\\Delta Y = 1$, where $\\Delta C$ equals the MPC value.",
+"pitfall": "Do not confuse this with the Average Propensity to Consume ($APC$), which is total consumption divided by total income ($C/Y$), rather than changes in income."
+},
+"hints": [
+"Focus on the word 'increase', which indicates a marginal change rather than an average total.",
+"Recall the formula $\\Delta C / \\Delta Y$.",
+"The prefix used for incremental economic changes is 'marginal'."
+]
+},
+{
+"id": "economics_2025_mcq_q44",
+"type": "mcq",
+"questionNumber": 44,
+"syllabusTopic": "Public Finance",
+"yieldProbability": "High-Yield",
+"questionText": "The retail sales tax typifies the",
+"options": [
+"A. Progressive tax system.",
+"B. Regressive tax system.",
+"C. Proportional tax system.",
+"D. Direct-Indirect tax system."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "A retail sales tax is flat in rate but regressive in impact, because lower-income consumers spend a larger percentage of their total income on it than higher-income earners do.",
+"steps": "1. Sales taxes apply an identical percentage rate to purchases regardless of buyer income.\n2. Lower-income households consume a much larger share of their earnings to survive than wealthy households.\n3. Because the tax burden consumes a higher percentage of low-income earnings, it constitutes a regressive tax.",
+"pitfall": "Avoid choosing 'proportional tax system'; while the statutory tax rate on the receipt is proportional, the question asks what type of system the tax *typifies* in economic reality, which is regressive."
+},
+"hints": [
+"Consider who feels a heavier burden from consumption taxes relative to their total income.",
+"A poor person and a rich person pay the exact same tax amount on a loaf of bread.",
+"This system takes a larger percentage of income from low-income earners."
+]
+},
+{
+"id": "economics_2025_mcq_q45",
+"type": "mcq",
+"questionNumber": 45,
+"syllabusTopic": "National Income Determination",
+"yieldProbability": "High-Yield",
+"questionText": "On the Keynesian cross, the aggregate expenditure curve in comparison to the real output curve",
+"options": [
+"A. rises much faster.",
+"B. falls at a faster rate.",
+"C. rises at a lower rate.",
+"D. is constant."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "The aggregate expenditure curve has a slope equal to the Marginal Propensity to Consume ($0 < MPC < 1$), making it flatter than the $45^{\\circ}$ reference line which has a slope of exactly 1.",
+"steps": "1. The real output curve on a Keynesian cross is represented by a $45^{\\circ}$ reference line with a slope of 1.\n2. The aggregate expenditure curve formula is $AE = C_0 + cY + I + G + NX$, where $c$ is the MPC.\n3. Because the MPC is a fractional value less than 1 ($c < 1$), the $AE$ curve rises at a lower rate than the $45^{\\circ}$ line.",
+"pitfall": "Do not assume the curves rise at the same rate; if they did, they would either be parallel or identical, preventing the model from finding a single equilibrium point."
+},
+"hints": [
+"Recall that the real output guideline line sits at a perfect 45-degree angle (slope = 1).",
+"The slope of the expenditure line is determined by the MPC, which is a fraction less than one.",
+"Compare a slope less than one against a slope of exactly one."
+]
+},
+{
+"id": "economics_2025_mcq_q46",
+"type": "mcq",
+"questionNumber": 46,
+"syllabusTopic": "Population and Labor Economics",
+"yieldProbability": "High-Yield",
+"questionText": "Mortality rate is the measure of the number of",
+"options": [
+"A. female deaths in a population during a particular period of time.",
+"B. babies that die at birth in a population during a particular period of time.",
+"C. deaths in a population during a particular period of time.",
+"D. deaths due to pregnancy or child birth in a population during a particular period of time."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "Mortality rate is a demographic metric tracking the total frequency of deaths within a specified population over a particular period of time.",
+"steps": "1. 'Mortality' comes from the Latin roots for death.\n2. Infant mortality ($B$) and maternal mortality ($D$) isolate specific subgroups.\n3. General mortality rate measures overall deaths within the population during a set timeframe, typically per 1,000 individuals.",
+"pitfall": "Avoid picking subcategories like infant or female deaths unless those specific modifiers are included in the question term."
+},
+"hints": [
+"Look for the most general, comprehensive definition of death tracking.",
+"Separate specific subcategories like infant or maternal mortality from the general term.",
+"It measures deaths across the entire population."
+]
+},
+{
+"id": "economics_2025_mcq_q47",
+"type": "mcq",
+"questionNumber": 47,
+"syllabusTopic": "National Income Determination",
+"yieldProbability": "Standard",
+"questionText": "What will be the reaction of the business sector to a fall in actual aggregate consumption caused by surplus savings in the economy? There will be",
+"options": [
+"A. an increase in the price of assets.",
+"B. a reduction in the price of assets.",
+"C. a cutback on planned investment.",
+"D. an increase in demand for loanable funds."
+],
+"correctAnswerIndex": 2,
+"explanation": {
+"coreConcept": "When consumption drops unexpectedly due to excess saving, firms experience unintended inventory accumulation, leading them to reduce planned investment and production output.",
+"steps": "1. High consumer savings lead to a drop in consumer demand ($C$).\n2. Unsold business products build up as unplanned inventory additions.\n3. Facing weak consumer demand and excess stock, businesses respond by cutting back on planned production investments.",
+"pitfall": "Do not select 'increase in demand for loanable funds'; even though savings increase the supply of funds, firms will not borrow to expand when demand is falling."
+},
+"hints": [
+"If households stop buying products and save instead, what happens to business sales?",
+"Unsold goods accumulate on warehouse shelves.",
+"Firms will reduce their future business expansion plans when sales drop."
+]
+},
+{
+"id": "economics_2025_mcq_q48",
+"type": "mcq",
+"questionNumber": 48,
+"syllabusTopic": "Theory of Consumption",
+"yieldProbability": "High-Yield",
+"questionText": "The fundamental law of consumption implies that households generally",
+"options": [
+"A. consume all the increase in their income.",
+"B. consume some part of the increase in their income.",
+"C. save more than they consume the increase.",
+"D. maintain their consumption pattern."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "Keynes' Psychological Law of Consumption states that as income increases, consumption increases but not by as much as the increase in income.",
+"steps": "1. The law establishes that $\\Delta C > 0$ when $\\Delta Y > 0$.\n2. Crucially, the change in consumption is less than the change in income: $\\Delta C < \\Delta Y$.\n3. This means consumers spend a portion of their extra income and save the rest, which means they consume some part of the increase.",
+"pitfall": "Do not select 'consume all the increase'; that would imply an MPC of 1, which violates the law's assumption that some portion is always saved."
+},
+"hints": [
+"Think about Keynes' rule on how your spending shifts when you get a pay raise.",
+"You will likely spend more money, but will you spend every single new dollar?",
+"An increase in income is split between extra consumption and extra savings."
+]
+},
+{
+"id": "economics_2025_mcq_q49",
+"type": "mcq",
+"questionNumber": 49,
+"syllabusTopic": "Introduction to Economics",
+"yieldProbability": "High-Yield",
+"questionText": "Most African exports are extracted from mining, fishing and forestry, meaning that majority of Africa\u2019s exports are from",
+"options": [
+"A. tertiary production.",
+"B. primary production.",
+"C. secondary production.",
+"D. intermediate production."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "The primary sector of production focuses on direct extraction and collection of natural resources from the earth.",
+"steps": "1. Primary production involves extracting raw materials directly from nature (e.g., mining, forestry, farming, fishing).\n2. Secondary production processes these raw items into manufactured goods.\n3. Because the question specifies mining, fishing, and forestry, these fall directly into primary production.",
+"pitfall": "Do not pick secondary or intermediate categories, as those require processing and manufacturing stages beyond raw extraction."
+},
+"hints": [
+"Consider the classification for raw resource extraction industries.",
+"What production stage comes first before factory processing?",
+"Logging and mining belong to this foundational economic sector."
+]
+},
+{
+"id": "economics_2025_mcq_q50",
+"type": "mcq",
+"questionNumber": 50,
+"syllabusTopic": "Population and Labor Economics",
+"yieldProbability": "High-Yield",
+"questionText": "Malthus opined that while resources tend to grow arithmetically, population exhibited",
+"options": [
+"A. binary growth.",
+"B. exponential growth.",
+"C. steady growth.",
+"D. differential growth."
+],
+"correctAnswerIndex": 1,
+"explanation": {
+"coreConcept": "The Malthusian Theory of Population states that while food production increases arithmetically, human populations grow geometrically or exponentially if unchecked.",
+"steps": "1. Thomas Malthus observed that food supply grows linearly ($1, 2, 3, 4, 5...$).\n2. He argued that human populations multiply compoundingly ($1, 2, 4, 8, 16...$).\n3. This compounding geometric progression is also termed exponential growth.",
+"pitfall": "Do not confuse geometric/exponential growth with linear or arithmetic terms, as the difference between them forms the basis of Malthus' warnings."
+},
+"hints": [
+"Think about compounding geometric growth rates ($1, 2, 4, 8, 16...$).",
+"What is another common name for non-linear, compounding growth curves?",
+"It represents a rapid doubling progression."
+]
+}
+]

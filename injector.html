@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Injector | JUPEB Orbit</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+</head>
+<body class="bg-slate-900 text-slate-200 antialiased min-h-screen p-6 md:p-12">
+
+    <div class="max-w-6xl mx-auto">
+        <header class="mb-12 flex justify-between items-end">
+            <div>
+                <h1 class="text-4xl font-black text-white mb-2">Question Injector</h1>
+                <p class="text-slate-400">Standardize and Sync JUPEB Past Questions to Firestore</p>
+            </div>
+            <a href="dashboard.html" class="text-sm font-bold text-indigo-400 hover:text-indigo-300">← Back to Dashboard</a>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <div class="lg:col-span-5 space-y-6">
+                <div class="bg-slate-800 rounded-3xl p-6 border border-slate-700 shadow-xl">
+                    <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-indigo-500 rounded-full"></span> 1. Context Metadata
+                    </h2>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Subject</label>
+                            <select id="subject-select" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm font-bold text-white outline-none focus:border-indigo-500">
+                                <optgroup label="Sciences">
+                                    <option value="physics">Physics</option>
+                                    <option value="mathematics">Mathematics</option>
+                                    <option value="chemistry" selected>Chemistry</option>
+                                    <option value="biology">Biology</option>
+                                    <option value="agricultural-science">Agricultural Science</option>
+                                </optgroup>
+                                <optgroup label="Social Sciences">
+                                    <option value="economics">Economics</option>
+                                    <option value="government">Government</option>
+                                    <option value="geography">Geography</option>
+                                    <option value="business-studies">Business Studies</option>
+                                </optgroup>
+                                <optgroup label="Arts & Humanities">
+                                    <option value="literature">Literature in English</option>
+                                    <option value="crs">CRS</option>
+                                    <option value="history">History</option>
+                                    <option value="french">French</option>
+                                    <option value="yoruba">Yoruba</option>
+                                    <option value="music">Music</option>
+                                    <option value="visual-arts">Visual Arts</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-black text-slate-500 uppercase tracking-widest mb-2">Year</label>
+                            <select id="year-select" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-sm font-bold text-white outline-none focus:border-indigo-500">
+                                <option value="2026">2026 (Model)</option>
+                                <option value="2025" selected>2025 (Official)</option>
+                                <option value="2024">2024 (Official)</option>
+                                <option value="2023">2023</option>
+                                <option value="2022">2022</option>
+                                <option value="2021">2021</option>
+                                <option value="2020">2020</option>
+                                <option value="2019">2019</option>
+                                <option value="2018">2018</option>
+                                <option value="2017">2017</option>
+                                <option value="2016">2016</option>
+                                <option value="2015">2015</option>
+                                <option value="2014">2014</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-slate-800 rounded-3xl p-6 border border-slate-700 shadow-xl">
+                    <h2 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                        <span class="w-2 h-6 bg-emerald-500 rounded-full"></span> 2. Paste JSON Data
+                    </h2>
+                    <p class="text-xs text-slate-500 mb-4">Paste the JSON array generated by your AI prompt here.</p>
+                    <textarea id="json-input" class="w-full h-96 bg-slate-900 border border-slate-700 rounded-2xl p-4 text-xs font-mono text-emerald-400 outline-none focus:border-emerald-500 placeholder:text-slate-700" placeholder="[ { ... }, { ... } ]"></textarea>
+                    <button onclick="previewData()" class="w-full mt-4 py-4 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold transition-all active:scale-95">Validate & Preview</button>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 space-y-6">
+                <div class="bg-slate-800 rounded-3xl p-8 border border-slate-700 shadow-xl min-h-[600px] flex flex-col">
+                    <div class="flex items-center justify-between mb-8">
+                        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+                            <span class="w-2 h-6 bg-amber-500 rounded-full"></span> 3. Live Preview
+                        </h2>
+                        <div id="status-pill" class="hidden px-4 py-1 bg-amber-500/10 border border-amber-500/20 rounded-full text-[10px] font-black text-amber-500 uppercase tracking-widest">
+                            Ready to Sync
+                        </div>
+                    </div>
+
+                    <div id="preview-area" class="flex-1 overflow-y-auto space-y-8 pr-4">
+                        <div class="text-center py-20 text-slate-600 italic">No data validated yet...</div>
+                    </div>
+
+                    <div class="mt-8 pt-8 border-t border-slate-700">
+                        <button id="sync-btn" disabled onclick="syncToCloud()" class="w-full py-5 bg-indigo-600 disabled:bg-slate-700 disabled:opacity-50 hover:bg-indigo-700 text-white rounded-2xl font-black text-lg shadow-xl shadow-indigo-500/10 transition-all active:scale-95">
+                            Inject into Firestore Bank
+                        </button>
+                        <p class="text-center text-[10px] text-slate-500 mt-4 uppercase tracking-widest font-bold">Target Path: subjects / [subject] / years / [year] / questions</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { auth, db } from "./firebase-config.js";
+        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+
+        let validatedData = null;
+
+        window.previewData = function() {
+            let input = document.getElementById('json-input').value.trim();
+            const preview = document.getElementById('preview-area');
+            const status = document.getElementById('status-pill');
+            const syncBtn = document.getElementById('sync-btn');
+
+            try {
+                if (!input) throw new Error("Input empty. Please paste your JSON schema.");
+
+                // SANITIZER STAGE: Clean raw control characters & literal text line breaks inside data values
+                // Fixes unescaped horizontal tabs, backspaces, form feeds, or carrier returns gracefully.
+                input = input.replace(/[\u0000-\u0019]+/g, " ");
+
+                const data = JSON.parse(input);
+                if (!Array.isArray(data)) throw new Error("Input must be a structured JSON array.");
+                
+                validatedData = data;
+                preview.innerHTML = "";
+                
+                data.forEach((q, i) => {
+                    const card = document.createElement('div');
+                    card.className = "bg-slate-900/50 border border-slate-700 p-6 rounded-2xl relative";
+                    
+                    // Safe mapping for options layout strings
+                    const optionsHTML = Array.isArray(q.options) 
+                        ? q.options.map((opt, idx) => `
+                            <div class="text-xs p-2 rounded-lg border ${idx === q.correctAnswerIndex ? 'border-emerald-500/50 bg-emerald-500/5' : 'border-slate-700'}">
+                                ${opt}
+                            </div>
+                        `).join('')
+                        : `<div class="text-rose-400 text-xs col-span-2">Options parsing broken or non-existent</div>`;
+
+                    card.innerHTML = `
+                        <div class="absolute -top-3 -left-3 w-8 h-8 bg-slate-700 rounded-full flex items-center justify-center text-xs font-black text-white">${i + 1}</div>
+                        <div class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">${q.syllabusTopic || 'No Topic Set'}</div>
+                        <h4 class="text-sm font-bold text-white mb-4">${q.questionText || 'Missing Question Text'}</h4>
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            ${optionsHTML}
+                        </div>
+                        <div class="p-3 bg-slate-800 rounded-xl text-[10px] text-slate-400 space-y-1">
+                            <div><strong>Core Concept:</strong> ${q.explanation?.coreConcept || 'N/A'}</div>
+                            <div class="mt-1 block text-slate-500 whitespace-pre-wrap"><strong>Steps:</strong> ${q.explanation?.steps || 'N/A'}</div>
+                        </div>
+                    `;
+                    preview.appendChild(card);
+                });
+
+                if (window.renderMathInElement) {
+                    renderMathInElement(preview, { 
+                        delimiters: [
+                            {left: "$$", right: "$$", display: true},
+                            {left: "$", right: "$", display: false}
+                        ],
+                        throwOnError: false
+                    });
+                }
+                
+                status.classList.remove('hidden');
+                syncBtn.disabled = false;
+            } catch (e) {
+                console.error("Validation breakdown:", e);
+                preview.innerHTML = `<div class="text-rose-500 bg-rose-500/5 border border-rose-500/20 p-4 rounded-xl font-mono text-xs"><strong>JSON Parse Failure:</strong> ${e.message}</div>`;
+                syncBtn.disabled = true;
+                status.classList.add('hidden');
+            }
+        }
+
+        window.syncToCloud = async function() {
+            const subject = document.getElementById('subject-select').value;
+            const year = document.getElementById('year-select').value;
+            const syncBtn = document.getElementById('sync-btn');
+            
+            if (!validatedData || validatedData.length === 0) return;
+
+            syncBtn.disabled = true;
+            syncBtn.innerText = "Processing Sync...";
+
+            let count = 0;
+            try {
+                for (const q of validatedData) {
+                    // Unique fallback identifier configuration if q.id is structurally absent
+                    const targetId = q.id ? q.id : `q_${q.questionNumber || Math.random().toString(36).substr(2, 9)}`;
+                    const cleanId = targetId.replace(/^(phys|math|chem|bio|econ|gov)_/, `${subject}_`);
+                    
+                    const qRef = doc(db, "subjects", subject, "years", year, "questions", cleanId);
+                    
+                    // Keep layout track documents indexed clean
+                    await setDoc(doc(db, "subjects", subject, "years", year), { active: true }, { merge: true });
+
+                    const finalObj = { 
+                        ...q, 
+                        id: cleanId, 
+                        subject: subject, 
+                        year: year,
+                        updatedAt: new Date().toISOString()
+                    };
+                    
+                    await setDoc(qRef, finalObj, { merge: true });
+                    count++;
+                    syncBtn.innerText = `Syncing... (${count}/${validatedData.length})`;
+                }
+                
+                alert(`Success! ${count} questions successfully synced to subjects/${subject}/years/${year}/questions`);
+                syncBtn.innerText = "Sync Complete";
+                syncBtn.className = "w-full py-5 bg-emerald-600 text-white rounded-2xl font-black text-lg transition-colors";
+                
+                setTimeout(() => {
+                    syncBtn.innerText = "Inject into Firestore Bank";
+                    syncBtn.className = "w-full py-5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-lg shadow-xl transition-all active:scale-95";
+                    syncBtn.disabled = false;
+                }, 4000);
+
+            } catch (e) {
+                console.error("Sync breakdown details:", e);
+                alert("Sync Error Matrix: " + e.message);
+                syncBtn.disabled = false;
+                syncBtn.innerText = "Retry Sync";
+            }
+        }
+    </script>
+</body>
+</html>
