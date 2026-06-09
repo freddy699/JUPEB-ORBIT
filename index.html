@@ -42,16 +42,22 @@
                     },
                     boxShadow: {
                         'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.07)',
-                        'premium': '0 20px 50px -12px rgba(0, 0, 0, 0.05)',
+                        'premium': '0 20px 50px -12px rgba(0, 0, 0, 0.08)',
+                        'inner-glass': 'inset 0 1px 1px 0 rgba(255, 255, 255, 0.4)',
                     },
                     animation: {
                         'float': 'float 6s ease-in-out infinite',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-20px)' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
                         }
                     }
                 }
@@ -63,14 +69,14 @@
             font-family: 'Inter', sans-serif; 
             background-color: #FAFBFF; 
             background-image: 
-                radial-gradient(at 0% 0%, rgba(37, 70, 235, 0.03) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.03) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(37, 70, 235, 0.04) 0px, transparent 40%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.04) 0px, transparent 40%);
         }
         .glass {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
         .text-gradient {
             background: linear-gradient(135deg, #1e2c8a 0%, #2546eb 50%, #7c3aed 100%);
@@ -79,183 +85,202 @@
         }
         .math-typeset { font-family: 'Times New Roman', Times, serif; }
         .grid-pattern {
-            background-image: radial-gradient(#e5e7eb 1px, transparent 1px);
-            background-size: 40px 40px;
+            background-image: radial-gradient(#e5e7eb 1.5px, transparent 1.5px);
+            background-size: 48px 48px;
+        }
+        .pro-shadow {
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.02), 0 12px 24px rgba(0,0,0,0.03);
         }
     </style>
 </head>
 <body class="text-slate-800 antialiased overflow-x-hidden">
 
     <!-- 1. NAVIGATION HEADER -->
-    <header class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-7xl h-16 glass rounded-2xl z-50 flex items-center px-6 shadow-glass transition-all duration-300" id="main-nav">
+    <header class="fixed top-6 left-1/2 -translate-x-1/2 w-[92%] max-w-7xl h-20 glass rounded-[2rem] z-50 flex items-center px-8 shadow-premium transition-all duration-300 border border-white/40" id="main-nav">
         <div class="w-full flex justify-between items-center">
             <!-- Logo -->
-            <a href="index.html" class="flex items-center gap-2.5 group cursor-pointer relative z-[60]">
-                <div class="w-9 h-9 bg-white rounded-xl flex items-center justify-center transform group-hover:rotate-[15deg] transition-all duration-300 shadow-lg shadow-brand-200 overflow-hidden">
-                    <img src="logo.png" alt="Orbit Logo" class="w-full h-full object-contain">
+            <a href="index.html" class="flex items-center gap-3 group cursor-pointer relative z-[60]">
+                <div class="w-10 h-10 bg-white rounded-2xl flex items-center justify-center transform group-hover:rotate-[15deg] transition-all duration-300 shadow-lg shadow-slate-100 overflow-hidden">
+                    <img src="logo.png" alt="Logo" class="w-full h-full object-contain">
                 </div>
-                <span class="font-display text-xl font-bold text-slate-900 tracking-tight">Orbit</span>
             </a>
 
             <!-- Nav Links (Desktop) -->
-            <nav class="hidden lg:flex items-center gap-10">
-                <a href="#simulator" class="text-sm font-bold text-slate-500 hover:text-brand-600 transition-colors">Simulator</a>
-                <a href="#features" class="text-sm font-bold text-slate-500 hover:text-brand-600 transition-colors">Features</a>
-                <a href="#analytics" class="text-sm font-bold text-slate-500 hover:text-brand-600 transition-colors">Analytics</a>
+            <nav class="hidden lg:flex items-center gap-12">
+                <a href="#simulator" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-brand-600 transition-colors">Simulator</a>
+                <a href="#features" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-brand-600 transition-colors">Advantages</a>
+                <a href="#analytics" class="text-xs font-black uppercase tracking-widest text-slate-500 hover:text-brand-600 transition-colors">Analytics</a>
             </nav>
 
-            <!-- CTA (Desktop) -->
-            <div class="flex items-center gap-4 relative z-[60]">
-                <a href="auth.html" class="hidden sm:block text-sm font-bold text-slate-600 hover:text-brand-600 transition-colors">Sign In</a>
-                <a href="auth.html" class="bg-brand-600 hover:bg-brand-700 text-white rounded-xl px-5 py-2 text-sm font-bold shadow-md shadow-brand-200 transition-all hover:scale-[1.02] active:scale-[0.98]">
-                    Get Started
-                </a>
-                
-                <!-- Mobile Menu Button -->
-                <button onclick="toggleMobileMenu()" class="lg:hidden w-9 h-9 flex flex-col items-center justify-center gap-1.5 focus:outline-none" id="menu-btn">
-                    <span class="w-5 h-0.5 bg-slate-900 transition-all duration-300" id="bar1"></span>
-                    <span class="w-5 h-0.5 bg-slate-900 transition-all duration-300" id="bar2"></span>
-                </button>
+            <!-- Nav Container -->
+            <div class="flex items-center gap-6 relative z-[60] justify-end flex-grow">
+                <!-- Profile Dropdown -->
+                <div class="relative group">
+                    <button onclick="toggleDropdown()" class="flex items-center gap-3 focus:outline-none bg-white p-1 pr-3 rounded-2xl border border-slate-100 shadow-sm hover:border-brand-200 transition-all">
+                        <div class="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-500 overflow-hidden">
+                            <img id="nav-user-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="Profile" class="w-full h-full object-cover">
+                        </div>
+                        <div class="hidden md:flex flex-col text-left">
+                            <span id="nav-user-name" class="text-xs font-black text-slate-900 leading-none">--</span>
+                            <span id="nav-user-tagline" class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Candidate</span>
+                        </div>
+                        <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    
+                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-60 bg-white rounded-[2rem] shadow-2xl border border-slate-100 py-3 z-[100] animate-in fade-in slide-in-from-top-2">
+                        <!-- Navigation Links -->
+                        <div class="px-4 py-2 border-b border-slate-50 mb-1">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Navigation</p>
+                            <a href="dashboard.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Dashboard</a>
+                            <a href="practice.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Practice Hub</a>
+                            <a href="exam.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Exam Simulator</a>
+                            <a href="history.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Performance</a>
+                        </div>
+                        <a href="profile.html" class="flex items-center gap-3 px-5 py-3 text-xs font-black uppercase tracking-widest text-slate-500 hover:bg-slate-50 hover:text-brand-600 transition-all">Settings</a>
+                        <button onclick="handleLogout()" class="flex items-center gap-3 px-5 py-3 text-xs font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 w-full text-left transition-all">Logout Session</button>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="fixed top-20 left-4 right-4 bg-white/90 backdrop-blur-lg border border-slate-200 rounded-2xl p-6 shadow-2xl flex flex-col gap-4 z-40 invisible opacity-0 translate-y-4 transition-all duration-300 lg:hidden">
-        <a href="#simulator" class="text-sm font-bold text-slate-700 hover:text-brand-600">Simulator</a>
-        <a href="#features" class="text-sm font-bold text-slate-700 hover:text-brand-600">Features</a>
-        <a href="#analytics" class="text-sm font-bold text-slate-700 hover:text-brand-600">Analytics</a>
-        <hr class="border-slate-100">
-        <a href="auth.html" class="text-sm font-bold text-slate-700 hover:text-brand-600">Sign In</a>
-    </div>
-
     <!-- 2. HERO SECTION -->
     <section class="relative pt-32 sm:pt-48 pb-20 sm:pb-32 px-6 overflow-hidden">
-        <div class="grid-pattern absolute inset-0 opacity-40 [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)]"></div>
+        <div class="grid-pattern absolute inset-0 opacity-[0.15] [mask-image:radial-gradient(ellipse_at_center,black_70%,transparent_100%)]"></div>
         
+        <!-- Animated Background Orbs -->
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-200/20 rounded-full blur-[120px] animate-float"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-200/20 rounded-full blur-[120px] animate-float" style="animation-delay: -3s"></div>
+
         <div class="container mx-auto text-center relative z-10">
-            <div class="inline-flex items-center gap-2 px-3 py-1 bg-brand-50 border border-brand-100 rounded-full text-[11px] sm:text-[12px] font-black text-brand-600 uppercase tracking-widest mb-8">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/50 backdrop-blur-md border border-brand-100 rounded-full text-[10px] sm:text-[11px] font-black text-brand-600 uppercase tracking-[0.2em] mb-10 shadow-sm animate-slide-up">
                 <span class="flex h-2 w-2 rounded-full bg-brand-600 animate-pulse"></span>
                 The 2026/27 JUPEB Standard
             </div>
             
-            <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold text-slate-900 tracking-tight max-w-4xl mx-auto leading-[1.1] mb-8">
-                Secure Your 15 Points with <br class="hidden sm:block"/><span class="text-gradient">AI-Powered</span> Simulations.
+            <h1 class="font-display text-5xl sm:text-7xl md:text-8xl font-extrabold text-slate-900 tracking-tight max-w-5xl mx-auto leading-[0.95] mb-10 animate-slide-up" style="animation-delay: 0.1s">
+                Master JUPEB with <br class="hidden sm:block"/><span class="text-gradient">Precision</span> & Clarity.
             </h1>
             
-            <p class="text-lg sm:text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed mb-12">
-                Replace manual past questions with a high-fidelity simulator, AI-powered explanations, and real-time admission forecasting. Built for serious candidates.
+            <p class="text-lg sm:text-xl md:text-2xl text-slate-500 max-w-3xl mx-auto leading-relaxed mb-14 animate-slide-up" style="animation-delay: 0.2s">
+                Ditch the outdated PDFs. Experience high-fidelity simulators, AI-driven feedback, and real-time aggregate forecasting designed for top-tier candidates.
             </p>
             
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="auth.html" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white rounded-2xl px-10 py-5 text-lg font-bold shadow-xl shadow-brand-200/50 transition-all hover:-translate-y-1">
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-5 animate-slide-up" style="animation-delay: 0.3s">
+                <a href="auth.html" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white rounded-2xl px-12 py-6 text-lg font-black shadow-2xl shadow-brand-200/50 transition-all hover:-translate-y-1 active:scale-95 group">
                     Begin Your Roadmap
+                    <svg class="inline-block ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7l5 5m0 0l-5 5m5-5H6"></path></svg>
                 </a>
-                <a href="#simulator" class="w-full sm:w-auto bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-2xl px-10 py-5 text-lg font-bold transition-all">
-                    Try Live Teaser
+                <a href="#simulator" class="w-full sm:w-auto bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 rounded-2xl px-12 py-6 text-lg font-bold transition-all hover:border-brand-200 active:scale-95">
+                    Live Demo
                 </a>
             </div>
-        </div>
-    </section>
 
             <!-- Social Proof -->
-            <div class="mt-20 flex flex-col items-center gap-6">
-                <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">Trusted by candidates at leading study centers</p>
-                <div class="flex flex-wrap justify-center gap-10 opacity-40 grayscale contrast-125">
-                    <span class="font-display text-2xl font-black">IBADAN</span>
-                    <span class="font-display text-2xl font-black">LAGOS</span>
-                    <span class="font-display text-2xl font-black">ILORIN</span>
-                    <span class="font-display text-2xl font-black">IFÉ</span>
-                    <span class="font-display text-2xl font-black">BENIN</span>
+            <div class="mt-24 flex flex-col items-center gap-8 animate-slide-up" style="animation-delay: 0.4s">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Empowering candidates across</p>
+                <div class="flex flex-wrap justify-center gap-x-12 gap-y-6 opacity-30 grayscale hover:grayscale-0 transition-all duration-700">
+                    <span class="font-display text-2xl font-black tracking-tighter">UNILAG</span>
+                    <span class="font-display text-2xl font-black tracking-tighter">UNIBADAN</span>
+                    <span class="font-display text-2xl font-black tracking-tighter">UNILORIN</span>
+                    <span class="font-display text-2xl font-black tracking-tighter">OAU IFÉ</span>
+                    <span class="font-display text-2xl font-black tracking-tighter">UNIBEN</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 3. INTERACTIVE SIMULATOR PREVIEW -->
-    <section id="simulator" class="py-24 px-6 relative">
+    <section id="simulator" class="py-24 px-6 relative bg-slate-50/50">
         <div class="container mx-auto">
             <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="font-display text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Experience High-Fidelity.</h2>
+                    <p class="text-slate-500 text-lg max-w-2xl mx-auto font-medium">The closest you can get to the real JUPEB computer-based test environment.</p>
+                </div>
+
                 <div class="relative group">
                     <!-- Glow effect -->
-                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-500 to-accent-600 rounded-[2.5rem] opacity-20 blur-2xl group-hover:opacity-30 transition duration-1000"></div>
+                    <div class="absolute -inset-4 bg-gradient-to-r from-brand-500/20 to-accent-600/20 rounded-[3rem] opacity-20 blur-3xl group-hover:opacity-30 transition duration-1000"></div>
                     
-                    <div class="relative bg-white rounded-3xl border border-slate-200 shadow-premium overflow-hidden flex flex-col lg:flex-row min-h-[640px]">
+                    <div class="relative bg-white rounded-[2.5rem] border border-slate-200 shadow-premium overflow-hidden flex flex-col lg:flex-row min-h-[680px]">
                         <!-- Left Panel: The Question Engine -->
-                        <div class="w-full lg:w-[60%] border-r border-slate-100 p-8 md:p-14 overflow-y-auto">
-                            <div class="flex items-center justify-between mb-10">
-                                <div class="flex items-center gap-3">
-                                    <div class="px-3 py-1 bg-brand-50 text-brand-600 text-xs font-bold rounded-lg uppercase tracking-wider">Physics • Module 02</div>
-                                    <span class="text-slate-400 text-xs font-bold">Question 42 of 50</span>
+                        <div class="w-full lg:w-[60%] border-r border-slate-100 p-8 md:p-14 overflow-y-auto bg-white">
+                            <div class="flex items-center justify-between mb-12">
+                                <div class="flex items-center gap-4">
+                                    <div class="px-4 py-1.5 bg-brand-50 text-brand-600 text-[10px] font-black rounded-full uppercase tracking-widest border border-brand-100">Physics • Module 02</div>
+                                    <span class="text-slate-400 text-[10px] font-black uppercase tracking-widest">Question 42 of 50</span>
                                 </div>
-                                <div class="flex gap-1.5">
+                                <div class="flex gap-2">
                                     <div class="w-2.5 h-2.5 rounded-full bg-slate-100"></div>
                                     <div class="w-2.5 h-2.5 rounded-full bg-slate-100"></div>
-                                    <div class="w-2.5 h-2.5 rounded-full bg-brand-500"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-brand-600 shadow-lg shadow-brand-200"></div>
                                 </div>
                             </div>
 
-                            <h3 class="text-2xl md:text-3xl font-bold text-slate-900 leading-[1.3] mb-10 math-typeset">
-                                A particle of mass <span class="italic">m</span> moves in a horizontal circle of radius <span class="italic">r</span> with a constant speed <span class="italic">v</span>. Which of the following expressions represents the centripetal acceleration?
+                            <h3 class="text-2xl md:text-4xl font-bold text-slate-900 leading-[1.2] mb-12 math-typeset">
+                                A particle of mass <span class="italic">m</span> moves in a horizontal circle of radius <span class="italic">r</span> with a constant speed <span class="italic">v</span>. Which of the following represents the centripetal acceleration?
                             </h3>
 
-                            <div class="space-y-4">
-                                <button class="w-full flex items-center p-5 border-2 border-slate-100 rounded-2xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] hover:shadow-md group/btn">
-                                    <span class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors">A</span>
-                                    <span class="ml-5 text-slate-700 font-semibold math-typeset text-lg">v / r</span>
+                            <div class="space-y-5">
+                                <button class="w-full flex items-center p-6 border-2 border-slate-100 rounded-3xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] group/btn">
+                                    <span class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-xs font-black text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors">A</span>
+                                    <span class="ml-6 text-slate-700 font-bold math-typeset text-xl italic">v / r</span>
                                 </button>
-                                <button class="w-full flex items-center p-5 border-2 border-brand-500 bg-brand-50/50 rounded-2xl shadow-sm transition-all duration-300 transform hover:scale-[1.01] hover:shadow-md">
-                                    <span class="w-8 h-8 rounded-lg bg-brand-500 flex items-center justify-center text-xs font-bold text-white shadow-brand-200">B</span>
-                                    <span class="ml-5 text-slate-900 font-bold math-typeset text-lg">v<sup>2</sup> / r</span>
-                                    <svg class="ml-auto w-6 h-6 text-brand-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                                <button class="w-full flex items-center p-6 border-2 border-brand-600 bg-brand-50/50 rounded-3xl shadow-xl shadow-brand-100/50 transition-all duration-300 transform hover:scale-[1.01]">
+                                    <span class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-xs font-black text-white shadow-lg shadow-brand-200">B</span>
+                                    <span class="ml-6 text-slate-900 font-black math-typeset text-xl italic">v<sup>2</sup> / r</span>
+                                    <div class="ml-auto w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center text-white">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                                    </div>
                                 </button>
-                                <button class="w-full flex items-center p-5 border-2 border-slate-100 rounded-2xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] hover:shadow-md group/btn">
-                                    <span class="w-8 h-8 rounded-lg border border-slate-200 flex items-center justify-center text-xs font-bold text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors">C</span>
-                                    <span class="ml-5 text-slate-700 font-semibold math-typeset text-lg">m v<sup>2</sup> / r</span>
+                                <button class="w-full flex items-center p-6 border-2 border-slate-100 rounded-3xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] group/btn">
+                                    <span class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-xs font-black text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors">C</span>
+                                    <span class="ml-6 text-slate-700 font-bold math-typeset text-xl italic">m v<sup>2</sup> / r</span>
                                 </button>
                             </div>
                         </div>
 
                         <!-- Right Panel: Intelligent Feedback -->
                         <div class="w-full lg:w-[40%] bg-slate-50 flex flex-col border-l border-slate-100">
-                            <div class="flex border-b border-slate-200 bg-white">
-                                <button id="tab-explanation" onclick="switchTeaserTab('explanation')" class="flex-1 py-5 text-xs font-black uppercase tracking-[0.2em] text-brand-600 border-b-2 border-brand-600">
+                            <div class="flex border-b border-slate-200 bg-white p-2 gap-2">
+                                <button id="tab-explanation" onclick="switchTeaserTab('explanation')" class="flex-1 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-brand-600 bg-brand-50 rounded-2xl transition-all">
                                     Explanation
                                 </button>
-                                <button id="tab-metrics" onclick="switchTeaserTab('metrics')" class="flex-1 py-5 text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-600 border-b-2 border-transparent">
+                                <button id="tab-metrics" onclick="switchTeaserTab('metrics')" class="flex-1 py-4 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-600 rounded-2xl transition-all">
                                     Time Metrics
                                 </button>
                             </div>
 
-                            <div id="content-explanation" class="p-8 md:p-10 flex-1 overflow-y-auto">
-                                <div class="bg-emerald-500/10 border border-emerald-500/20 rounded-2xl p-5 mb-8">
-                                    <div class="flex items-center gap-3 mb-2">
-                                        <div class="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
-                                        <span class="text-[11px] font-black uppercase tracking-widest text-emerald-700">Concept Mastery</span>
+                            <div id="content-explanation" class="p-8 md:p-12 flex-1 overflow-y-auto">
+                                <div class="bg-white border border-slate-200 rounded-3xl p-6 mb-10 pro-shadow">
+                                    <div class="flex items-center gap-3 mb-4">
+                                        <div class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></div>
+                                        <span class="text-[10px] font-black uppercase tracking-widest text-emerald-600">AI Concept Mastery</span>
                                     </div>
-                                    <p class="text-sm text-emerald-900 font-semibold leading-relaxed">
-                                        Perfect! You recognized that acceleration is purely kinematic, independent of mass.
+                                    <p class="text-sm text-slate-700 font-bold leading-relaxed">
+                                        Perfect! You recognized that acceleration is purely kinematic, independent of mass. Mass only matters when calculating force.
                                     </p>
                                 </div>
 
-                                <div class="space-y-8">
+                                <div class="space-y-10">
                                     <div>
-                                        <h4 class="text-[11px] font-black text-slate-400 uppercase tracking-[0.2em] mb-4">Derivation Path</h4>
-                                        <div class="space-y-4">
-                                            <div class="flex gap-4">
+                                        <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-6">Derivation Roadmap</h4>
+                                        <div class="space-y-6">
+                                            <div class="flex gap-5">
                                                 <div class="flex flex-col items-center">
-                                                    <div class="w-6 h-6 rounded-full bg-brand-600 text-white text-[10px] font-bold flex items-center justify-center">1</div>
+                                                    <div class="w-8 h-8 rounded-2xl bg-brand-600 text-white text-[10px] font-black flex items-center justify-center shadow-lg shadow-brand-100">01</div>
                                                     <div class="w-0.5 h-full bg-slate-200 mt-2"></div>
                                                 </div>
-                                                <p class="text-sm text-slate-600 leading-relaxed font-medium pb-4">
+                                                <p class="text-sm text-slate-600 leading-relaxed font-bold pb-6">
                                                     The change in velocity direction creates a net acceleration vector pointing toward the center.
                                                 </p>
                                             </div>
-                                            <div class="flex gap-4">
+                                            <div class="flex gap-5">
                                                 <div class="flex flex-col items-center">
-                                                    <div class="w-6 h-6 rounded-full bg-slate-200 text-slate-500 text-[10px] font-bold flex items-center justify-center">2</div>
+                                                    <div class="w-8 h-8 rounded-2xl bg-white border border-slate-200 text-slate-400 text-[10px] font-black flex items-center justify-center">02</div>
                                                 </div>
-                                                <p class="text-sm text-slate-600 leading-relaxed font-medium">
+                                                <p class="text-sm text-slate-600 leading-relaxed font-bold">
                                                     Using circular geometry, <span class="math-typeset">a<sub>c</sub> = lim(&Delta;v/&Delta;t)</span> simplifies to <span class="math-typeset font-bold italic">v<sup>2</sup>/r</span>.
                                                 </p>
                                             </div>
@@ -264,26 +289,28 @@
                                 </div>
                             </div>
 
-                            <div id="content-metrics" class="hidden p-8 md:p-10 flex-1 flex flex-col">
-                                <div class="text-center mb-10">
-                                    <div class="text-4xl font-display font-black text-slate-900 mb-2">00:48</div>
-                                    <div class="text-xs font-bold text-slate-400 uppercase tracking-widest">Time Spent on Question</div>
+                            <div id="content-metrics" class="hidden p-8 md:p-12 flex-1 flex flex-col">
+                                <div class="text-center mb-12 bg-white rounded-[2rem] p-8 border border-slate-200 pro-shadow">
+                                    <div class="text-5xl font-display font-black text-slate-900 mb-3 tracking-tighter">00:48</div>
+                                    <div class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Pacing Analytics</div>
                                 </div>
 
                                 <div class="space-y-6">
-                                    <div class="p-5 bg-white rounded-2xl border border-slate-200 shadow-sm">
-                                        <div class="flex justify-between items-center mb-3">
-                                            <span class="text-xs font-bold text-slate-500">Class Average</span>
+                                    <div class="p-6 bg-white rounded-3xl border border-slate-200 pro-shadow">
+                                        <div class="flex justify-between items-center mb-4">
+                                            <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Global Avg.</span>
                                             <span class="text-xs font-black text-slate-900">01:12</span>
                                         </div>
-                                        <div class="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                                            <div class="h-full bg-brand-500 w-[65%]"></div>
+                                        <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+                                            <div class="h-full bg-brand-600 rounded-full w-[65%]"></div>
                                         </div>
                                     </div>
-                                    <div class="p-5 bg-brand-600 rounded-2xl shadow-lg shadow-brand-200 text-white">
-                                        <div class="text-[10px] font-black uppercase tracking-widest opacity-70 mb-1">Pacing Insight</div>
+                                    <div class="p-8 bg-slate-900 rounded-3xl text-white shadow-2xl">
+                                        <div class="flex items-center gap-2 mb-3">
+                                            <span class="text-[10px] font-black uppercase tracking-widest text-indigo-400">Insight Alpha</span>
+                                        </div>
                                         <p class="text-sm font-bold leading-relaxed">
-                                            You're 33% faster than your peers on this topic. Consider increasing difficulty.
+                                            You're 33% faster than your peers on this topic. Our engine recommends higher complexity targets.
                                         </p>
                                     </div>
                                 </div>
@@ -295,73 +322,137 @@
         </div>
     </section>
 
-    <!-- 4. THE ORBIT ADVANTAGE (Consolidated Features) -->
-    <section id="features" class="py-24 px-6 bg-white">
-        <div class="container mx-auto max-w-6xl">
-            <div class="text-center mb-16">
-                <h2 class="font-display text-3xl md:text-5xl font-extrabold text-slate-900 mb-4 tracking-tight">Standardized Excellence.</h2>
-                <p class="text-slate-500 text-lg max-w-2xl mx-auto font-medium">We've deconstructed the JUPEB curriculum into a measurable roadmap for success.</p>
+    <!-- 4. THE ORBIT ADVANTAGE -->
+    <section id="features" class="py-32 px-6 bg-white relative overflow-hidden">
+        <!-- Background accents -->
+        <div class="absolute top-0 right-0 w-1/3 h-full bg-slate-50/50 -skew-x-12 translate-x-1/2"></div>
+
+        <div class="container mx-auto max-w-7xl relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-20 gap-8">
+                <div class="max-w-2xl">
+                    <div class="text-brand-600 text-[10px] font-black uppercase tracking-[0.3em] mb-4">Core Capabilities</div>
+                    <h2 class="font-display text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-[0.95]">Standardized Excellence.</h2>
+                </div>
+                <p class="text-slate-500 text-lg max-w-sm font-medium leading-relaxed">
+                    We've deconstructed the JUPEB curriculum into a measurable, data-driven roadmap for your success.
+                </p>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Feature 1 -->
-                <div class="p-8 border border-slate-100 rounded-3xl hover:border-brand-100 hover:shadow-xl hover:shadow-brand-50/50 transition-all group">
-                    <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <div class="group p-10 bg-white border border-slate-100 rounded-[2.5rem] hover:border-brand-100 hover:shadow-premium transition-all duration-500 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-brand-50/50 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-brand-100/50 transition-colors"></div>
+                    <div class="w-14 h-14 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-500">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     </div>
-                    <h4 class="font-bold text-slate-900 text-xl mb-3">Weakness Isolation</h4>
-                    <p class="text-slate-500 text-sm leading-relaxed">Our algorithm identifies recurring errors and converts them into spaced-repetition revision cards.</p>
+                    <h4 class="font-display text-2xl font-black text-slate-900 mb-4">Weakness Isolation</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed font-medium">
+                        Our engine identifies recurring conceptual errors and auto-generates spaced-repetition revision cards tailored to your gaps.
+                    </p>
                 </div>
+
                 <!-- Feature 2 -->
-                <div class="p-8 border border-slate-100 rounded-3xl hover:border-brand-100 hover:shadow-xl hover:shadow-brand-50/50 transition-all group">
-                    <div class="w-12 h-12 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="group p-10 bg-white border border-slate-100 rounded-[2.5rem] hover:border-emerald-100 hover:shadow-premium transition-all duration-500 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-emerald-50/50 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-emerald-100/50 transition-colors"></div>
+                    <div class="w-14 h-14 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:-rotate-[5deg] transition-all duration-500">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h4 class="font-bold text-slate-900 text-xl mb-3">Admission Forecasting</h4>
-                    <p class="text-slate-500 text-sm leading-relaxed">Real-time estimation of your 15-point aggregate based on cumulative mock test analytics.</p>
+                    <h4 class="font-display text-2xl font-black text-slate-900 mb-4">Admission Forecast</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed font-medium">
+                        Real-time calculation of your 15-point aggregate based on cumulative analytics and historical university thresholds.
+                    </p>
                 </div>
+
                 <!-- Feature 3 -->
-                <div class="p-8 border border-slate-100 rounded-3xl hover:border-brand-100 hover:shadow-xl hover:shadow-brand-50/50 transition-all group">
-                    <div class="w-12 h-12 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <div class="group p-10 bg-white border border-slate-100 rounded-[2.5rem] hover:border-indigo-100 hover:shadow-premium transition-all duration-500 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-indigo-100/50 transition-colors"></div>
+                    <div class="w-14 h-14 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-[5deg] transition-all duration-500">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     </div>
-                    <h4 class="font-bold text-slate-900 text-xl mb-3">Simulated Pressure</h4>
-                    <p class="text-slate-500 text-sm leading-relaxed">Toggle into "Exam Atmosphere" mode with enforced time limits and hidden explanations.</p>
+                    <h4 class="font-display text-2xl font-black text-slate-900 mb-4">Simulated Pressure</h4>
+                    <p class="text-slate-500 text-sm leading-relaxed font-medium">
+                        Toggle "Exam Atmosphere" to disable hints, enforce strict time-per-question limits, and mirror the actual test day UI.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 5. FINAL CTA & FOOTER -->
-    <footer class="bg-slate-50 py-20 border-t border-slate-200">
-        <div class="container mx-auto px-6 max-w-6xl">
-            <div class="bg-brand-600 rounded-[2.5rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl shadow-brand-100">
-                <div class="absolute inset-0 grid-pattern opacity-10"></div>
-                <h2 class="font-display text-4xl md:text-5xl font-extrabold text-white mb-6 relative z-10 tracking-tight">Secure Your Admission.</h2>
-                <p class="text-brand-100 text-lg mb-10 max-w-xl mx-auto relative z-10 font-medium">Join 12,000+ candidates using the digital standard in JUPEB preparation.</p>
+    <footer class="bg-slate-50 pt-32 pb-12 border-t border-slate-200 relative overflow-hidden">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <!-- Impactful CTA -->
+            <div class="bg-brand-600 rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden shadow-2xl shadow-brand-200/50 group">
+                <div class="absolute inset-0 grid-pattern opacity-10 group-hover:opacity-20 transition-opacity duration-700"></div>
+                <!-- Background Orbs -->
+                <div class="absolute -top-24 -left-24 w-64 h-64 bg-white/10 rounded-full blur-3xl animate-float"></div>
+                <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-accent-400/20 rounded-full blur-3xl animate-float" style="animation-delay: -3s"></div>
+
                 <div class="relative z-10">
-                    <a href="auth.html" class="inline-block bg-white text-brand-600 hover:bg-slate-50 font-black px-12 py-5 rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-xl">
-                        Launch Your Cockpit
-                    </a>
+                    <h2 class="font-display text-4xl md:text-7xl font-extrabold text-white mb-8 tracking-tighter leading-none">Your 15 Points <br/>Wait Here.</h2>
+                    <p class="text-brand-100 text-lg md:text-xl mb-14 max-w-2xl mx-auto font-medium leading-relaxed opacity-90">
+                        Join over 12,000 candidates who have elevated their preparation with the digital standard for JUPEB excellence.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-6">
+                        <a href="auth.html" class="w-full sm:w-auto bg-white text-brand-600 hover:bg-slate-50 font-black px-12 py-6 rounded-2xl transition-all hover:scale-105 active:scale-95 shadow-xl text-lg">
+                            Launch Your Cockpit
+                        </a>
+                        <a href="auth.html" class="text-white font-black text-sm uppercase tracking-[0.2em] border-b-2 border-white/30 hover:border-white transition-all pb-1">
+                            Create Free Account
+                        </a>
+                    </div>
                 </div>
             </div>
 
-            <div class="mt-20 flex flex-col md:flex-row justify-between items-center gap-8">
-                <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 bg-slate-900 rounded-lg flex items-center justify-center shadow-lg">
-                        <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+            <!-- Footer Links -->
+            <div class="mt-32 grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-slate-200 pb-16">
+                <div class="md:col-span-1">
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg">
+                            <img src="logo.png" alt="Orbit" class="w-6 h-6 object-contain">
+                        </div>
+                        <span class="font-display text-2xl font-black text-slate-900 tracking-tighter">Orbit</span>
                     </div>
-                    <span class="font-display text-xl font-extrabold text-slate-900">Orbit</span>
+                    <p class="text-slate-400 text-sm font-medium leading-relaxed">
+                        Redefining Direct Entry preparation through high-fidelity simulation and data-driven learning.
+                    </p>
                 </div>
                 
-                <div class="flex gap-8 text-xs font-bold text-slate-400 uppercase tracking-widest">
-                    <a href="#" class="hover:text-slate-900 transition-colors">Privacy</a>
-                    <a href="#" class="hover:text-slate-900 transition-colors">Terms</a>
-                    <a href="#" class="hover:text-slate-900 transition-colors">Contact</a>
-                    <span class="text-slate-300">© 2026 Orbit Education</span>
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-6">Product</h4>
+                    <ul class="space-y-4 text-sm font-bold text-slate-500">
+                        <li><a href="#simulator" class="hover:text-brand-600 transition-colors">CBT Simulator</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">AI Explainer</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Aggregate Tracker</a></li>
+                    </ul>
                 </div>
-                <div class="text-xs font-bold text-slate-400">
-                    Created by <span class="text-indigo-600">Code Maverick</span>
+
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-6">Resources</h4>
+                    <ul class="space-y-4 text-sm font-bold text-slate-500">
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Past Questions</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Study Roadmap</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Support Center</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-[10px] font-black text-slate-900 uppercase tracking-[0.3em] mb-6">Company</h4>
+                    <ul class="space-y-4 text-sm font-bold text-slate-500">
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">About Orbit</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-brand-600 transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Bar -->
+            <div class="mt-12 flex flex-col md:flex-row justify-between items-center gap-6">
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">
+                    © 2026 Orbit Education Group. All rights reserved.
+                </p>
+                <div class="flex items-center gap-6">
+                    <span class="text-xs font-bold text-slate-400">Created by <span class="text-brand-600">Code Maverick</span></span>
                 </div>
             </div>
         </div>
@@ -369,26 +460,6 @@
 
     <!-- JAVASCRIPT BEHAVIORS -->
     <script>
-        function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu');
-            const bar1 = document.getElementById('bar1');
-            const bar2 = document.getElementById('bar2');
-            
-            if (menu.classList.contains('invisible')) {
-                // Open
-                menu.classList.remove('invisible', 'opacity-0', 'translate-y-4');
-                menu.classList.add('visible', 'opacity-100', 'translate-y-0');
-                bar1.classList.add('rotate-45', 'translate-y-1');
-                bar2.classList.add('-rotate-45', '-translate-y-1');
-            } else {
-                // Close
-                menu.classList.add('invisible', 'opacity-0', 'translate-y-4');
-                menu.classList.remove('visible', 'opacity-100', 'translate-y-0');
-                bar1.classList.remove('rotate-45', 'translate-y-1');
-                bar2.classList.remove('-rotate-45', '-translate-y-1');
-            }
-        }
-
         function switchTeaserTab(tab) {
             const tabs = ['explanation', 'metrics'];
             const contentContainer = document.getElementById('content-explanation').parentElement;
@@ -429,6 +500,10 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js');
             });
+        }
+        
+        window.toggleDropdown = function() {
+            document.getElementById('profile-dropdown').classList.toggle('hidden');
         }
     </script>
 </body>

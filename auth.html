@@ -7,7 +7,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -15,25 +15,26 @@
             theme: {
                 extend: {
                     colors: {
-                        indigo: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            500: '#6366F1',
-                            600: '#4F46E5', // Primary
-                            700: '#4338CA',
+                        brand: {
+                            50: '#f0f4ff',
+                            100: '#e0e9fe',
+                            200: '#c1d3fe',
+                            300: '#92b3fd',
+                            400: '#5c89fa',
+                            500: '#345df6',
+                            600: '#2546eb', // Primary
+                            700: '#1d35d8',
+                            800: '#1e2eaf',
+                            900: '#1e2c8a',
                         },
-                        slate: {
-                            50: '#F8FAFC',
-                            100: '#F1F5F9',
-                            200: '#E2E8F0',
-                            400: '#94A3B8',
-                            600: '#475569',
-                            900: '#0F172A',
+                        accent: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
                         }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Bricolage Grotesque', 'sans-serif'],
                     }
                 }
             }
@@ -44,13 +45,14 @@
             font-family: 'Inter', sans-serif; 
             background-color: #FAFBFF; 
             background-image: 
-                radial-gradient(at 0% 0%, rgba(79, 70, 229, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(37, 70, 235, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
         }
-        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        .font-display { font-family: 'Bricolage Grotesque', sans-serif; }
         .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        input:focus { box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1) !important; }
-        .hidden-state { display: none !important; }
+        input:focus { box-shadow: 0 0 0 4px rgba(37, 70, 235, 0.1) !important; }
+        .hidden-state { opacity: 0; pointer-events: none; position: absolute; transform: translateY(10px); }
+        .visible-state { opacity: 1; pointer-events: auto; position: relative; transform: translateY(0); }
         .glass {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(12px);
@@ -62,23 +64,38 @@
             to { opacity: 1; transform: translateY(0); }
         }
         .animate-slide-up { animation: slideUp 0.6s ease-out forwards; }
+        
+        #loading-overlay {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.4s ease-out;
+        }
     </style>
 </head>
 <body class="text-slate-600 antialiased overflow-x-hidden">
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+        <div class="flex flex-col items-center gap-4">
+            <div class="w-12 h-12 border-4 border-indigo-100 border-t-indigo-600 rounded-full animate-spin"></div>
+            <p class="text-[10px] font-black text-indigo-500 uppercase tracking-[0.2em]">Checking Session...</p>
+        </div>
+    </div>
 
     <main class="min-h-screen grid grid-cols-1 lg:grid-cols-12">
         
         <!-- COLUMN 1: THE DYNAMIC AUTHENTICATION PANEL -->
         <div class="lg:col-span-5 flex flex-col min-h-screen bg-white shadow-2xl z-10">
             <!-- Header/Logo -->
-            <div class="p-8">
+            <div class="p-10">
                 <a href="index.html" class="flex items-center gap-3 group w-fit">
-                    <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center transform group-hover:rotate-[15deg] transition-all duration-300 shadow-lg shadow-indigo-100">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    </div>
-                    <div class="flex flex-col">
-                        <span class="font-display text-xl font-extrabold text-slate-900 tracking-tight leading-none">Orbit</span>
-                        <span class="text-[9px] font-black text-indigo-500 uppercase tracking-[0.2em] mt-1">JUPEB Standard</span>
+                    <div class="w-12 h-12 bg-brand-600 rounded-2xl flex items-center justify-center transform group-hover:rotate-[15deg] transition-all duration-300 shadow-lg shadow-brand-100">
+                        <img src="logo.png" alt="Logo" class="w-7 h-7 object-contain">
                     </div>
                 </a>
             </div>
@@ -89,78 +106,82 @@
                     
                     <!-- STATE A: REGISTRATION (SIGN UP) -->
                     <div id="signup-state" class="transition-all duration-500">
-                        <header class="mb-10">
-                            <h1 class="font-display text-4xl font-extrabold tracking-tight text-slate-900 mb-3 leading-tight">Begin your <span class="text-indigo-600 underline decoration-indigo-200">Orbit</span> journey.</h1>
-                            <p class="text-slate-500 font-medium text-lg leading-relaxed">Join thousands of students mastering the JUPEB curriculum through data-driven practice.</p>
+                        <header class="mb-12">
+                            <h1 class="font-display text-4xl font-black tracking-tighter text-slate-900 mb-4 leading-none">Begin your <br/><span class="text-brand-600 underline decoration-brand-100 underline-offset-4">learning journey.</span></h1>
+                            <p class="text-slate-500 font-medium text-lg leading-relaxed">Join 12,000+ students mastering the curriculum through high-fidelity practice.</p>
                         </header>
 
-                        <form id="registration-form" class="space-y-4">
+                        <form id="registration-form" class="space-y-6">
                             <div>
-                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Full Name</label>
-                                <input id="reg-name" type="text" placeholder="e.g. John Doe" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Full Name</label>
+                                <input id="reg-name" type="text" placeholder="e.g. John Doe" required class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-brand-500 outline-none transition-all font-bold">
                             </div>
                             <div>
-                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Email Address</label>
-                                <input id="reg-email" type="email" autocomplete="email" placeholder="name@domain.com" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Email Address</label>
+                                <input id="reg-email" type="email" autocomplete="email" placeholder="name@domain.com" required class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-brand-500 outline-none transition-all font-bold">
                             </div>
-                            <div>
-                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Password</label>
-                                <input id="reg-pass" type="password" autocomplete="new-password" placeholder="Min. 6 characters" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
-                                <p id="pass-hint" class="hidden text-[11px] font-semibold text-rose-500 mt-1">Password must be at least 6 characters.</p>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Password</label>
+                                    <input id="reg-pass" type="password" autocomplete="new-password" placeholder="Min. 6 chars" required class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-brand-500 outline-none transition-all font-bold">
+                                </div>
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Confirm</label>
+                                    <input id="reg-confirm" type="password" autocomplete="new-password" placeholder="Repeat pass" required class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-brand-500 outline-none transition-all font-bold">
+                                </div>
                             </div>
-                            <div>
-                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Confirm Password</label>
-                                <input id="reg-confirm" type="password" autocomplete="new-password" placeholder="Repeat your password" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
-                                <p id="match-error" class="hidden text-[11px] font-semibold text-rose-500 mt-1">Passwords do not match.</p>
+                            <div class="space-y-1">
+                                <p id="pass-hint" class="hidden text-[10px] font-black text-rose-500 uppercase tracking-widest">⚠️ Password too short (min 6)</p>
+                                <p id="match-error" class="hidden text-[10px] font-black text-rose-500 uppercase tracking-widest">⚠️ Passwords do not match</p>
                             </div>
 
-                            <div class="flex items-center gap-3 py-2">
-                                <input id="reg-terms" type="checkbox" required class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
-                                <label class="text-sm text-slate-500 leading-tight">I agree to the <a href="#" class="text-indigo-600 font-semibold hover:underline">Terms of Academic Service</a> and Privacy Policy.</label>
+                            <div class="flex items-start gap-3 py-2">
+                                <input id="reg-terms" type="checkbox" required class="mt-1 w-5 h-5 rounded-lg border-slate-200 text-brand-600 focus:ring-brand-500 cursor-pointer transition-all">
+                                <label class="text-[13px] text-slate-500 font-medium leading-snug">I agree to the <a href="#" class="text-brand-600 font-bold hover:underline">Terms of Service</a> and our Privacy Policy.</label>
                             </div>
 
-                            <button id="signup-submit" type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-4 font-bold shadow-sm transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
-                                Create My Free Account
+                            <button id="signup-submit" type="submit" class="w-full bg-slate-900 hover:bg-brand-600 text-white rounded-[2rem] py-5 font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-slate-200 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed">
+                                Create Account
                             </button>
                         </form>
 
-                        <footer class="mt-8 text-center">
-                            <p class="text-sm text-slate-500 font-medium">Already tracking your points? <button id="to-signin-btn" class="text-indigo-600 font-bold hover:underline">Sign In</button></p>
+                        <footer class="mt-12 text-center">
+                            <p class="text-sm text-slate-500 font-medium">Already have an account? <button id="to-signin-btn" type="button" class="text-brand-600 font-black hover:underline uppercase tracking-widest text-xs ml-2">Sign In</button></p>
                         </footer>
                     </div>
 
                     <!-- STATE B: SIGN IN (LOGIN) -->
                     <div id="signin-state" class="hidden-state transition-all duration-500">
-                        <header class="mb-8">
-                            <h1 class="font-display text-3xl font-extrabold tracking-tight text-slate-900 mb-2">Welcome back to Orbit</h1>
-                            <p class="text-slate-500 font-medium">Pick up exactly where you left off in your revision tracks.</p>
+                        <header class="mb-12">
+                            <h1 class="font-display text-4xl font-black tracking-tighter text-slate-900 mb-4 leading-none">Welcome back.</h1>
+                            <p class="text-slate-500 font-medium text-lg">Pick up exactly where you left off.</p>
                         </header>
 
-                        <form id="login-form" class="space-y-4">
+                        <form id="login-form" class="space-y-6">
                             <div>
-                                <label class="block text-sm font-bold text-slate-900 mb-1.5">Email Address</label>
-                                <input id="login-email" type="email" autocomplete="email" placeholder="name@domain.com" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Email Address</label>
+                                <input id="login-email" type="email" autocomplete="email" placeholder="name@domain.com" required class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-brand-500 outline-none transition-all font-bold">
                             </div>
                             <div>
-                                <div class="flex justify-between mb-1.5">
-                                    <label class="text-sm font-bold text-slate-900">Password</label>
-                                    <button type="button" class="text-sm font-bold text-indigo-600 hover:underline">Forgot Password?</button>
+                                <div class="flex justify-between mb-2 ml-1">
+                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Password</label>
+                                    <button type="button" onclick="handleForgotPassword()" class="text-[10px] font-black text-brand-600 uppercase tracking-[0.2em] hover:underline">Forgot?</button>
                                 </div>
-                                <input id="login-pass" type="password" autocomplete="current-password" placeholder="Enter your password" required class="w-full bg-white border border-slate-200 rounded-xl px-4 py-3 text-slate-900 placeholder-slate-400 focus:border-indigo-500 outline-none transition-all">
+                                <input id="login-pass" type="password" autocomplete="current-password" placeholder="Enter password" required class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-5 py-4 text-slate-900 placeholder-slate-400 focus:bg-white focus:border-brand-500 outline-none transition-all font-bold">
                             </div>
 
                             <div class="flex items-center gap-3 py-2">
-                                <input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer">
-                                <label class="text-sm text-slate-500 font-medium">Remember me for 30 days</label>
+                                <input type="checkbox" class="w-5 h-5 rounded-lg border-slate-200 text-brand-600 focus:ring-brand-500 cursor-pointer transition-all">
+                                <label class="text-[13px] text-slate-500 font-medium">Keep me signed in for 30 days</label>
                             </div>
 
-                            <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl py-4 font-bold shadow-sm transition-all hover:scale-[1.01] active:scale-[0.98]">
-                                Sign In to Dashboard
+                            <button type="submit" class="w-full bg-slate-900 hover:bg-brand-600 text-white rounded-[2rem] py-5 font-black uppercase tracking-[0.2em] text-sm shadow-xl shadow-slate-200 transition-all hover:scale-[1.02] active:scale-[0.98]">
+                                Sign In
                             </button>
                         </form>
 
-                        <footer class="mt-8 text-center">
-                            <p class="text-sm text-slate-500 font-medium">New to the platform? <button id="to-signup-btn" class="text-indigo-600 font-bold hover:underline">Create an Account</button></p>
+                        <footer class="mt-12 text-center">
+                            <p class="text-sm text-slate-500 font-medium">New to us? <button id="to-signup-btn" type="button" class="text-brand-600 font-black hover:underline uppercase tracking-widest text-xs ml-2">Join Now</button></p>
                         </footer>
                     </div>
 
@@ -168,81 +189,78 @@
             </div>
 
             <!-- Footer Small Link -->
-            <div class="p-8 text-center lg:text-left">
-                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">© 2026 Orbit Education Systems</p>
+            <div class="p-10 text-center lg:text-left border-t border-slate-50">
+                <p class="text-[10px] font-black text-slate-300 uppercase tracking-[0.3em]">© 2026 Education Group</p>
             </div>
         </div>
 
         <!-- COLUMN 2: THE VISUAL ACADEMIC SIDEBAR -->
-        <div class="hidden lg:col-span-7 bg-slate-50 border-l border-slate-100 lg:flex flex-col items-center justify-center p-12 relative overflow-hidden">
+        <div class="hidden lg:col-span-7 bg-slate-50 border-l border-slate-100 lg:flex flex-col items-center justify-center p-16 relative overflow-hidden">
             <!-- Background Decorative Elements -->
-            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-100/50 rounded-full blur-3xl -mr-32 -mt-32"></div>
-            <div class="absolute bottom-0 left-0 w-96 h-96 bg-indigo-50 rounded-full blur-3xl -ml-48 -mb-48"></div>
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-100/30 rounded-full blur-[120px] -mr-64 -mt-64 animate-pulse-slow"></div>
+            <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-accent-100/20 rounded-full blur-[120px] -ml-96 -mb-64 animate-pulse-slow" style="animation-delay: -2s"></div>
 
-            <div class="relative z-10 w-full max-w-md">
+            <div class="relative z-10 w-full max-w-lg">
                 <!-- Floating Preview Card -->
-                <div class="bg-white border border-slate-200 rounded-[2rem] p-8 shadow-[0_20px_50px_-12px_rgba(15,23,42,0.1)]">
+                <div class="bg-white border border-slate-200 rounded-[3rem] p-10 shadow-premium group transition-all duration-700 hover:shadow-2xl">
                     <!-- Top Row -->
-                    <div class="flex items-center justify-between mb-10">
-                        <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white font-bold text-xs">OM</div>
+                    <div class="flex items-center justify-between mb-12">
+                        <div class="flex items-center gap-4">
+                            <div class="w-14 h-14 rounded-2xl bg-slate-900 flex items-center justify-center text-white font-black text-lg shadow-xl">OM</div>
                             <div>
-                                <h4 class="text-sm font-bold text-slate-900 leading-none">Obadoni Malvis</h4>
-                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Candidate ID: 49201</span>
+                                <h4 class="text-lg font-black text-slate-900 tracking-tight leading-none">Code Maverick</h4>
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-2 block">Candidate Alpha-09</span>
                             </div>
                         </div>
-                        <div class="text-right">
-                            <span class="block text-xl font-extrabold text-indigo-600 leading-none">12 / 15</span>
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Points Tracking</span>
+                        <div class="text-right bg-brand-50 px-5 py-3 rounded-2xl border border-brand-100">
+                            <span class="block text-2xl font-black text-brand-600 tracking-tighter leading-none">12.5</span>
+                            <span class="text-[9px] font-black text-brand-400 uppercase tracking-widest mt-1 block">Forecasted</span>
                         </div>
                     </div>
 
                     <!-- Middle: Subject Progress -->
-                    <div class="space-y-6 mb-10">
+                    <div class="space-y-8 mb-12">
                         <div>
-                            <div class="flex justify-between text-[11px] font-bold uppercase tracking-wider mb-2">
+                            <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-3">
                                 <span class="text-slate-400">Mathematics</span>
-                                <span class="text-emerald-600">78%</span>
+                                <span class="text-slate-900">78% Mastery</span>
                             </div>
-                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-emerald-500 rounded-full w-[78%]"></div>
+                            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-50">
+                                <div class="h-full bg-brand-600 rounded-full w-[78%] transition-all duration-1000 shadow-[0_0_8px_rgba(37,70,235,0.4)]"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-[11px] font-bold uppercase tracking-wider mb-2">
+                            <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-3">
                                 <span class="text-slate-400">Physics</span>
-                                <span class="text-amber-500">52%</span>
+                                <span class="text-slate-900">52% Mastery</span>
                             </div>
-                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-amber-400 rounded-full w-[52%]"></div>
+                            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-50">
+                                <div class="h-full bg-accent-500 rounded-full w-[52%] transition-all duration-1000 shadow-[0_0_8px_rgba(139,92,246,0.4)]"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="flex justify-between text-[11px] font-bold uppercase tracking-wider mb-2">
+                            <div class="flex justify-between text-[10px] font-black uppercase tracking-widest mb-3">
                                 <span class="text-slate-400">Chemistry</span>
-                                <span class="text-rose-500">35%</span>
+                                <span class="text-slate-900">35% Mastery</span>
                             </div>
-                            <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
-                                <div class="h-full bg-rose-500 rounded-full w-[35%]"></div>
+                            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-50">
+                                <div class="h-full bg-rose-500 rounded-full w-[35%] transition-all duration-1000"></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Caption Footer -->
-                    <div class="bg-slate-50 rounded-2xl p-5 border border-slate-100">
-                        <div class="flex gap-2 mb-2">
-                            <div class="w-1.5 h-1.5 rounded-full bg-indigo-400"></div>
-                            <div class="w-1.5 h-1.5 rounded-full bg-indigo-200"></div>
-                        </div>
-                        <p class="text-xs text-slate-600 leading-relaxed italic">
-                            "The engine isolates your systemic weak areas automatically, converting missed examination questions into verified point gains."
+                    <!-- Quote Footer -->
+                    <div class="bg-slate-50 rounded-[2rem] p-8 border border-slate-100 relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-24 h-24 bg-brand-100/20 rounded-full blur-2xl -mr-12 -mt-12"></div>
+                        <p class="text-sm text-slate-600 leading-relaxed font-medium italic relative z-10">
+                            "Orbit isolates your systemic weak areas automatically, converting missed examination questions into verified point gains."
                         </p>
                     </div>
                 </div>
 
                 <!-- Secondary Annotation -->
-                <div class="mt-8 text-center">
-                    <p class="text-sm font-medium text-slate-400">Join <span class="text-slate-900 font-bold">12,402 students</span> mastering the curriculum today.</p>
+                <div class="mt-12 text-center animate-pulse">
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-[0.3em]">Join 12,402 candidates today</p>
                 </div>
             </div>
         </div>
@@ -251,10 +269,11 @@
     <!-- FIREBASE & AUTH MECHANICS -->
     <script type="module">
         import { auth, db } from "./firebase-config.js";
-        import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+        import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
         import { doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
 
         // DOM Elements
+        const loadingOverlay = document.getElementById('loading-overlay');
         const signupState = document.getElementById('signup-state');
         const signinState = document.getElementById('signin-state');
         const toSigninBtn = document.getElementById('to-signin-btn');
@@ -263,14 +282,22 @@
         const regForm = document.getElementById('registration-form');
         const loginForm = document.getElementById('login-form');
 
+        const regName = document.getElementById('reg-name');
+        const regEmail = document.getElementById('reg-email');
         const regPass = document.getElementById('reg-pass');
         const regConfirm = document.getElementById('reg-confirm');
+        const regTerms = document.getElementById('reg-terms');
+        
         const passHint = document.getElementById('pass-hint');
         const matchError = document.getElementById('match-error');
         const signupSubmit = document.getElementById('signup-submit');
 
+        let isAuthenticating = false;
+
         // 0. SESSION DETECTION
         onAuthStateChanged(auth, async (user) => {
+            if (isAuthenticating) return; // Let form handlers handle redirection
+
             if (user) {
                 console.log("Session detected:", user.email);
                 try {
@@ -281,27 +308,57 @@
                         window.location.href = "onboarding.html";
                     }
                 } catch (e) {
-                    // If doc read fails (e.g. permission error), still try to go to dashboard
                     window.location.href = "dashboard.html";
                 }
+            } else {
+                // No user, hide loading
+                setTimeout(() => {
+                    loadingOverlay.style.opacity = '0';
+                    setTimeout(() => loadingOverlay.style.display = 'none', 400);
+                }, 500);
             }
         });
 
         // 1. FORM STATE TOGGLE
         toSigninBtn.addEventListener('click', () => {
             signupState.classList.add('hidden-state');
+            signupState.classList.remove('visible-state');
             signinState.classList.remove('hidden-state');
+            signinState.classList.add('visible-state');
         });
 
         toSignupBtn.addEventListener('click', () => {
             signinState.classList.add('hidden-state');
+            signinState.classList.remove('visible-state');
             signupState.classList.remove('hidden-state');
+            signupState.classList.add('visible-state');
         });
 
-        // 2. BASIC REAL-TIME INPUT VALIDATION
+        // 2. FORGOT PASSWORD
+        window.handleForgotPassword = async () => {
+            const email = document.getElementById('login-email').value;
+            if (!email) {
+                alert("Please enter your email address first.");
+                return;
+            }
+            if (confirm(`Send password reset link to ${email}?`)) {
+                try {
+                    await sendPasswordResetEmail(auth, email);
+                    alert("Reset link sent! Please check your inbox.");
+                } catch (e) {
+                    alert("Error: " + e.message);
+                }
+            }
+        };
+
+        // 3. ENHANCED INPUT VALIDATION
         function validateSignup() {
+            const name = regName.value.trim();
+            const email = regEmail.value.trim();
             const pass = regPass.value;
             const confirm = regConfirm.value;
+            const terms = regTerms.checked;
+            
             let isValid = true;
 
             if (pass.length > 0 && pass.length < 6) {
@@ -318,27 +375,30 @@
                 matchError.classList.add('hidden');
             }
 
-            signupSubmit.disabled = !isValid || pass.length < 6 || confirm.length < 6 || pass !== confirm;
+            const allFieldsFilled = name.length > 2 && email.includes('@') && pass.length >= 6 && confirm.length >= 6;
+            signupSubmit.disabled = !isValid || !allFieldsFilled || !terms;
         }
 
-        regPass.addEventListener('input', validateSignup);
-        regConfirm.addEventListener('input', validateSignup);
+        [regName, regEmail, regPass, regConfirm, regTerms].forEach(el => {
+            el.addEventListener('input', validateSignup);
+            el.addEventListener('change', validateSignup);
+        });
 
-        // 3. FIREBASE IMPLEMENTATION
+        // 4. FIREBASE IMPLEMENTATION
         regForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            isAuthenticating = true;
             signupSubmit.disabled = true;
-            signupSubmit.innerText = "Creating Account...";
+            signupSubmit.innerText = "Initializing Cockpit...";
 
-            const fullName = document.getElementById('reg-name').value;
-            const email = document.getElementById('reg-email').value;
+            const fullName = regName.value;
+            const email = regEmail.value;
             const password = regPass.value;
 
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // Store User Details in Firestore
                 await setDoc(doc(db, "users", user.uid), {
                     fullName: fullName,
                     email: email,
@@ -346,10 +406,9 @@
                     onboardingComplete: false
                 });
 
-                console.log("Registration successful for:", email);
                 window.location.href = "onboarding.html";
             } catch (error) {
-                console.error("Registration Error:", error.message);
+                isAuthenticating = false;
                 alert("Registration failed: " + error.message);
                 signupSubmit.disabled = false;
                 signupSubmit.innerText = "Create My Free Account";
@@ -358,19 +417,19 @@
 
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            isAuthenticating = true;
             const submitBtn = e.target.querySelector('button[type="submit"]');
             submitBtn.disabled = true;
-            submitBtn.innerText = "Signing In...";
+            submitBtn.innerText = "Syncing Dashboard...";
 
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-pass').value;
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                console.log("Login successful for:", email);
                 window.location.href = "dashboard.html";
             } catch (error) {
-                console.error("Login Error:", error.message);
+                isAuthenticating = false;
                 alert("Login failed: " + error.message);
                 submitBtn.disabled = false;
                 submitBtn.innerText = "Sign In to Dashboard";

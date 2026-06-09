@@ -148,21 +148,22 @@
                     throw new Error("No subject combination found in profile.");
                 }
 
-                // 1. Sort subjects by mastery to determine weighting
-                // Weights: Lowest Mastery gets 2, Middle gets 2, Highest gets 1
+                // 1. Adaptive Weighting: Prioritize subjects with lower mastery
                 const masteryPairs = userData.combination.map(sub => ({
                     name: sub.toLowerCase(),
                     score: userData.mastery?.[sub.toLowerCase()] || 0
                 })).sort((a, b) => a.score - b.score);
 
+                // Weights: Lowest Mastery gets 3 questions, Middle gets 2, Highest gets 1 (Total 6, then we slice to 5)
+                const counts = [3, 2, 1];
                 const pool = [];
                 
-                // 2. Fetch questions from each subject
+                // 2. Fetch questions from each subject based on weight
                 const commonYears = ["2026", "2025", "2024", "2023", "2022", "2021", "2020"];
                 
                 for (let i = 0; i < masteryPairs.length; i++) {
                     const sub = masteryPairs[i].name;
-                    const countNeeded = i === 2 ? 1 : 2;
+                    const countNeeded = counts[i] || 1;
 
                     // Probe for available years
                     const yearChecks = await Promise.all(commonYears.map(async (y) => {
@@ -181,11 +182,6 @@
                         const picked = questions.sort(() => Math.random() - 0.5).slice(0, countNeeded);
                         pool.push(...picked);
                     }
-                }
-
-                if (pool.length < 5) {
-                    // Fill remaining with a general pool if specific fetches fall short
-                    console.warn("Morning Mix pool under 5. Filling gaps.");
                 }
 
                 quizQuestions = pool.sort(() => Math.random() - 0.5).slice(0, 5);
@@ -232,7 +228,17 @@
             segments.forEach((s, i) => s.classList.toggle('active', i <= currentIndex));
 
             // Re-render Math
-            if (window.renderMathInElement) renderMathInElement(document.body, { delimiters: [{left: "$", right: "$", display: false}] });
+            if (window.renderMathInElement) {
+                renderMathInElement(document.getElementById('quiz-container'), {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false},
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
         }
 
         window.checkAnswer = function(index) {
@@ -275,7 +281,17 @@
                 </div>
             `;
             
-            if (window.renderMathInElement) renderMathInElement(tray, { delimiters: [{left: "$", right: "$", display: false}] });
+            if (window.renderMathInElement) {
+                renderMathInElement(tray, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false},
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
         }
 
         window.handleNext = function() {

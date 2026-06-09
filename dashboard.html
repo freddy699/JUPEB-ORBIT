@@ -7,7 +7,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -15,25 +15,29 @@
             theme: {
                 extend: {
                     colors: {
-                        indigo: {
-                            50: '#f5f3ff',
-                            100: '#ede9fe',
-                            500: '#6366F1',
-                            600: '#4F46E5', // Primary
-                            700: '#4338CA',
+                        brand: {
+                            50: '#f0f4ff',
+                            100: '#e0e9fe',
+                            200: '#c1d3fe',
+                            300: '#92b3fd',
+                            400: '#5c89fa',
+                            500: '#345df6',
+                            600: '#2546eb', // Primary
+                            700: '#1d35d8',
+                            800: '#1e2eaf',
+                            900: '#1e2c8a',
                         },
-                        slate: {
-                            25: '#FBFDFF',
-                            50: '#F8FAFC',
-                            100: '#F1F5F9',
-                            200: '#E2E8F0',
-                            600: '#475569',
-                            900: '#0F172A',
+                        accent: {
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
                         }
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        display: ['Plus Jakarta Sans', 'sans-serif'],
+                        display: ['Bricolage Grotesque', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'premium': '0 20px 50px -12px rgba(0, 0, 0, 0.08)',
                     }
                 }
             }
@@ -44,67 +48,66 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #FFFFFF; }
-        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { font-family: 'Inter', sans-serif; background-color: #FAFBFF; }
+        .font-display { font-family: 'Bricolage Grotesque', sans-serif; }
         .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .radial-progress { transform: rotate(-90deg); transform-origin: 50% 50%; }
         .hide-scrollbar::-webkit-scrollbar { display: none; }
         .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .active-tab { color: #4F46E5; border-bottom: 2px solid #4F46E5; }
+        .active-tab { color: #2546eb; position: relative; }
+        .active-tab::after { content: ''; position: absolute; bottom: -28px; left: 0; width: 100%; height: 3px; background: #2546eb; border-radius: 10px; }
+        .glass { background: rgba(255, 255, 255, 0.75); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255, 255, 255, 0.4); }
+        #mobile-menu { background-color: #ffffff !important; opacity: 1 !important; }
     </style>
 </head>
 <body class="text-slate-600 antialiased overflow-x-hidden">
 
     <!-- TOP NAVIGATION BAR -->
-    <nav class="sticky top-0 w-full h-20 bg-white/80 backdrop-blur-md border-b border-slate-200/60 z-50 px-4 md:px-8 flex items-center justify-between transition-all">
-        <div class="flex items-center gap-4 md:gap-12">
-            <!-- Brand -->
-            <a href="index.html" class="flex items-center gap-2.5 md:gap-3 group">
-                <div class="w-8 h-8 md:w-10 md:h-10 bg-white rounded-lg md:rounded-xl flex items-center justify-center shadow-lg shadow-indigo-100 group-hover:scale-110 transition-transform overflow-hidden">
-                    <img src="logo.png" alt="Orbit Logo" class="w-full h-full object-contain">
+    <nav class="sticky top-0 w-full h-20 glass z-50 px-4 md:px-10 flex items-center justify-between transition-all">
+        <!-- LEFT: Brand -->
+        <div class="flex items-center gap-6">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-white rounded-2xl flex items-center justify-center shadow-lg shadow-slate-100 group-hover:scale-110 transition-transform overflow-hidden">
+                    <img src="logo.png" alt="Logo" class="w-full h-full object-contain">
                 </div>
                 <div class="flex flex-col">
-                    <span class="font-display text-lg md:text-xl font-extrabold text-slate-900 tracking-tight leading-none">Orbit</span>
-                    <span class="text-[8px] md:text-[9px] font-black text-indigo-500 uppercase tracking-[0.2em] mt-1">JUPEB Standard</span>
+                    <span class="font-display text-xl font-black text-slate-900 tracking-tighter leading-none">Dashboard</span>
                 </div>
             </a>
-
-            <!-- Primary Nav (Desktop) -->
-            <div class="hidden lg:flex items-center gap-8">
-                <a href="dashboard.html" class="flex items-center gap-2 text-sm font-bold text-indigo-600">
-                    <span class="w-1.5 h-1.5 rounded-full bg-indigo-600"></span>
-                    Dashboard
-                </a>
-                <a href="practice.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Practice Hub</a>
-                <a href="quiz.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Daily Quiz</a>
-                <a href="exam.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Exam Simulator</a>
-                <a href="history.html" class="text-sm font-bold text-slate-400 hover:text-slate-900 transition-colors">Performance</a>
-            </div>
         </div>
 
-        <div class="flex items-center gap-3 md:gap-6">
+        <!-- CENTER: Desktop Nav -->
+        <div class="hidden lg:flex items-center gap-10">
+            <a href="dashboard.html" class="text-xs font-black uppercase tracking-[0.2em] active-tab">Dashboard</a>
+            <a href="practice.html" class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors">Practice</a>
+            <a href="quiz.html" class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors">Daily Quiz</a>
+            <a href="exam.html" class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors">Simulator</a>
+            <a href="history.html" class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors">Performance</a>
+        </div>
+        
+        <!-- RIGHT: Profile/Actions -->
+        <div class="flex items-center gap-6 ml-auto">
             <!-- Stats -->
-            <div class="hidden sm:flex items-center gap-4 border-r border-slate-200 pr-6">
+            <div class="hidden sm:flex items-center gap-4 bg-slate-50 border border-slate-100 px-5 py-2 rounded-2xl">
                 <div class="text-right">
-                    <div id="streak-display" class="text-xs font-black text-slate-900 leading-none">-- Day Streak</div>
-                    <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1 block">Consistency Loop</span>
+                    <div id="streak-display" class="text-[10px] font-black text-slate-900 leading-none uppercase tracking-widest">-- Day Streak</div>
                 </div>
-                <div class="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.66 11.5c-.21-.07-.43-.14-.65-.21a1.2 1.2 0 01-.84-1.35c.13-.88.13-1.77.13-2.66 0-.3-.1-.59-.28-.83a.9.9 0 00-.7-.34c-.2 0-.41.08-.57.24l-3.23 3.23c-.15.15-.31.3-.47.44a1.2 1.2 0 01-1.68-.2l-1.04-1.3c-.16-.2-.41-.3-.66-.3-.25 0-.5.1-.66.3l-1.4 1.76c-.2.24-.3.55-.28.86.02.3.14.59.34.81l3.54 3.93c.3.34.72.54 1.17.54h3.76c.45 0 .87-.2 1.17-.54l2.5-2.78a1.2 1.2 0 00.23-1.18z"></path></svg>
+                <div class="w-6 h-6 rounded-lg bg-orange-100 flex items-center justify-center text-orange-600">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M17.66 11.5c-.21-.07-.43-.14-.65-.21a1.2 1.2 0 01-.84-1.35c.13-.88.13-1.77.13-2.66 0-.3-.1-.59-.28-.83a.9.9 0 00-.7-.34c-.2 0-.41.08-.57.24l-3.23 3.23c-.15.15-.31.3-.47.44a1.2 1.2 0 01-1.68-.2l-1.04-1.3c-.16-.2-.41-.3-.66-.3-.25 0-.5.1-.66.3l-1.4 1.76c-.2.24-.3.55-.28.86.02.3.14.59.34.81l3.54 3.93c.3.34.72.54 1.17.54h3.76c.45 0 .87-.2 1.17-.54l2.5-2.78a1.2 1.2 0 00.23-1.18z"></path></svg>
                 </div>
             </div>
 
             <!-- Profile Dropdown -->
             <div class="relative group">
-                <button onclick="toggleDropdown()" class="flex items-center gap-2 md:gap-3 md:pl-2 focus:outline-none">
-                    <div class="w-9 h-9 md:w-10 md:h-10 rounded-lg md:rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-500 overflow-hidden shadow-sm">
+                <button onclick="toggleDropdown()" class="flex items-center gap-3 focus:outline-none bg-white p-1 pr-3 rounded-2xl border border-slate-100 shadow-sm hover:border-brand-200 transition-all">
+                    <div class="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-500 overflow-hidden">
                         <img id="nav-user-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="Profile" class="w-full h-full object-cover">
                     </div>
                     <div class="hidden md:flex flex-col text-left">
-                        <span id="nav-user-name" class="text-xs font-bold text-slate-900 leading-none">--</span>
-                        <span id="nav-user-tagline" class="text-[9px] font-bold text-slate-400 uppercase tracking-widest mt-1">Candidate</span>
+                        <span id="nav-user-name" class="text-xs font-black text-slate-900 leading-none">--</span>
+                        <span id="nav-user-tagline" class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Candidate</span>
                     </div>
-                    <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-900 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                    <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
                 </button>
                 
                 <!-- Dropdown -->
@@ -135,27 +138,48 @@
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 md:px-6 py-6 md:py-10 space-y-8 md:space-y-12 max-w-7xl">
+    <main class="container mx-auto px-4 md:px-10 py-10 space-y-12 md:space-y-16 max-w-7xl">
 
         <!-- 0. FEATURE ANNOUNCEMENT: FLASH-MASTER MODE -->
         <section>
-            <div class="bg-indigo-600 rounded-[2rem] md:rounded-[2.5rem] p-8 md:p-12 flex flex-col md:flex-row items-center gap-8 shadow-2xl shadow-indigo-200 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-3xl group-hover:bg-white/20 transition-all duration-700"></div>
+            <div class="bg-brand-600 rounded-[3rem] p-10 md:p-16 flex flex-col md:flex-row items-center gap-12 shadow-2xl shadow-brand-200 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-white/10 rounded-full -translate-y-1/2 translate-x-1/3 blur-[100px] group-hover:bg-white/20 transition-all duration-1000"></div>
                 
                 <div class="flex-1 relative z-10 text-center md:text-left">
-                    <span class="inline-block px-3 py-1 bg-white/20 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-4">New Upgrade</span>
-                    <h2 class="font-display text-3xl md:text-4xl font-extrabold text-white mb-4 leading-tight">Master weaknesses with <span class="underline decoration-indigo-300 text-indigo-100">Flash-Master</span></h2>
-                    <p class="text-indigo-100 text-base md:text-lg mb-8 max-w-lg">Convert failed questions into recall flashcards. Clear your bucket 2x faster.</p>
-                    <button onclick="openFlashMaster()" class="w-full sm:w-auto px-8 py-4 bg-white text-indigo-600 rounded-2xl font-black text-sm shadow-xl hover:scale-105 active:scale-95 transition-all">Launch Study Loop</button>
+                    <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-black text-white uppercase tracking-[0.2em] mb-6">
+                        <span class="flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        Neural Upgrade v3.0
+                    </div>
+                    <h2 class="font-display text-4xl md:text-5xl font-black text-white mb-6 tracking-tighter leading-[0.95]">Master weaknesses <br/>with <span class="text-brand-100 italic">Flash-Master.</span></h2>
+                    <p class="text-brand-50 text-lg md:text-xl mb-10 max-w-xl font-medium opacity-90 leading-relaxed">Our new engine converts systemic conceptual errors into active-recall flashcards automatically.</p>
+                    <div class="flex flex-col sm:flex-row items-center gap-4">
+                        <button onclick="openFlashMaster()" class="w-full sm:w-auto px-10 py-5 bg-white text-brand-600 rounded-2xl font-black text-xs uppercase tracking-[0.2em] shadow-2xl hover:scale-105 active:scale-95 transition-all">Launch Study Loop</button>
+                        <button onclick="toggleFormulaVault()" class="w-full sm:w-auto px-10 py-5 bg-brand-700 text-white rounded-2xl font-black text-xs uppercase tracking-[0.2em] hover:bg-brand-800 transition-all">Vault Access</button>
+                    </div>
                 </div>
 
-                <div class="w-full md:w-72 relative z-10 flex flex-col gap-4">
-                    <div class="bg-white/10 backdrop-blur-md border border-white/20 p-4 rounded-2xl">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] font-bold text-white uppercase tracking-widest">Vault Shortcut</span>
-                            <span class="text-white text-xs hidden sm:inline">Press 'V'</span>
+                <div class="hidden lg:block w-80 relative z-10">
+                    <div class="bg-white/10 backdrop-blur-xl border border-white/20 p-8 rounded-[2.5rem] shadow-inner-glass">
+                        <div class="flex justify-between items-center mb-6">
+                            <span class="text-[10px] font-black text-white uppercase tracking-[0.3em]">Recall Stats</span>
+                            <div class="flex gap-1">
+                                <div class="w-1 h-3 bg-white/40 rounded-full"></div>
+                                <div class="w-1 h-5 bg-white rounded-full"></div>
+                                <div class="w-1 h-2 bg-white/40 rounded-full"></div>
+                            </div>
                         </div>
-                        <button onclick="toggleFormulaVault()" class="w-full py-3 bg-indigo-500 hover:bg-indigo-400 text-white rounded-xl text-xs font-black transition-all">Open Formula Vault</button>
+                        <div class="space-y-6">
+                            <div>
+                                <div class="flex justify-between text-[10px] font-bold text-brand-100 uppercase tracking-widest mb-2">
+                                    <span>Retention</span>
+                                    <span>84%</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                    <div class="h-full bg-white rounded-full w-[84%]"></div>
+                                </div>
+                            </div>
+                            <p class="text-[11px] text-brand-50 font-medium leading-relaxed italic opacity-80">"Consistency in the weakness loop is the primary driver of aggregate point gains."</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,33 +187,34 @@
 
         <!-- 1. THE NORTH STAR POINT FORECASTER -->
         <section>
-            <div class="bg-gradient-to-r from-slate-50 to-white border border-slate-200 p-8 rounded-3xl shadow-[0_1px_3px_rgba(0,0,0,0.02)] flex flex-col md:flex-row justify-between items-start md:items-center gap-8 relative overflow-hidden">
-                <div class="absolute top-0 right-0 w-64 h-full bg-indigo-50/20 skew-x-12 translate-x-32"></div>
+            <div class="bg-white border border-slate-200 p-10 md:p-12 rounded-[2.5rem] shadow-premium flex flex-col lg:flex-row justify-between items-start lg:items-center gap-10 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-1/3 h-full bg-slate-50 -skew-x-12 translate-x-1/2"></div>
 
                 <div class="relative z-10">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-[10px] font-bold text-indigo-500 uppercase tracking-widest bg-indigo-50 px-2 py-0.5 rounded">Admission Forecast</span>
+                    <div class="flex items-center gap-3 mb-4">
+                        <span class="text-[10px] font-black text-brand-600 uppercase tracking-[0.3em] bg-brand-50 px-3 py-1 rounded-lg">Performance Vector</span>
                     </div>
-                    <div class="flex items-baseline gap-2">
-                        <h2 id="aggregate-display" class="text-5xl font-extrabold text-slate-900 tracking-tighter">12 / 15</h2>
-                        <span class="text-slate-400 font-bold text-lg">Points Tracking</span>
+                    <div class="flex items-baseline gap-4">
+                        <h2 id="aggregate-display" class="text-6xl md:text-7xl font-black text-slate-900 tracking-tighter">12 / 15</h2>
+                        <span class="text-slate-400 font-black text-xl uppercase tracking-widest">Aggregate</span>
                     </div>
                 </div>
 
-                <div class="flex-1 max-w-xl w-full relative z-10">
-                    <div class="flex justify-between text-xs font-bold mb-3">
-                        <span id="goal-text" class="text-slate-900">Target Tracking: Loading...</span>
-                        <span class="text-indigo-600">Goal: 13 Points</span>
+                <div class="flex-1 max-w-2xl w-full relative z-10">
+                    <div class="flex justify-between text-[10px] font-black uppercase tracking-[0.2em] mb-4">
+                        <span id="goal-text" class="text-slate-500 italic truncate max-w-[70%]">Tracking Goal: Software Engineering at UI</span>
+                        <span class="text-brand-600">Goal: 13.5 Points</span>
                     </div>
-                    <div class="w-full h-4 bg-slate-200/50 rounded-full relative overflow-hidden">
-                        <div id="point-forecast-bar" class="h-full bg-indigo-600 rounded-full w-[0%] shadow-[0_0_15px_rgba(79,70,229,0.3)] transition-all duration-1000"></div>
+                    <div class="w-full h-5 bg-slate-100 rounded-full relative overflow-hidden p-1 border border-slate-200 shadow-inner">
+                        <div id="point-forecast-bar" class="h-full bg-brand-600 rounded-full w-[0%] shadow-[0_0_20px_rgba(37,70,235,0.4)] transition-all duration-1000"></div>
                     </div>
-                    <div class="mt-4 bg-amber-50 border border-amber-200/70 rounded-2xl p-4 flex items-center gap-4">
-                        <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm border border-amber-100">
-                            <span class="text-lg">⚠️</span>
+                    <div class="mt-8 bg-slate-900 rounded-[2rem] p-6 flex items-center gap-6 shadow-2xl">
+                        <div class="w-12 h-12 bg-brand-600 rounded-2xl flex items-center justify-center shadow-lg shadow-brand-500/20 shrink-0">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                         </div>
-                        <p class="text-sm text-amber-800 font-medium leading-relaxed">
-                            <span class="font-bold">Bonus Point Alert:</span> Raising your Chemistry mock score by 5% will prevent a lower boundary drop, securing your automatic +1 JUPEB Bonus Point allocation!
+                        <p class="text-sm text-slate-300 font-medium leading-relaxed">
+                            <span class="text-white font-black uppercase tracking-widest text-[10px] block mb-1">Strategic Insight</span>
+                            Raising your <span class="text-brand-400 font-bold">Chemistry</span> mock score by 5.2% will prevent a boundary drop, securing your 15-point ceiling.
                         </p>
                     </div>
                 </div>
@@ -197,79 +222,116 @@
         </section>
 
         <!-- 2. THE SUBJECT TRIO GRID -->
-        <section id="subject-cards-container" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="flex items-center justify-between mb-8">
+            <h3 class="font-display text-2xl font-black text-slate-900 tracking-tight">Active Curriculum</h3>
+            <span class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em]">Session: 2026/27</span>
+        </div>
+        <section id="subject-cards-container" class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
             <!-- Dynamic Subject Cards Injected Here -->
-            <div class="col-span-full py-10 text-center text-slate-400 italic">Syncing your curriculum...</div>
+            <div class="col-span-full py-20 text-center">
+                <div class="w-12 h-12 border-4 border-brand-100 border-t-brand-600 rounded-full animate-spin mx-auto mb-4"></div>
+                <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Calibrating Diagnostic Datasets...</p>
+            </div>
         </section>
 
         <!-- 3. THE LIVE WEAKNESS BUCKET REPOSITORY -->
         <section>
-            <div class="bg-white border border-slate-200 rounded-[2.5rem] overflow-hidden">
-                <header class="p-8 border-b border-slate-100 flex items-center justify-between bg-slate-25">
-                    <div class="flex items-center gap-4">
-                        <div class="w-10 h-10 bg-indigo-600 text-white rounded-2xl flex items-center justify-center shadow-indigo-100 shadow-lg">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+            <div class="bg-white border border-slate-200 rounded-[3rem] overflow-hidden shadow-premium">
+                <header class="p-10 border-b border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-6 bg-slate-25/50">
+                    <div class="flex items-center gap-5">
+                        <div class="w-14 h-14 bg-slate-900 text-white rounded-[1.25rem] flex items-center justify-center shadow-2xl">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
                         </div>
-                        <h2 class="font-display text-2xl font-bold text-slate-900">Your Active Weakness Bucket</h2>
+                        <div class="text-center sm:text-left">
+                            <h2 class="font-display text-3xl font-black text-slate-900 tracking-tight">Weakness Bucket</h2>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">Real-time Concept Tracking</p>
+                        </div>
                     </div>
-                    <div class="flex items-center gap-2 px-4 py-2 bg-rose-50 border border-rose-100 rounded-xl">
-                        <div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
-                        <span id="weakness-count" class="text-xs font-extrabold text-rose-600 uppercase tracking-widest">0 Urgent Items to Clear</span>
+                    <div class="flex items-center gap-3 px-6 py-3 bg-rose-50 border border-rose-100 rounded-2xl">
+                        <div class="w-2 h-2 rounded-full bg-rose-500 animate-pulse shadow-[0_0_8px_rgba(244,63,94,0.6)]"></div>
+                        <span id="weakness-count" class="text-[10px] font-black text-rose-600 uppercase tracking-[0.2em]">Analyzing Items...</span>
                     </div>
                 </header>
                 
-                <div id="weakness-list" class="divide-y divide-slate-100">
-                    <div class="p-12 text-center text-slate-400">Loading your profile...</div>
+                <div id="weakness-list" class="divide-y divide-slate-50 max-h-[500px] overflow-y-auto custom-scrollbar">
+                    <div class="p-20 text-center">
+                        <p class="text-sm font-bold text-slate-300 italic">Establishing cloud sync...</p>
+                    </div>
                 </div>
-                <footer class="p-6 bg-slate-50 border-t border-slate-100 flex items-center justify-between">
-                    <p class="text-[11px] text-slate-500 max-w-sm">Items are only cleared after 2 consecutive correct answers on separate practice dates. Systemic mastery is required.</p>
-                    <button onclick="openFlashMaster()" class="px-6 py-3 bg-indigo-600 text-white rounded-xl font-bold text-xs shadow-lg shadow-indigo-200 hover:bg-indigo-700 transition-all">Start Review Loop</button>
+
+                <footer class="p-10 bg-slate-50 border-t border-slate-100 flex flex-col md:flex-row items-center justify-between gap-8">
+                    <p class="text-xs text-slate-500 max-w-lg leading-relaxed font-medium text-center md:text-left">
+                        Items are archived only after <span class="text-slate-900 font-black">2 consecutive mastery confirmations</span> on separate dates. Systemic fluency is required for removal.
+                    </p>
+                    <button onclick="openFlashMaster()" class="w-full md:w-auto px-10 py-5 bg-slate-900 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] shadow-xl hover:bg-brand-600 transition-all active:scale-95">Start Review Loop</button>
                 </footer>
             </div>
         </section>
     </main>
 
     <!-- 4. FORMULA VAULT SIDEBAR -->
-    <div id="formula-vault" class="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-2xl z-[60] translate-x-full transition-transform duration-500 flex flex-col">
-        <div class="p-8 border-b border-slate-100 flex justify-between items-center bg-slate-50">
+    <div id="formula-vault" class="fixed inset-y-0 right-0 w-full max-w-lg bg-white shadow-2xl z-[60] translate-x-full transition-transform duration-700 flex flex-col border-l border-slate-100">
+        <div class="p-10 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
             <div>
-                <h3 class="font-display text-2xl font-bold text-slate-900">Formula Vault</h3>
-                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Active Recall Library</p>
+                <h3 class="font-display text-3xl font-black text-slate-900 tracking-tight text-gradient">Formula Vault</h3>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mt-1">Neural Recall Library</p>
             </div>
-            <button onclick="toggleFormulaVault()" class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-sm hover:bg-rose-50 hover:text-rose-500 transition-all">✕</button>
+            <button onclick="toggleFormulaVault()" class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-premium hover:bg-rose-50 hover:text-rose-500 transition-all active:scale-90">✕</button>
         </div>
         
-        <div class="p-6 border-b border-slate-100">
-            <input type="text" id="formula-search" oninput="searchFormulas()" placeholder="Search formulas (e.g. 'velocity')..." class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 text-sm font-medium outline-none focus:border-indigo-500 transition-all">
+        <div class="p-8 border-b border-slate-100 bg-white sticky top-0 z-20">
+            <div class="relative group">
+                <input type="text" id="formula-search" oninput="searchFormulas()" placeholder="Search neural nodes (e.g. 'entropy')..." class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-6 py-4 text-sm font-bold outline-none focus:bg-white focus:border-brand-500 transition-all shadow-inner">
+                <div class="absolute right-6 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-brand-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+            </div>
         </div>
 
-        <div id="formula-content" class="flex-1 overflow-y-auto p-6 space-y-8 hide-scrollbar">
+        <div id="formula-content" class="flex-1 overflow-y-auto p-8 space-y-10 hide-scrollbar bg-white">
             <!-- Formulas injected here -->
         </div>
     </div>
 
     <!-- 5. FLASH-MASTER MODAL -->
-    <div id="flash-modal" class="fixed inset-0 z-[100] bg-slate-900/90 backdrop-blur-md hidden flex items-center justify-center p-6">
-        <div class="w-full max-w-2xl bg-white rounded-[3rem] overflow-hidden shadow-2xl flex flex-col min-h-[500px]">
-            <header class="p-8 border-b border-slate-100 flex justify-between items-center">
-                <div class="flex items-center gap-4">
-                    <div class="w-10 h-10 bg-indigo-600 rounded-2xl flex items-center justify-center text-white font-bold italic">FM</div>
-                    <h3 class="font-display text-xl font-bold text-slate-900">Flash-Master Loop</h3>
+    <div id="flash-modal" class="fixed inset-0 z-[100] bg-slate-950/95 backdrop-blur-xl hidden flex items-center justify-center p-6">
+        <div class="w-full max-w-3xl bg-white rounded-[3.5rem] overflow-hidden shadow-2xl flex flex-col min-h-[600px] relative">
+            <div class="absolute inset-0 grid-pattern opacity-[0.03] pointer-events-none"></div>
+
+            <header class="p-10 border-b border-slate-50 flex justify-between items-center relative z-10">
+                <div class="flex items-center gap-5">
+                    <div class="w-14 h-14 bg-brand-600 rounded-[1.25rem] flex items-center justify-center text-white font-black italic shadow-2xl shadow-brand-200">FM</div>
+                    <div>
+                        <h3 class="font-display text-2xl font-black text-slate-900 tracking-tight">Flash-Master Loop</h3>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">Sustained Recall Session</p>
+                    </div>
                 </div>
-                <button onclick="closeFlashMaster()" class="text-slate-400 hover:text-slate-900 font-bold">Close</button>
+                <button onclick="closeFlashMaster()" class="w-12 h-12 rounded-full bg-slate-50 flex items-center justify-center text-slate-400 hover:text-slate-900 transition-all">✕</button>
             </header>
 
-            <div id="flash-card-container" class="flex-1 p-12 flex flex-col items-center justify-center text-center">
+            <div id="flash-card-container" class="flex-1 p-12 md:p-20 flex flex-col items-center justify-center text-center relative z-10">
                 <!-- Flashcard content injected here -->
-                <div id="flash-loading" class="text-slate-400 italic">Analyzing your Weakness Bucket...</div>
+                <div id="flash-loading" class="flex flex-col items-center gap-6">
+                    <div class="w-12 h-12 border-4 border-brand-100 border-t-brand-600 rounded-full animate-spin"></div>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest">Analyzing Weakness Vector...</p>
+                </div>
             </div>
 
-            <footer id="flash-footer" class="hidden p-8 bg-slate-50 border-t border-slate-100 grid grid-cols-2 gap-4">
-                <button onclick="handleFlashResponse(false)" class="py-4 bg-white border border-rose-200 text-rose-600 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-rose-50 transition-all">Still Weak</button>
-                <button onclick="handleFlashResponse(true)" class="py-4 bg-indigo-600 text-white rounded-2xl font-black text-xs uppercase tracking-widest shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition-all">Mastered</button>
+            <footer id="flash-footer" class="hidden p-10 bg-slate-50 border-t border-slate-100 grid grid-cols-2 gap-6 relative z-10">
+                <button onclick="handleFlashResponse(false)" class="group py-5 bg-white border border-slate-200 text-slate-400 rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] hover:border-rose-200 hover:text-rose-500 transition-all active:scale-95 flex items-center justify-center gap-2">
+                    Still Weak
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-200 group-hover:bg-rose-400 transition-colors"></span>
+                </button>
+                <button onclick="handleFlashResponse(true)" class="py-5 bg-slate-900 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.2em] shadow-2xl shadow-slate-200 hover:bg-brand-600 transition-all active:scale-95">Mastered</button>
             </footer>
         </div>
     </div>
+
+    <script>
+        function toggleDropdown() {
+            document.getElementById('profile-dropdown').classList.toggle('hidden');
+        }
+    </script>
 
     <!-- FIREBASE & DASHBOARD LOGIC WORKER -->
     <script type="module">
@@ -363,25 +425,53 @@
             if (bar) bar.style.width = `${progressPercent}%`;
         }
 
+        function triggerMath(el) {
+            if (window.renderMathInElement) {
+                renderMathInElement(el, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false},
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
         async function loadWeaknessBucket(uid) {
             const bucketRef = collection(db, "users", uid, "weaknessBucket");
             onSnapshot(bucketRef, (snapshot) => {
                 const list = document.getElementById('weakness-list');
                 const countSpan = document.getElementById('weakness-count');
-                if (snapshot.empty) {
-                    list.innerHTML = `<div class="p-12 text-center text-sm text-slate-400">Your bucket is empty! 🎉</div>`;
-                    if (countSpan) countSpan.innerText = "0 Urgent Items to Clear";
+                const now = new Date();
+
+                const dueItems = [];
+                snapshot.forEach(d => {
+                    const item = d.data();
+                    const nextReview = item.nextReviewDate ? new Date(item.nextReviewDate) : new Date(0);
+                    if (now >= nextReview) dueItems.push({ id: d.id, ...item });
+                });
+
+                if (dueItems.length === 0) {
+                    list.innerHTML = `<div class="p-12 text-center text-sm text-slate-400">All caught up! Next review cycle pending. 🎉</div>`;
+                    if (countSpan) countSpan.innerText = "Bucket is Clear";
                     return;
                 }
-                if (countSpan) countSpan.innerText = `${snapshot.size} Urgent Items to Clear`;
+                
+                if (countSpan) countSpan.innerText = `${dueItems.length} Items Due for Review`;
                 list.innerHTML = "";
-                snapshot.forEach((doc) => {
-                    const item = doc.data();
+                dueItems.forEach((item) => {
                     const div = document.createElement('div');
                     div.className = "p-6 flex items-center gap-6 hover:bg-slate-25 transition-all";
-                    div.innerHTML = `<div class="flex-1 font-bold text-sm text-slate-900">${item.title}</div><button onclick="clearWeaknessItem('${doc.id}')" class="text-xs font-bold text-indigo-600">Clear</button>`;
+                    div.innerHTML = `
+                        <div class="w-2 h-2 rounded-full bg-indigo-400"></div>
+                        <div class="flex-1 font-bold text-sm text-slate-900">${item.title}</div>
+                        <div class="px-2 py-1 bg-slate-100 rounded text-[9px] font-black text-slate-400 uppercase tracking-tighter">Level ${item.srsLevel || 1}</div>
+                    `;
                     list.appendChild(div);
                 });
+                triggerMath(list);
             }, (err) => console.error("Bucket sync error:", err));
         }
 
@@ -396,6 +486,10 @@
         window.handleLogout = async function() { await signOut(auth); window.location.href = "index.html"; }
         
         // --- 4. FORMULA VAULT LOGIC ---
+        window.toggleFormulaVault = function() { 
+            document.getElementById('formula-vault').classList.toggle('translate-x-full'); 
+        }
+
         window.searchFormulas = function() {
             const query = document.getElementById('formula-search').value.toLowerCase();
             renderFormulas(query);
@@ -436,10 +530,6 @@
             if (window.renderMathInElement) renderMathInElement(container);
         }
         renderFormulas(); // Initial render
-
-        window.toggleFormulaVault = function() { 
-            document.getElementById('formula-vault').classList.toggle('translate-x-full'); 
-        }
 
         // --- 5. FLASH-MASTER LOGIC ---
         let flashBucket = [];
@@ -488,17 +578,40 @@
                     </div>
                 </div>
             `;
+            triggerMath(container);
         }
 
         window.handleFlashResponse = async function(mastered) {
             const item = flashBucket[currentFlashIndex];
+            const itemRef = doc(db, "users", currentUser.uid, "weaknessBucket", item.id);
             
             if (mastered) {
-                // If mastered, remove from bucket
-                await deleteDoc(doc(db, "users", currentUser.uid, "weaknessBucket", item.id));
-                flashBucket.splice(currentFlashIndex, 1);
+                // SRS Progression: Level 1=1d, 2=3d, 3=7d, 4=21d, 5=Mastered
+                const currentLevel = item.srsLevel || 1;
+                if (currentLevel >= 4) {
+                    await deleteDoc(itemRef);
+                    flashBucket.splice(currentFlashIndex, 1);
+                } else {
+                    const intervals = [0, 1, 3, 7, 21]; // index matches level
+                    const nextInterval = intervals[currentLevel];
+                    const nextDate = new Date();
+                    nextDate.setDate(nextDate.getDate() + nextInterval);
+                    
+                    await updateDoc(itemRef, {
+                        srsLevel: currentLevel + 1,
+                        nextReviewDate: nextDate.toISOString(),
+                        lastCorrect: new Date().toISOString()
+                    });
+                    flashBucket.splice(currentFlashIndex, 1);
+                }
             } else {
-                // If still weak, just move to next
+                // If failed, reset to level 1 and snooze for 4 hours
+                const resetDate = new Date();
+                resetDate.setHours(resetDate.getHours() + 4);
+                await updateDoc(itemRef, {
+                    srsLevel: 1,
+                    nextReviewDate: resetDate.toISOString()
+                });
                 currentFlashIndex++;
             }
 
@@ -519,5 +632,6 @@
             if (e.key.toLowerCase() === 'v') toggleFormulaVault();
         });
     </script>
-</body>
-</html>
+
+    </body>
+    </html>

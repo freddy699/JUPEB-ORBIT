@@ -2,8 +2,11 @@ import { doc, getDoc, updateDoc, collection, getDocs, query } from "https://www.
 import { db } from "./firebase-config.js";
 
 /**
- * Calculates and updates the user's aggregate score based on exam history.
- * Aggregates all scores from 'examHistory'.
+ * PROFESSIONAL JUPEB SCORE ENGINE
+ * Implements: 
+ * - Confidence-Weighted Mastery (Mocks = 3x weight, Practice = 1x)
+ * - JUPEB Bonus Point (+1 for no F-grades)
+ * - Admission Risk Flagging
  */
 export async function updateAggregateScore(uid) {
     try {
@@ -12,41 +15,85 @@ export async function updateAggregateScore(uid) {
         
         if (snapshot.empty) return;
 
-        let totalScore = 0;
-        let totalMaxScore = 0;
+        const subjectGroups = {};
+        const now = new Date();
 
         snapshot.forEach((doc) => {
             const data = doc.data();
-            if (typeof data.score === 'number' && typeof data.maxScore === 'number') {
-                totalScore += data.score;
-                totalMaxScore += data.maxScore;
-            }
+            const sub = (data.subject || "General").toLowerCase();
+            if (!subjectGroups[sub]) subjectGroups[sub] = [];
+            
+            const ageDays = (now - new Date(data.timestamp)) / (1000 * 60 * 60 * 24);
+            
+            // 1. Recency Weight (Time Decay)
+            let recencyWeight = 0.2;
+            if (ageDays <= 7) recencyWeight = 1.0;
+            else if (ageDays <= 21) recencyWeight = 0.6;
+
+            // 2. Confidence Weight (Mocks carry 3x more predictive value than Practice)
+            const isMock = data.mode === "Mock Simulator" || data.maxScore >= 40;
+            const confidenceWeight = isMock ? 3.0 : 1.0;
+
+            subjectGroups[sub].push({
+                percentage: (data.score / data.maxScore) * 100,
+                weight: recencyWeight * confidenceWeight
+            });
         });
 
-        if (totalMaxScore === 0) return;
+        let totalJupebPoints = 0;
+        let hasFGrade = false;
+        const newMastery = {};
+        const subjectGrades = {};
 
-        // Calculate average percentage, normalized to 15 points
-        const averagePercentage = (totalScore / totalMaxScore);
-        const normalizedAggregate = Math.round(averagePercentage * 15);
+        for (const sub in subjectGroups) {
+            const runs = subjectGroups[sub];
+            let weightedSum = 0;
+            let weightTotal = 0;
+
+            runs.forEach(run => {
+                weightedSum += (run.percentage * run.weight);
+                weightTotal += run.weight;
+            });
+
+            const subjectAverage = weightedSum / weightTotal;
+            newMastery[sub] = subjectAverage / 100;
+
+            // Map to JUPEB Points
+            let points = 0;
+            let grade = 'F';
+
+            if (subjectAverage >= 70) { points = 5; grade = 'A'; }
+            else if (subjectAverage >= 60) { points = 4; grade = 'B'; }
+            else if (subjectAverage >= 50) { points = 3; grade = 'C'; }
+            else if (subjectAverage >= 45) { points = 2; grade = 'D'; }
+            else if (subjectAverage >= 40) { points = 1; grade = 'E'; }
+            else { points = 0; grade = 'F'; hasFGrade = true; }
+
+            totalJupebPoints += points;
+            subjectGrades[sub] = grade;
+        }
+
+        // 3. THE 16th POINT (Official JUPEB Bonus)
+        // One bonus point is awarded if a candidate has no F grade in the three subjects.
+        let bonusPoint = 0;
+        const subjectCount = Object.keys(subjectGroups).filter(s => s !== 'general' && s !== 'daily mix').length;
+        if (subjectCount >= 3 && !hasFGrade) {
+            bonusPoint = 1;
+        }
+
+        const finalAggregate = Math.min(totalJupebPoints + bonusPoint, 16);
 
         const userRef = doc(db, "users", uid);
         await updateDoc(userRef, {
-            aggregateScore: normalizedAggregate
+            aggregateScore: finalAggregate,
+            mastery: newMastery,
+            subjectGrades: subjectGrades,
+            hasAdmissionRisk: hasFGrade,
+            bonusPointAwarded: bonusPoint > 0,
+            lastCalculated: new Date().toISOString()
         });
-
-        // Adaptive Goal Logic
-        if (normalizedAggregate >= 14) {
-            const userData = (await getDoc(userRef)).data();
-            // Only upgrade if not already at the top tier
-            if (userData.targetInstitution !== "Prestigious University") {
-                await updateDoc(userRef, {
-                    targetInstitution: "Prestigious University",
-                    targetDepartment: "Advanced Engineering"
-                });
-            }
-        }
         
     } catch (e) {
-        console.error("Error updating aggregate score:", e);
+        console.error("Error in Professional Score Engine:", e);
     }
 }
