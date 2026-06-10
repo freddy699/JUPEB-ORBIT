@@ -154,6 +154,7 @@
                             <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Navigation</p>
                             <a href="dashboard.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Dashboard</a>
                             <a href="practice.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Practice Hub</a>
+                            <a href="quiz.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Daily Quiz</a>
                             <a href="exam.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Exam Simulator</a>
                             <a href="history.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Performance</a>
                         </div>
@@ -237,7 +238,7 @@
     <script type="module">
         import { auth, db } from "./firebase-config.js";
         import { signOut } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-        import { collection, getDocs, addDoc, query, limit, doc, getDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { collection, getDocs, addDoc, query, limit, doc, getDoc, onSnapshot, where } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
         import { initAuthGuard } from "./auth-guard.js";
         import { updateAggregateScore } from "./score-calculator.js";
 
@@ -286,14 +287,13 @@
             yearSelect.innerHTML = `<option value="" disabled selected>Loading Active Sessions...</option>`;
             
             try {
-                // 1. Fetch Admin Configs for this subject
-                const configSnap = await getDocs(collection(db, "examConfigs"));
+                // 1. Fetch Admin Configs for this specific subject
+                const q = query(collection(db, "examConfigs"), where("subject", "==", sub), where("isActive", "==", true));
+                const configSnap = await getDocs(q);
                 const activeYears = new Set();
                 configSnap.forEach(doc => {
                     const data = doc.data();
-                    if (data.subject === sub && data.isActive) {
-                        activeYears.add(data.year);
-                    }
+                    activeYears.add(data.year);
                 });
 
                 // 2. Cross-reference with actual data availability
