@@ -114,6 +114,12 @@
         html.dark .grid-pattern {
             background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
+        
+        /* 3D Flashcard Utilities */
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+        .rotate-y-180 { transform: rotateY(180deg); }
 
         /* Dark Mode overrides */
         html.dark, html.dark body {
@@ -726,7 +732,7 @@
         import { auth, db } from "./firebase-config.js";
         import { signOut } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
         import { doc, updateDoc, collection, query, getDocs, deleteDoc, onSnapshot, limit, orderBy } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
-        import { FORMULA_DATA } from "./formula-data.js";
+
         import { initAuthGuard } from "./auth-guard.js";
 
         // --- 1.15 SIDEBAR & TAB OPERATIONAL ENGINE ---
@@ -1621,44 +1627,64 @@
             renderFormulas(query);
         }
 
+        let CLOUD_FORMULAS = [];
+        
+        onSnapshot(collection(db, "formulas"), (snap) => {
+            CLOUD_FORMULAS = [];
+            snap.forEach(doc => CLOUD_FORMULAS.push(doc.data()));
+            const searchInput = document.getElementById('formula-search');
+            renderFormulas(searchInput ? searchInput.value.toLowerCase() : "");
+        });
+
         function renderFormulas(filter = "") {
             const container = document.getElementById('formula-content');
+            if (!container) return;
             container.innerHTML = "";
             
             const userCombo = currentUserData?.combination?.map(c => c.toLowerCase()) || ['physics', 'mathematics', 'chemistry'];
             
-            for (const subject in FORMULA_DATA) {
-                if (!userCombo.includes(subject)) continue;
-                const categories = FORMULA_DATA[subject];
-                categories.forEach(cat => {
-                    const filteredFormulas = cat.formulas.filter(f => 
-                        f.name.toLowerCase().includes(filter) || 
-                        cat.topic.toLowerCase().includes(filter)
+            // Group formulas by subject and topic
+            const grouped = {};
+            CLOUD_FORMULAS.forEach(f => {
+                const sub = (f.subject || '').toLowerCase();
+                if (!userCombo.includes(sub)) return;
+                
+                const top = f.topic || 'General';
+                if (!grouped[sub]) grouped[sub] = {};
+                if (!grouped[sub][top]) grouped[sub][top] = [];
+                grouped[sub][top].push(f);
+            });
+
+            for (const subject in grouped) {
+                for (const topic in grouped[subject]) {
+                    const filteredFormulas = grouped[subject][topic].filter(f => 
+                        (f.description && f.description.toLowerCase().includes(filter)) || 
+                        topic.toLowerCase().includes(filter) ||
+                        (f.formula && f.formula.toLowerCase().includes(filter))
                     );
 
                     if (filteredFormulas.length > 0) {
                         const section = document.createElement('div');
                         section.innerHTML = `
                             <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 flex items-center gap-2">
-                                <span class="w-1.5 h-4 bg-brand-600 rounded-full"></span> ${subject} • ${cat.topic}
+                                <span class="w-1.5 h-4 bg-brand-600 rounded-full"></span> ${subject} • ${topic}
                             </h4>
-                            <div class="space-y-4">
+                            <div class="space-y-4 mb-6">
                                 ${filteredFormulas.map(f => `
                                     <div class="p-5 bg-slate-50 border border-slate-100 rounded-2xl group hover:border-brand-200 transition-all">
-                                        <div class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-tight">${f.name}</div>
-                                        <div class="text-lg text-slate-900 font-mono mb-2 formula-render">$$${f.latex}$$</div>
-                                        <p class="text-[11px] text-slate-500 italic">${f.description}</p>
+                                        <div class="text-xs font-bold text-slate-400 mb-2 uppercase tracking-tight">${f.topic}</div>
+                                        <div class="text-lg text-slate-900 font-mono mb-2 formula-render">$$${f.formula}$$</div>
+                                        ${f.description ? `<p class="text-[11px] text-slate-500 italic">${f.description}</p>` : ''}
                                     </div>
                                 `).join('')}
                             </div>
                         `;
                         container.appendChild(section);
                     }
-                });
+                }
             }
             if (window.renderMathInElement) renderMathInElement(container);
         }
-        renderFormulas(); // Initial render
 
         // --- 5. FLASH-MASTER LOGIC ---
         let flashBucket = [];
@@ -1696,17 +1722,46 @@
             if (flashBucket.length === 0) return;
             const item = flashBucket[0];
             
+            let exp = "";
+            if (item.explanation) {
+                if (typeof item.explanation === 'object') {
+                    exp = (item.explanation.coreConcept || "") + " " + (item.explanation.steps || "");
+                } else {
+                    exp = item.explanation;
+                }
+            }
+            
+            let ans = item.options && item.options[item.correctAnswerIndex] ? item.options[item.correctAnswerIndex] : "No answer provided";
+
             container.innerHTML = `
-                <div class="w-full animate-in fade-in zoom-in duration-300">
-                    <span class="px-3 py-1 bg-rose-50 text-rose-600 text-[10px] font-black uppercase tracking-widest rounded-full">Active Weakness</span>
-                    <h3 class="text-2xl md:text-3xl font-bold text-slate-900 mt-6 mb-8 leading-tight">${item.title}</h3>
-                    <div class="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-left">
-                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Mental Prompt</p>
-                        <p class="text-slate-600 font-medium italic">"Recall the core principle or formula needed to solve this. Flip your mind to see if you can explain the 'Why' behind this topic."</p>
+                <div class="w-full max-w-xl mx-auto h-[400px] relative perspective-1000 group cursor-pointer animate-in zoom-in fade-in duration-500" onclick="this.querySelector('.flash-inner').classList.toggle('rotate-y-180')">
+                    <div class="flash-inner w-full h-full absolute transform-style-3d transition-transform duration-700 ease-[cubic-bezier(0.23,1,0.32,1)]">
+                        <!-- Front of Card (Question) -->
+                        <div class="absolute w-full h-full bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 rounded-[2.5rem] p-8 flex flex-col justify-center items-center shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] backface-hidden">
+                            <span class="absolute top-8 px-4 py-1.5 bg-rose-50 text-rose-600 text-[10px] font-black uppercase tracking-[0.2em] rounded-full shadow-sm">Review Needed</span>
+                            <div class="text-lg md:text-xl font-bold text-slate-900 dark:text-white text-center leading-relaxed mt-4 w-full formula-render max-h-48 overflow-y-auto custom-scrollbar">
+                                ${item.questionText || "Question text unavailable"}
+                            </div>
+                            <p class="absolute bottom-8 text-[10px] font-black text-slate-300 uppercase tracking-[0.2em] flex items-center gap-2 animate-bounce">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path></svg>
+                                Tap to flip
+                            </p>
+                        </div>
+                        
+                        <!-- Back of Card (Answer) -->
+                        <div class="absolute w-full h-full bg-brand-600 border border-brand-500 rounded-[2.5rem] p-8 flex flex-col justify-center items-center shadow-[0_30px_60px_-15px_rgba(37,70,235,0.4)] backface-hidden rotate-y-180 transform">
+                            <span class="absolute top-8 px-4 py-1.5 bg-white/20 text-white text-[10px] font-black uppercase tracking-[0.2em] rounded-full">Correct Answer</span>
+                            <div class="text-xl md:text-2xl font-black text-white text-center leading-tight mb-4 w-full formula-render mt-8">
+                                ${ans}
+                            </div>
+                            ${exp ? `<div class="text-xs md:text-sm font-medium text-brand-100 italic text-center max-h-32 overflow-y-auto custom-scrollbar border-t border-brand-500/50 pt-4 mt-2">
+                                ${exp}
+                            </div>` : ''}
+                        </div>
                     </div>
                 </div>
             `;
-            triggerMath(container);
+            if (window.renderMathInElement) renderMathInElement(container);
         }
 
         window.handleFlashResponse = async function(mastered) {
