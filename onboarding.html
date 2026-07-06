@@ -12,6 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -40,6 +41,17 @@
             }
         }
     </script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('jup_theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
@@ -48,6 +60,49 @@
                 radial-gradient(at 0% 0%, rgba(37, 70, 235, 0.05) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
         }
+        
+        /* Dark Mode overrides */
+        html.dark, html.dark body {
+            background-color: #0B0F19 !important;
+            color: #94A3B8 !important;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(37, 70, 235, 0.02) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.02) 0px, transparent 50%) !important;
+        }
+        html.dark .glass-card {
+            background-color: #111827 !important;
+            border-color: #1F2937 !important;
+        }
+        html.dark .border-slate-100 {
+            border-color: #1F2937 !important;
+        }
+        html.dark .text-slate-900 {
+            color: #F3F4F6 !important;
+        }
+        html.dark .text-slate-500 {
+            color: #94A3B8 !important;
+        }
+        html.dark .bg-slate-50 {
+            background-color: #1F2937 !important;
+            border-color: #374151 !important;
+        }
+        html.dark .bg-slate-100 {
+            background-color: #1F2937 !important;
+            color: #6B7280 !important;
+        }
+        html.dark .subject-card.selected {
+            border-color: #2546eb !important;
+            background-color: rgba(37, 70, 235, 0.1) !important;
+        }
+        html.dark .subject-card.selected .icon-wrapper {
+            background-color: #111827 !important;
+            color: #2546eb !important;
+        }
+        html.dark .bg-slate-900 {
+            background-color: #1F2937 !important;
+            border-color: #374151 !important;
+        }
+
         .font-display { font-family: 'Bricolage Grotesque', sans-serif; }
         .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .wizard-step { display: none; }
@@ -81,7 +136,7 @@
         <!-- Brand Header (Simplified) -->
         <div class="flex justify-center mb-12">
             <a href="index.html" class="flex items-center gap-4 group">
-                <div class="w-12 h-12 bg-brand-600 rounded-2xl flex items-center justify-center shadow-lg shadow-brand-100 group-hover:scale-110 transition-transform">
+                <div class="w-12 h-12 bg-white border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
                     <img src="logo.png" alt="Logo" class="w-7 h-7 object-contain">
                 </div>
             </a>
@@ -131,7 +186,7 @@
                 </div>
 
                 <div class="mt-16 flex justify-end">
-                    <button onclick="nextStep()" class="w-full sm:w-auto bg-slate-900 hover:bg-brand-600 text-white font-black uppercase tracking-[0.2em] text-xs px-10 py-5 rounded-[2rem] shadow-xl shadow-slate-200 transition-all hover:scale-105 active:scale-95">
+                    <button id="step-1-next" onclick="nextStep()" disabled class="w-full sm:w-auto bg-slate-900 hover:bg-brand-600 text-white font-black uppercase tracking-[0.2em] text-xs px-10 py-5 rounded-[2rem] shadow-xl shadow-slate-200 transition-all hover:scale-105 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed">
                         Continue to Curriculum →
                     </button>
                 </div>
@@ -320,7 +375,7 @@
                 </div>
 
                 <div class="mt-16 flex flex-col gap-5">
-                    <button onclick="handleSubmit()" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-black uppercase tracking-[0.2em] py-5 rounded-[2.5rem] shadow-2xl shadow-brand-200 transition-all hover:scale-[1.02] active:scale-95 text-xs">
+                    <button id="submit-btn" onclick="handleSubmit()" disabled class="w-full bg-brand-600 hover:bg-brand-700 text-white font-black uppercase tracking-[0.2em] py-5 rounded-[2.5rem] shadow-2xl shadow-brand-200 transition-all hover:scale-[1.02] active:scale-95 text-xs disabled:opacity-30 disabled:cursor-not-allowed">
                         🚀 Finalize & Launch Cockpit
                     </button>
                     <button onclick="prevStep()" class="text-slate-400 font-black uppercase tracking-[0.2em] text-[10px] hover:text-slate-900 transition-all text-center">
@@ -460,6 +515,37 @@
                 finalizeBtn.innerText = "🚀 Finalize & Launch My Flight Deck";
             }
         }
+
+        // Input Validations
+        function validateStep1() {
+            const userVal = document.getElementById('username').value.trim();
+            const tagVal = document.getElementById('tagline').value.trim();
+            const nextBtn = document.getElementById('step-1-next');
+            if (userVal.length >= 2 && tagVal.length >= 2) {
+                nextBtn.disabled = false;
+            } else {
+                nextBtn.disabled = true;
+            }
+        }
+
+        function validateStep3() {
+            const uniVal = document.getElementById('target-uni').value.trim();
+            const majorVal = document.getElementById('target-major').value.trim();
+            const submitBtn = document.getElementById('submit-btn');
+            if (uniVal.length >= 2 && majorVal.length >= 2) {
+                submitBtn.disabled = false;
+            } else {
+                submitBtn.disabled = true;
+            }
+        }
+
+        document.getElementById('username').addEventListener('input', validateStep1);
+        document.getElementById('tagline').addEventListener('input', validateStep1);
+        document.getElementById('target-uni').addEventListener('input', validateStep3);
+        document.getElementById('target-major').addEventListener('input', validateStep3);
+
+        validateStep1();
+        validateStep3();
     </script>
 </body>
 </html>

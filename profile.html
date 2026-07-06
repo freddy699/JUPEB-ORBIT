@@ -12,6 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -40,21 +41,71 @@
             }
         }
     </script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('jup_theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
-            background-color: #FAFBFF; 
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(37, 70, 235, 0.05) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
         }
         .font-display { font-family: 'Bricolage Grotesque', sans-serif; }
         .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+        
+        /* Grid pattern background helper */
+        .grid-pattern {
+            background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 16px 16px;
         }
+        html.dark .grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        /* Dark Mode overrides */
+        html.dark, html.dark body {
+            background-color: #0B0F19 !important;
+            color: #94A3B8 !important;
+        }
+        html.dark .bg-white {
+            background-color: #111827 !important;
+            border-color: #1F2937 !important;
+        }
+        html.dark .border-slate-200 {
+            border-color: #1F2937 !important;
+        }
+        html.dark .text-slate-900 {
+            color: #F3F4F6 !important;
+        }
+        html.dark .text-slate-800 {
+            color: #E5E7EB !important;
+        }
+        html.dark .text-slate-650 {
+            color: #94A3B8 !important;
+        }
+        html.dark .text-slate-600 {
+            color: #94A3B8 !important;
+        }
+        html.dark .text-slate-500 {
+            color: #6B7280 !important;
+        }
+        html.dark .bg-slate-50 {
+            background-color: #1F2937 !important;
+            border-color: #374151 !important;
+        }
+        html.dark .border-slate-100 {
+            border-color: #1f2937 !important;
+        }
+        html.dark .bg-slate-25 {
+            background-color: #111827 !important;
+        }
+
         input:focus { box-shadow: 0 0 0 4px rgba(37, 70, 235, 0.1) !important; }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -63,57 +114,78 @@
         .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-6">
-    <div class="max-w-2xl w-full glass-card p-10 md:p-20 rounded-[3.5rem] shadow-2xl shadow-brand-100/50 animate-fade-in relative overflow-hidden">
+<body class="min-h-screen flex items-center justify-center p-4 bg-slate-50 dark:bg-slate-950 transition-colors">
+    <div class="absolute inset-0 grid-pattern opacity-40 pointer-events-none z-0"></div>
+
+    <div class="max-w-xl w-full bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 md:p-10 rounded-2xl shadow-xl animate-fade-in relative overflow-hidden z-10">
         
-        <!-- Background Glow -->
-        <div class="absolute top-0 right-0 w-80 h-80 bg-brand-50/50 rounded-full blur-3xl -mr-40 -mt-40"></div>
+        <!-- Ambient decorative blur -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-brand-500/5 rounded-full blur-3xl -mr-32 -mt-32 pointer-events-none"></div>
 
         <div class="relative z-10">
-            <header class="flex items-center gap-8 mb-16">
-                <a href="dashboard.html" class="w-14 h-14 bg-white shadow-premium border border-slate-100 flex items-center justify-center rounded-2xl hover:bg-slate-50 transition-all hover:scale-110 active:scale-95">
-                    <svg class="w-6 h-6 text-slate-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
+            <header class="flex items-center gap-6 mb-8 border-b border-slate-100 dark:border-slate-800 pb-6">
+                <a href="dashboard.html" class="w-10 h-10 bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 flex items-center justify-center rounded-xl transition-all hover:scale-105 active:scale-95 text-slate-700 dark:text-white" title="Go back to Dashboard">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
                 </a>
                 <div>
-                    <h1 class="font-display text-4xl font-black text-slate-900 tracking-tight leading-none">Edit Profile</h1>
-                    <p class="text-[10px] font-black text-brand-600 uppercase tracking-[0.3em] mt-2">Cockpit Identity Manager</p>
+                    <h1 class="font-display text-2xl font-black text-slate-900 dark:text-white tracking-tight leading-none">Edit Profile</h1>
+                    <p class="text-[9px] font-black text-brand-600 dark:text-brand-400 uppercase tracking-widest mt-1.5">Cockpit Identity Manager</p>
                 </div>
             </header>
 
-            <div class="space-y-12">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="space-y-6">
+                <!-- Username & Tagline -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-3 ml-1">Username</label>
-                        <input id="username" type="text" placeholder="e.g. malvis_orbit" class="w-full bg-white border border-slate-200 rounded-2xl h-14 px-6 text-slate-900 font-bold focus:border-brand-500 outline-none transition-all">
+                        <label class="block text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 ml-1">Username</label>
+                        <input id="username" type="text" placeholder="e.g. malvis_orbit" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl h-12 px-4 text-slate-900 dark:text-white font-bold focus:border-brand-500 outline-none transition-all text-xs">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-3 ml-1">Tagline</label>
-                        <input id="tagline" type="text" placeholder="e.g. Aspiring Engineer" class="w-full bg-white border border-slate-200 rounded-2xl h-14 px-6 text-slate-900 font-bold focus:border-brand-500 outline-none transition-all">
+                        <label class="block text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 ml-1">Tagline</label>
+                        <input id="tagline" type="text" placeholder="e.g. Aspiring Engineer" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl h-12 px-4 text-slate-900 dark:text-white font-bold focus:border-brand-500 outline-none transition-all text-xs">
                     </div>
                 </div>
                 
-                <div class="pt-12 border-t border-slate-100 space-y-8">
+                <!-- Target Institution & Major -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-100 dark:border-slate-800">
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-3 ml-1">Target Institution</label>
-                        <input id="target-uni" type="text" placeholder="e.g. University of Ibadan" class="w-full bg-white border border-slate-200 rounded-2xl h-14 px-6 text-slate-900 font-bold focus:border-brand-500 outline-none transition-all">
+                        <label class="block text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 ml-1">Target Institution</label>
+                        <input id="target-uni" type="text" placeholder="e.g. University of Ibadan" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl h-12 px-4 text-slate-900 dark:text-white font-bold focus:border-brand-500 outline-none transition-all text-xs">
                     </div>
-                    
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.3em] mb-3 ml-1">Target Academic Major</label>
-                        <input id="target-major" type="text" placeholder="e.g. Computer Science" class="w-full bg-white border border-slate-200 rounded-2xl h-14 px-6 text-slate-900 font-bold focus:border-brand-500 outline-none transition-all">
+                        <label class="block text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 ml-1">Target major</label>
+                        <input id="target-major" type="text" placeholder="e.g. Computer Science" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl h-12 px-4 text-slate-900 dark:text-white font-bold focus:border-brand-500 outline-none transition-all text-xs">
                     </div>
                 </div>
 
-                <div class="pt-12 flex flex-col gap-6">
-                    <button id="save-btn" class="w-full bg-slate-900 hover:bg-brand-600 text-white font-black uppercase tracking-[0.2em] py-6 rounded-[2.5rem] shadow-2xl shadow-slate-200 transition-all hover:scale-[1.02] active:scale-95 text-xs">
+                <!-- Theme Settings -->
+                <div class="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-3">
+                    <label class="block text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest ml-1">App Appearance Theme</label>
+                    <div class="grid grid-cols-3 gap-3">
+                        <button type="button" onclick="setAppTheme('light')" id="theme-light-btn" class="py-2.5 px-3 border border-slate-200 dark:border-slate-800 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-350 bg-slate-50 dark:bg-slate-950/20 hover:border-brand-500 transition-all text-center">
+                            Light Aura
+                        </button>
+                        <button type="button" onclick="setAppTheme('dark')" id="theme-dark-btn" class="py-2.5 px-3 border border-slate-200 dark:border-slate-800 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-350 bg-slate-50 dark:bg-slate-950/20 hover:border-brand-500 transition-all text-center">
+                            Dark Obsidian
+                        </button>
+                        <button type="button" onclick="setAppTheme('system')" id="theme-system-btn" class="py-2.5 px-3 border border-slate-200 dark:border-slate-800 rounded-xl text-[10px] font-black uppercase tracking-wider text-slate-700 dark:text-slate-350 bg-slate-50 dark:bg-slate-955/20 hover:border-brand-500 transition-all text-center">
+                            System
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Save Action -->
+                <div class="pt-6 flex flex-col gap-4">
+                    <button id="save-btn" class="w-full bg-slate-900 dark:bg-brand-600 hover:bg-brand-600 dark:hover:bg-brand-700 text-white font-black uppercase tracking-widest py-4 rounded-xl shadow-lg transition-all active:scale-[0.99] text-[10px]">
                         Synchronize Identity Update
                     </button>
-                    <p class="text-center text-[10px] font-black text-slate-400 uppercase tracking-[0.4em]">Propagating changes to global cloud</p>
+                    <p class="text-center text-[8px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Propagating Changes to Cloud Vault</p>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- LOGIC -->
     <script type="module">
         import { auth, db } from "./firebase-config.js";
         import { doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
@@ -121,9 +193,56 @@
 
         let currentUser = null;
 
+        // --- THEME ENGINE INITIALIZATION ---
+        window.initTheme = function() {
+            const savedTheme = localStorage.getItem('jup_theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+        initTheme();
+
+        window.setAppTheme = function(theme) {
+            if (theme === 'system') {
+                localStorage.removeItem('jup_theme');
+            } else {
+                localStorage.setItem('jup_theme', theme);
+            }
+            initTheme();
+            updateThemeButtons();
+        }
+
+        function updateThemeButtons() {
+            const theme = localStorage.getItem('jup_theme') || 'system';
+            const lightBtn = document.getElementById('theme-light-btn');
+            const darkBtn = document.getElementById('theme-dark-btn');
+            const sysBtn = document.getElementById('theme-system-btn');
+            
+            [lightBtn, darkBtn, sysBtn].forEach(btn => {
+                if (btn) {
+                    btn.classList.remove('border-brand-500', 'text-brand-600', 'dark:text-brand-400', 'bg-brand-50/50', 'dark:bg-brand-950/20');
+                    btn.classList.add('border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-350');
+                }
+            });
+            
+            let activeBtn = sysBtn;
+            if (theme === 'light') activeBtn = lightBtn;
+            else if (theme === 'dark') activeBtn = darkBtn;
+            
+            if (activeBtn) {
+                activeBtn.classList.remove('border-slate-200', 'dark:border-slate-800', 'text-slate-700', 'dark:text-slate-350');
+                activeBtn.classList.add('border-brand-500', 'text-brand-600', 'dark:text-brand-400', 'bg-brand-50/50', 'dark:bg-brand-950/20');
+            }
+        }
+
         onAuthStateChanged(auth, async (user) => {
             if (user) {
                 currentUser = user;
+                updateThemeButtons();
                 const docSnap = await getDoc(doc(db, "users", user.uid));
                 if (docSnap.exists()) {
                     const data = docSnap.data();
@@ -139,7 +258,9 @@
 
         document.getElementById('save-btn').addEventListener('click', async () => {
             const saveBtn = document.getElementById('save-btn');
-            saveBtn.innerText = "Saving...";
+            const originalText = saveBtn.innerText;
+            saveBtn.innerText = "Synchronizing Changes...";
+            saveBtn.disabled = true;
             
             try {
                 await updateDoc(doc(db, "users", currentUser.uid), {
@@ -151,8 +272,9 @@
                 window.location.href = "dashboard.html";
             } catch (e) {
                 console.error(e);
-                alert("Error saving profile.");
-                saveBtn.innerText = "Save Profile Changes";
+                alert("Error synchronizing profile details.");
+                saveBtn.innerText = originalText;
+                saveBtn.disabled = false;
             }
         });
     </script>

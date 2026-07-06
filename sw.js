@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jupeb-orbit-v1';
+const CACHE_NAME = 'jupeb-orbit-v2';
 const ASSETS = [
     '/',
     '/index.html',

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Practice Sandbox | JUPEB Orbit</title>
+    <title>Practice Hub | JUPEB Orbit</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,6 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -22,7 +23,7 @@
                             300: '#92b3fd',
                             400: '#5c89fa',
                             500: '#345df6',
-                            600: '#2546eb',
+                            600: '#2546eb', // Primary
                             700: '#1d35d8',
                             800: '#1e2eaf',
                             900: '#1e2c8a',
@@ -43,232 +44,152 @@
             }
         }
     </script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('jup_theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
     <!-- KaTeX -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     <style>
-        :root {
-            --nav-h: 64px;
-            --footer-h: 72px;
-        }
-
-        * { box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #FAFBFF;
-            -webkit-text-size-adjust: 100%;
-            /* prevent iOS font inflation */
-        }
-
+        body { font-family: 'Inter', sans-serif; }
         .font-display { font-family: 'Bricolage Grotesque', sans-serif; }
-
-        .glass {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-        }
-
-        /* ── Option Buttons ─────────────────────────────── */
-        .option-btn {
-            border: 2px solid #f1f5f9;
-            background-color: #ffffff;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            -webkit-tap-highlight-color: transparent;
-            cursor: pointer;
-        }
-        .option-btn:hover  { border-color: #c1d3fe; background-color: #f0f4ff; transform: translateY(-1px); }
-        .option-btn:active { transform: scale(0.98); }
-        .option-correct    { border-color: #10B981 !important; background-color: #ECFDF5 !important; color: #065F46 !important; box-shadow: 0 6px 20px rgba(16,185,129,0.12); }
-        .option-incorrect  { border-color: #EF4444 !important; background-color: #FEF2F2 !important; color: #991B1B !important; }
-
+        .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        
+        /* Option states */
+        .option-correct { border-color: #10B981 !important; background-color: #F0FDF4 !important; color: #065F46 !important; }
+        html.dark .option-correct { border-color: #10B981 !important; background-color: rgba(16, 185, 129, 0.15) !important; color: #34D399 !important; }
+        .option-incorrect { border-color: #EF4444 !important; background-color: #FEF2F2 !important; color: #991B1B !important; }
+        html.dark .option-incorrect { border-color: #EF4444 !important; background-color: rgba(239, 68, 68, 0.15) !important; color: #F87171 !important; }
         .math-typeset { font-family: 'Times New Roman', Times, serif; }
 
-        /* ── Active nav tab ─────────────────────────────── */
-        .active-tab { color: #2546eb; position: relative; }
-        .active-tab::after {
-            content: '';
-            position: absolute;
-            bottom: -24px;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: #2546eb;
-            border-radius: 10px;
+        /* Sidebar transition styles */
+        #sidebar {
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        #main-content {
+            transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .sidebar-collapsed #sidebar {
+            width: 5rem; /* w-20 */
+        }
+        .sidebar-collapsed #main-content {
+            margin-left: 5rem;
+        }
+        .sidebar-collapsed .sidebar-text {
+            display: none !important;
+        }
+        
+        /* Mobile layout adaptations */
+        @media (max-width: 767px) {
+            #sidebar {
+                transform: translateX(-100%);
+            }
+            #main-content {
+                margin-left: 0 !important;
+            }
+            .mobile-sidebar-open #sidebar {
+                transform: translateX(0);
+            }
+            .mobile-sidebar-open #sidebar-overlay {
+                display: block !important;
+            }
+        }
+        
+        /* Grid pattern background helper */
+        .grid-pattern {
+            background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+            background-size: 16px 16px;
+        }
+        html.dark .grid-pattern {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px);
         }
 
-        /* ── Setup Overlay ─────────────────────────────── */
-        #setup-overlay {
-            background: rgba(2,6,23,0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+        /* Dark Mode overrides */
+        html.dark, html.dark body {
+            background-color: #0B0F19 !important;
+            color: #94A3B8 !important;
         }
-
-        /* ── Setup card mobile ──────────────────────────── */
-        .setup-card {
-            border-radius: 2rem;
-            padding: 1.75rem;
-            max-width: 440px;
-            width: 100%;
+        html.dark .bg-white {
+            background-color: #111827 !important;
+            border-color: #1F2937 !important;
         }
-        @media (min-width: 640px) {
-            .setup-card { padding: 3rem; border-radius: 3rem; }
+        html.dark .border-slate-200 {
+            border-color: #1F2937 !important;
         }
-
-        /* ── Question text – responsive font ───────────── */
-        #practice-view h2.q-text {
-            font-size: clamp(1.05rem, 3.5vw, 1.6rem);
-            line-height: 1.45;
+        html.dark .text-slate-900 {
+            color: #F3F4F6 !important;
         }
-
-        /* ── Option text – responsive font ─────────────── */
-        .option-text {
-            font-size: clamp(0.875rem, 2.8vw, 1.1rem);
-            line-height: 1.5;
+        html.dark .text-slate-805 {
+            color: #F3F4F6 !important;
         }
-
-        /* ── Option letter badge ────────────────────────── */
-        .opt-badge {
-            width: 2.25rem;
-            height: 2.25rem;
-            min-width: 2.25rem;
-            font-size: 0.7rem;
+        html.dark .text-slate-800 {
+            color: #E5E7EB !important;
         }
-        @media (min-width: 640px) {
-            .opt-badge { width: 2.75rem; height: 2.75rem; min-width: 2.75rem; font-size: 0.75rem; }
+        html.dark .text-slate-650 {
+            color: #94A3B8 !important;
         }
-
-        /* ── Option button padding ──────────────────────── */
-        .option-btn {
-            padding: 0.875rem 1rem;
+        html.dark .text-slate-600 {
+            color: #94A3B8 !important;
         }
-        @media (min-width: 640px) {
-            .option-btn { padding: 1.25rem 1.5rem; }
+        html.dark .text-slate-500 {
+            color: #6B7280 !important;
         }
-
-        /* ── Feedback card ──────────────────────────────── */
-        .feedback-card {
-            padding: 1.5rem;
-            border-radius: 2rem;
+        html.dark .bg-slate-50 {
+            background-color: #1F2937 !important;
+            border-color: #374151 !important;
         }
-        @media (min-width: 640px) {
-            .feedback-card { padding: 2.5rem; border-radius: 3rem; }
+        html.dark .border-slate-100 {
+            border-color: #1f2937 !important;
         }
-
-        .feedback-title {
-            font-size: clamp(1rem, 3vw, 1.4rem);
+        html.dark .bg-slate-25 {
+            background-color: #111827 !important;
         }
-        .feedback-steps {
-            font-size: clamp(0.825rem, 2.5vw, 1rem);
-            line-height: 1.75;
+        html.dark .bg-slate-25\/50 {
+            background-color: rgba(17, 24, 39, 0.5) !important;
         }
-
-        /* ── Progress bar area ──────────────────────────── */
-        .progress-wrap { width: 120px; }
-        @media (min-width: 640px) { .progress-wrap { width: 180px; } }
-
-        /* ── Footer nav ─────────────────────────────────── */
-        #page-footer {
-            padding: 0.75rem 1rem;
+        html.dark .border-slate-50 {
+            border-color: #1f2937 !important;
         }
-        @media (min-width: 640px) {
-            #page-footer { padding: 1.25rem 2rem; }
-        }
-
-        /* ── Hint button ────────────────────────────────── */
-        .hint-btn {
-            width: 3rem;
-            height: 3rem;
-            border-radius: 1rem;
-        }
-        @media (min-width: 640px) {
-            .hint-btn { width: 3.5rem; height: 3.5rem; }
-        }
-
-        /* ── Next/Prev buttons ──────────────────────────── */
-        .nav-next {
-            font-size: clamp(0.6rem, 2vw, 0.7rem);
-            padding: 0.875rem 1.25rem;
-        }
-        @media (min-width: 640px) {
-            .nav-next { padding: 1.125rem 2rem; }
-        }
-        .nav-prev {
-            font-size: clamp(0.6rem, 2vw, 0.7rem);
-            padding: 0.75rem 0.75rem;
-            white-space: nowrap;
-        }
-
-        /* ── Session meta text ──────────────────────────── */
-        .q-number-box {
-            font-size: clamp(0.85rem, 3vw, 1.1rem);
-        }
-
-        /* ── Dropdown ───────────────────────────────────── */
-        #profile-dropdown {
-            right: 0;
-            min-width: 220px;
-        }
-
-        /* Smooth transition */
-        .fade-up {
-            animation: fadeUp 0.45s cubic-bezier(0.22,1,0.36,1) both;
-        }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Spin loader */
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .spin { animation: spin 0.8s linear infinite; }
     </style>
 </head>
-<body class="text-slate-600 antialiased overflow-x-hidden min-h-screen flex flex-col">
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-600 antialiased overflow-x-hidden min-h-screen flex transition-colors">
 
-    <!-- ══════════════════ SETUP OVERLAY ══════════════════ -->
-    <div id="setup-overlay" class="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        <div class="setup-card bg-white shadow-2xl relative overflow-hidden">
+    <!-- SETUP OVERLAY -->
+    <div id="setup-overlay" class="fixed inset-0 z-[100] bg-slate-900/40 dark:bg-slate-955/80 backdrop-blur-md flex items-center justify-center p-5 transition-all duration-500">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 md:p-10 max-w-sm w-full shadow-2xl relative overflow-hidden">
+            <div class="absolute inset-0 grid-pattern opacity-[0.02] pointer-events-none"></div>
             <div class="relative z-10">
-                <!-- Icon -->
-                <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-xl flex items-center justify-center mb-6 shadow-inner">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"/>
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                    </svg>
+                <div class="w-12 h-12 bg-brand-50 dark:bg-brand-900/20 text-brand-600 dark:text-brand-400 rounded-xl flex items-center justify-center mb-6 shadow-inner">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
-
-                <h2 class="font-display text-2xl sm:text-3xl font-black text-slate-900 mb-1 tracking-tight leading-none">Practice Sandbox</h2>
-                <p class="text-slate-500 text-sm font-medium mb-8 leading-relaxed">Initialize a targeted curriculum track for focused revision.</p>
-
-                <div class="space-y-5">
+                <h2 class="font-display text-2xl font-black text-slate-900 dark:text-white mb-2 tracking-tight leading-none">Practice Sandbox</h2>
+                <p class="text-slate-500 dark:text-slate-400 text-xs font-semibold mb-8 leading-relaxed">Initialize a targeted curriculum track for focused revision.</p>
+                
+                <div class="space-y-4">
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Curriculum Track</label>
-                        <select id="subject-select" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-4 py-3.5 text-sm font-bold text-slate-900 outline-none focus:bg-white focus:border-brand-500 transition-all shadow-inner">
+                        <label class="block text-[8px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 ml-1">Curriculum Track</label>
+                        <select id="subject-select" onchange="loadAvailableYearsForSelectedSubject()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-xl px-4 py-3.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:bg-white dark:focus:bg-slate-800 focus:border-brand-500 transition-all">
                             <option value="" disabled selected>Select Subject</option>
                         </select>
                     </div>
                     <div>
-                        <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2 ml-1">Academic Cycle</label>
-                        <select id="year-select" class="w-full bg-slate-50 border border-slate-100 rounded-2xl px-4 py-3.5 text-sm font-bold text-slate-900 outline-none focus:bg-white focus:border-brand-500 transition-all shadow-inner">
-                            <option value="2026">2026</option>
-                            <option value="2025">2025</option>
-                            <option value="2024">2024</option>
-                            <option value="2023">2023</option>
-                            <option value="2022">2022</option>
-                            <option value="2021">2021</option>
-                            <option value="2020">2020</option>
-                            <option value="2019">2019</option>
-                            <option value="2018">2018</option>
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                            <option value="2014">2014</option>
+                        <label class="block text-[8px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 ml-1">Academic Cycle</label>
+                        <select id="year-select" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-800 rounded-xl px-4 py-3.5 text-xs font-bold text-slate-900 dark:text-white outline-none focus:bg-white dark:focus:bg-slate-800 focus:border-brand-500 transition-all">
+                            <option value="" disabled selected>Select Track First</option>
                         </select>
                     </div>
-                    <button onclick="startPractice()" class="w-full py-4 bg-slate-900 hover:bg-brand-600 text-white rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs shadow-xl shadow-slate-200 transition-all hover:scale-[1.02] active:scale-95 mt-2">
+                    <button onclick="startPractice()" class="w-full py-4 bg-slate-900 hover:bg-brand-600 dark:bg-brand-600 dark:hover:bg-brand-700 text-white rounded-xl font-black uppercase tracking-widest text-[10px] shadow-lg shadow-brand-500/10 hover:scale-[1.01] active:scale-[0.99] transition-all mt-4">
                         Initialize Engine
                     </button>
                 </div>
@@ -276,170 +197,250 @@
         </div>
     </div>
 
-    <!-- ══════════════════ TOP NAV ══════════════════ -->
-    <nav class="sticky top-0 w-full glass z-50 px-4 md:px-10 flex items-center justify-between" style="height:var(--nav-h)">
-        <!-- Brand -->
-        <a href="index.html" class="flex items-center gap-2.5 group shrink-0">
-            <div class="w-9 h-9 bg-white rounded-xl flex items-center justify-center shadow-lg shadow-slate-100 group-hover:scale-110 transition-transform overflow-hidden">
-                <img src="logo.png" alt="Logo" class="w-full h-full object-contain">
+    <!-- SIDEBAR NAV -->
+    <aside id="sidebar" class="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 transition-all duration-300 flex flex-col justify-between">
+        <!-- Top Section -->
+        <div>
+            <!-- Brand -->
+            <div class="h-20 px-6 flex items-center gap-3 border-b border-slate-200 dark:border-slate-800">
+                <div class="w-8 h-8 rounded-xl bg-white border border-slate-200 dark:border-slate-800 flex items-center justify-center text-white font-black overflow-hidden shrink-0 shadow-sm">
+                    <img src="logo.png" alt="Logo" class="w-full h-full object-contain">
+                </div>
+                <span class="font-display text-lg font-black text-slate-900 dark:text-white tracking-tight sidebar-text">JUPEB Orbit</span>
             </div>
-            <span class="font-display text-base sm:text-lg font-black text-slate-900 tracking-tighter leading-none">Practice Hub</span>
-        </a>
-
-        <!-- Desktop Nav Links -->
-        <div class="hidden lg:flex items-center gap-8 xl:gap-10">
-            <a href="dashboard.html"  class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors">Dashboard</a>
-            <a href="practice.html"   class="text-xs font-black uppercase tracking-[0.2em] active-tab">Practice Sandbox</a>
-            <a href="exam.html"       class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors">Simulator</a>
-            <a href="history.html"    class="text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-slate-900 transition-colors">Performance</a>
+            
+            <!-- Nav Links -->
+            <nav class="p-4 space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2v-4zM14 16a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2v-4z"></path></svg>
+                    <span class="sidebar-text">Dashboard</span>
+                </a>
+                <a href="practice.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-black uppercase tracking-wider text-brand-600 bg-brand-50/50 dark:bg-brand-600/10 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364.364l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 113.536 0V21h2v-2.73"></path></svg>
+                    <span class="sidebar-text">Practice Hub</span>
+                </a>
+                <a href="quiz.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    <span class="sidebar-text">Daily Quiz</span>
+                </a>
+                <a href="exam.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <span class="sidebar-text">Simulator</span>
+                </a>
+                <a href="history.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    <span class="sidebar-text">Performance</span>
+                </a>
+                <a href="profile.html" class="flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                    <span class="sidebar-text">Settings</span>
+                </a>
+            </nav>
         </div>
-
-        <!-- Profile Dropdown -->
-        <div class="relative shrink-0">
-            <button onclick="toggleDropdown()" class="flex items-center gap-2 focus:outline-none bg-white p-1 pr-3 rounded-2xl border border-slate-100 shadow-sm hover:border-brand-200 transition-all">
-                <div class="w-8 h-8 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-500 overflow-hidden">
-                    <img id="nav-user-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="Profile" class="w-full h-full object-cover">
-                </div>
-                <div class="hidden sm:flex flex-col text-left">
-                    <span id="nav-user-name" class="text-xs font-black text-slate-900 leading-none">--</span>
-                    <span id="nav-user-tagline" class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-0.5">Candidate</span>
-                </div>
-                <svg class="w-3 h-3 text-slate-400 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
-                </svg>
+        
+        <!-- Bottom Section -->
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800">
+            <!-- Sidebar toggle button (desktop) -->
+            <button onclick="toggleSidebar()" class="hidden md:flex w-full items-center justify-center py-2 mb-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 transition-colors">
+                <svg id="sidebar-toggle-icon" class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11 19l-7-7 7-7m8 14l-7-7 7-7"></path></svg>
             </button>
-
-            <div id="profile-dropdown" class="hidden absolute right-0 mt-3 bg-white rounded-[2rem] shadow-2xl border border-slate-100 py-3 z-[100]">
-                <div class="px-4 py-2 border-b border-slate-50 mb-1">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Navigation</p>
-                    <a href="dashboard.html"  class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Dashboard</a>
-                    <a href="practice.html"   class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Practice Hub</a>
-                    <a href="quiz.html"       class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Daily Quiz</a>
-                    <a href="exam.html"       class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Exam Simulator</a>
-                    <a href="history.html"    class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Performance</a>
+            
+            <!-- User summary -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-25 dark:border-slate-700 flex items-center justify-center font-bold text-slate-500 overflow-hidden shrink-0">
+                    <img id="sidebar-user-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="Profile" class="w-full h-full object-cover">
                 </div>
-                <a href="profile.html" class="flex items-center gap-3 px-5 py-3 text-xs font-black uppercase tracking-widest text-slate-500 hover:bg-slate-50 hover:text-brand-600 transition-all">Settings</a>
-                <button onclick="handleLogout()" class="flex items-center gap-3 px-5 py-3 text-xs font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 w-full text-left transition-all">Logout Session</button>
-            </div>
-        </div>
-    </nav>
-
-    <!-- ══════════════════ MAIN ══════════════════ -->
-    <main class="flex-1 w-full max-w-4xl mx-auto px-4 sm:px-6 md:px-10 py-6 md:py-10">
-
-        <!-- Page Title -->
-        <h1 id="header-title" class="font-display text-lg sm:text-xl md:text-2xl font-black text-slate-900 mb-6">Practice Sandbox</h1>
-
-        <!-- Session Header Meta -->
-        <div class="flex items-center justify-between mb-6 sm:mb-10 gap-3">
-            <!-- Left: Q number + meta -->
-            <div class="flex items-center gap-3 min-w-0">
-                <div class="w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl sm:rounded-2xl border border-slate-100 flex items-center justify-center shadow-premium shrink-0">
-                    <span id="q-number-box" class="q-number-box font-black text-slate-900 leading-none">--</span>
-                </div>
-                <div class="min-w-0">
-                    <div id="q-meta-display" class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] truncate">Calibrating...</div>
-                    <div id="q-topic-badge" class="text-[11px] sm:text-xs font-bold text-brand-600 mt-0.5 truncate">Topic Analysis Pending</div>
-                </div>
-            </div>
-
-            <!-- Right: Progress -->
-            <div class="flex flex-col items-end shrink-0">
-                <div class="text-[9px] sm:text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-1.5">Progress</div>
-                <div class="progress-wrap h-2 bg-slate-100 rounded-full overflow-hidden border border-slate-50 shadow-inner">
-                    <div id="progress-bar" class="h-full bg-brand-600 rounded-full w-[0%] transition-all duration-700 shadow-[0_0_8px_rgba(37,70,235,0.4)]"></div>
+                <div class="flex flex-col text-left overflow-hidden sidebar-text">
+                    <span id="sidebar-user-name" class="text-xs font-black text-slate-900 dark:text-white truncate">--</span>
+                    <span id="sidebar-user-tagline" class="text-[9px] font-black text-slate-400 dark:text-slate-550 uppercase tracking-widest mt-0.5 truncate">Candidate</span>
                 </div>
             </div>
         </div>
+    </aside>
 
-        <!-- Question Content Rendered Here -->
-        <div id="practice-view" class="space-y-6 sm:space-y-10">
-            <div class="py-24 text-center">
-                <div class="w-10 h-10 border-4 border-brand-100 border-t-brand-600 rounded-full spin mx-auto mb-5"></div>
-                <p class="text-xs font-black text-slate-300 uppercase tracking-[0.3em]">Initializing Question Engine...</p>
-            </div>
-        </div>
-    </main>
+    <div id="sidebar-overlay" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-slate-950/40 backdrop-blur-sm z-40 transition-opacity"></div>
 
-    <!-- ══════════════════ STICKY FOOTER NAV ══════════════════ -->
-    <footer id="page-footer" class="bg-white/85 backdrop-blur-xl border-t border-slate-100 sticky bottom-0 z-40">
-        <div class="max-w-4xl mx-auto flex items-center gap-3">
-            <!-- Prev -->
-            <button id="prev-btn" class="nav-prev text-slate-400 hover:text-slate-900 font-black uppercase tracking-[0.15em] transition-all border-b-2 border-transparent hover:border-slate-900 shrink-0">
-                ← Prev
-            </button>
-
-            <!-- Next + Hint -->
-            <div class="flex items-center gap-2 flex-1">
-                <button id="next-btn" class="nav-next flex-1 bg-slate-900 text-white hover:bg-brand-600 rounded-[2rem] font-black uppercase tracking-[0.15em] shadow-xl shadow-slate-200 transition-all active:scale-95 disabled:opacity-30 text-center">
-                    Next →
+    <!-- MAIN SHELL CONTAINER -->
+    <div id="main-content" class="flex-1 min-h-screen ml-64 transition-all duration-300 flex flex-col overflow-hidden bg-slate-50 dark:bg-slate-950">
+        <!-- Sticky Top Bar -->
+        <header class="sticky top-0 h-20 bg-white/80 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-6 md:px-10 flex items-center justify-between z-45 shrink-0">
+            <!-- Left Header -->
+            <div class="flex items-center gap-4">
+                <!-- Mobile Menu toggle -->
+                <button onclick="toggleMobileSidebar()" class="md:hidden p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
-                <button onclick="toggleHint()" class="hint-btn bg-brand-50 text-brand-600 flex items-center justify-center hover:bg-brand-100 transition-all shadow-inner border border-brand-100 shrink-0">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
-                    </svg>
-                </button>
+                <div>
+                    <h1 id="header-title" class="font-display text-xl font-black text-slate-900 dark:text-white tracking-tight leading-none">Practice Sandbox</h1>
+                    <p class="text-[9px] font-black text-slate-400 dark:text-slate-550 uppercase tracking-widest mt-1.5">Focused Revision Mode</p>
+                </div>
             </div>
-        </div>
-    </footer>
 
-    <!-- ══════════════════ LOGIC ══════════════════ -->
+            <!-- Right Header Actions (Streak/Progress) -->
+            <div class="flex items-center gap-4">
+                <div class="hidden sm:flex items-center gap-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 px-4 py-2 rounded-xl">
+                    <span class="text-[8px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest block leading-none">Progress</span>
+                    <div class="w-24 h-2 bg-slate-100 dark:bg-slate-950 rounded-full overflow-hidden p-0.5 border border-slate-200 dark:border-slate-850">
+                        <div id="progress-bar" class="h-full bg-brand-600 dark:bg-brand-550 rounded-full w-[0%] transition-all duration-700"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- MAIN VIEW WRAPPER -->
+        <main class="flex-grow p-6 md:p-10 max-w-4xl w-full mx-auto space-y-6 overflow-y-auto pb-28">
+            <!-- Session Header Meta -->
+            <div class="flex items-center justify-between mb-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 shadow-sm">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl flex items-center justify-center shadow-inner shrink-0">
+                        <span id="q-number-box" class="text-base font-black text-slate-900 dark:text-white leading-none">--</span>
+                    </div>
+                    <div>
+                        <div id="q-meta-display" class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Calibrating...</div>
+                        <div id="q-topic-badge" class="text-xs font-bold text-brand-600 dark:text-brand-400 mt-0.5">Topic Analysis Pending</div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="practice-view" class="space-y-12">
+                <!-- Questions will be rendered here -->
+                <div class="py-32 text-center">
+                    <div class="w-12 h-12 border-4 border-brand-100 border-t-brand-600 rounded-full animate-spin mx-auto mb-6"></div>
+                    <p class="text-xs font-black text-slate-300 dark:text-slate-650 uppercase tracking-[0.3em]">Initializing Question Engine...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- PRO-GRADE NAVIGATION FOOTER (Sticky inside main content frame) -->
+        <footer class="bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-850 p-4 md:p-6 fixed bottom-0 left-0 right-0 md:left-64 z-30 transition-all duration-300">
+            <div class="max-w-4xl mx-auto flex items-center justify-between gap-6">
+                <button id="prev-btn" class="px-5 py-3 text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white font-black uppercase tracking-widest text-[9px] transition-all">
+                    ← Prev Node
+                </button>
+                
+                <div class="flex items-center gap-3.5 flex-1 max-w-sm">
+                    <button id="next-btn" class="flex-1 py-3.5 bg-slate-900 dark:bg-brand-600 hover:bg-brand-600 dark:hover:bg-brand-700 text-white rounded-xl font-black uppercase tracking-widest text-[9px] shadow-lg transition-all active:scale-[0.99] disabled:opacity-30">
+                        Process Next Task →
+                    </button>
+                    <button onclick="toggleHint()" class="w-11 h-11 bg-brand-50 dark:bg-brand-900/20 text-brand-600 dark:text-brand-400 rounded-xl flex items-center justify-center hover:bg-brand-100 dark:hover:bg-brand-950/40 transition-all border border-brand-100 dark:border-brand-900/50 shrink-0 shadow-sm" title="Toggle Hint">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- LOGIC -->
     <script type="module">
         import { auth, db } from "./firebase-config.js";
         import { signOut } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-        import { collection, query, getDocs, doc, addDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { collection, query, getDocs, doc, getDoc, addDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
         import { initAuthGuard } from "./auth-guard.js";
         import { updateAggregateScore } from "./score-calculator.js";
+
+        // --- THEME ENGINE INITIALIZATION ---
+        function initTheme() {
+            const savedTheme = localStorage.getItem('jup_theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+        initTheme();
 
         let currentQuestions = [];
         let currentIndex = 0;
         let isAnswered = false;
         let currentUser = null;
+        let currentSubject = "";
+        let currentYear = "";
 
-        // ── Auth Guard ──────────────────────────────────────
+        // 0. INITIALIZE AUTH GUARD
         initAuthGuard().then(({ user, userData }) => {
             if (user) {
                 currentUser = user;
                 setupSubjectSelector(userData);
+                setupSidebarSync(user.uid);
                 checkAutoLaunch();
             }
         });
+
+        function setupSidebarSync(uid) {
+            onSnapshot(doc(db, "users", uid), (docSnap) => {
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    const name = data.username || "Student";
+                    const tagline = data.tagline || "Candidate";
+                    
+                    document.getElementById('sidebar-user-name').innerText = name;
+                    document.getElementById('sidebar-user-tagline').innerText = tagline;
+                    document.getElementById('sidebar-user-avatar').src = `https://api.dicebear.com/7.x/avataaars/svg?seed=${name}`;
+                }
+            });
+        }
+
+        window.toggleSidebar = function() {
+            document.body.classList.toggle('sidebar-collapsed');
+            const icon = document.getElementById('sidebar-toggle-icon');
+            if (icon) {
+                icon.classList.toggle('rotate-180');
+            }
+        }
+
+        window.toggleMobileSidebar = function() {
+            document.body.classList.toggle('mobile-sidebar-open');
+        }
 
         async function setupSubjectSelector(data) {
             const combination = data.combination || ["physics", "mathematics", "chemistry"];
             const select = document.getElementById('subject-select');
             if (select) {
-                select.innerHTML = combination
-                    .map(sub => `<option value="${sub.toLowerCase().replace(/\s+/g, '-')}">${sub}</option>`)
-                    .join('');
+                select.innerHTML = combination.map(sub => `<option value="${sub.toLowerCase().replace(/\s+/g, '-')}">${sub}</option>`).join('');
+                loadAvailableYearsForSelectedSubject();
             }
         }
 
-        window.handleLogout = async () => {
-            await signOut(auth);
-            window.location.href = "index.html";
-        };
-
-        // ── Dropdown ────────────────────────────────────────
-        window.toggleDropdown = () => {
-            const dd = document.getElementById('profile-dropdown');
-            dd.classList.toggle('hidden');
-        };
-        document.addEventListener('click', (e) => {
-            const dd = document.getElementById('profile-dropdown');
-            if (!e.target.closest('#profile-dropdown') && !e.target.closest('[onclick="toggleDropdown()"]')) {
-                dd.classList.add('hidden');
+        window.loadAvailableYearsForSelectedSubject = async function() {
+            const subSelect = document.getElementById('subject-select');
+            const yearSelect = document.getElementById('year-select');
+            if (!subSelect || !yearSelect) return;
+            
+            const selectedSubject = subSelect.value;
+            if (!selectedSubject) return;
+            
+            yearSelect.innerHTML = `<option value="" disabled selected>Loading cycles...</option>`;
+            
+            try {
+                const yearsSnap = await getDocs(collection(db, "subjects", selectedSubject, "years"));
+                const years = yearsSnap.docs.map(doc => doc.id);
+                years.sort((a, b) => b.localeCompare(a));
+                
+                if (years.length > 0) {
+                    yearSelect.innerHTML = years.map(y => `<option value="${y}">${y}</option>`).join('');
+                } else {
+                    yearSelect.innerHTML = `<option value="none" disabled selected>No Data Yet</option>`;
+                }
+            } catch (e) {
+                console.error("Error loading years for subject select:", e);
+                yearSelect.innerHTML = `<option value="none" disabled selected>Error loading data</option>`;
             }
-        });
+        }
 
-        // ── Auto Launch ─────────────────────────────────────
+        window.handleLogout = async () => { await signOut(auth); window.location.href = "index.html"; };
+
+        // 1. SESSION ORCHESTRATION
         async function checkAutoLaunch() {
             const params = new URLSearchParams(window.location.search);
             const sub = params.get('subject');
             const year = params.get('year');
             if (sub && year) {
+                currentSubject = sub;
+                currentYear = year;
                 document.getElementById('setup-overlay').classList.add('hidden');
-                document.getElementById('header-title').innerText = `${cap(sub)} · ${year}`;
+                document.getElementById('header-title').innerText = `${sub.charAt(0).toUpperCase() + sub.slice(1)} • ${year} Sandbox`;
                 await loadQuestions(sub, year);
             }
         }
@@ -448,219 +449,265 @@
             const sub = document.getElementById('subject-select').value;
             const year = document.getElementById('year-select').value;
             if (!sub || !year) { alert("Please select subject and year."); return; }
+            currentSubject = sub;
+            currentYear = year;
+            
             document.getElementById('setup-overlay').classList.add('hidden');
-            document.getElementById('header-title').innerText = `${cap(sub)} · ${year}`;
+            document.getElementById('header-title').innerText = `${sub.charAt(0).toUpperCase() + sub.slice(1)} • ${year} Sandbox`;
             await loadQuestions(sub, year);
-        };
+        }
 
-        function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-        // ── Load Questions ──────────────────────────────────
         async function loadQuestions(subject, year) {
             const container = document.getElementById('practice-view');
-            container.innerHTML = `
-                <div class="py-24 text-center">
-                    <div class="w-10 h-10 border-4 border-brand-100 border-t-brand-600 rounded-full spin mx-auto mb-5"></div>
-                    <p class="text-xs font-black text-slate-300 uppercase tracking-[0.3em]">Loading Questions...</p>
-                </div>`;
-
+            container.innerHTML = `<div class="text-center py-20 animate-pulse text-slate-400 font-bold">Initializing Question Engine...</div>`;
+            
             try {
                 const qRef = collection(db, "subjects", subject, "years", year, "questions");
                 const snap = await getDocs(query(qRef));
-
+                
                 if (snap.empty) {
                     container.innerHTML = `
-                        <div class="text-center py-20 space-y-4">
-                            <p class="text-slate-500 font-bold text-sm">No data found for this year. Try another selection.</p>
-                            <a href="dashboard.html" class="inline-block px-6 py-3 bg-brand-600 text-white rounded-2xl font-bold text-sm">Return to Dashboard</a>
-                        </div>`;
+                        <div class="text-center py-20 space-y-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8">
+                            <p class="text-slate-500 dark:text-slate-400 font-bold text-xs uppercase tracking-widest">No questions found for this cycle</p>
+                            <a href="dashboard.html" class="inline-block px-6 py-3.5 bg-brand-600 hover:bg-brand-700 text-white rounded-xl font-black text-[10px] uppercase tracking-widest transition-all">Return to Deck</a>
+                        </div>
+                    `;
                     return;
                 }
 
-                currentQuestions = snap.docs
-                    .map(d => ({ id: d.id, ...d.data() }))
-                    .sort(() => Math.random() - 0.5);
-
+                currentQuestions = snap.docs.map(doc => ({ id: doc.id, ...doc.data() })).sort(() => Math.random() - 0.5);
                 window.sessionTotal = currentQuestions.length;
                 window.sessionScore = 0;
                 currentIndex = 0;
+                
                 renderQuestion();
             } catch (e) {
                 console.error(e);
-                container.innerHTML = `<div class="text-center py-20 text-rose-500 font-bold text-sm">Database connection error.</div>`;
+                container.innerHTML = `<div class="text-center py-20 text-rose-500 font-bold bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl">Database connection error.</div>`;
             }
         }
 
-        // ── Render Question ─────────────────────────────────
         function renderQuestion() {
             const q = currentQuestions[currentIndex];
             const container = document.getElementById('practice-view');
             isAnswered = false;
 
-            // Meta
+            // Update Header Meta
             document.getElementById('q-number-box').innerText = currentIndex + 1;
-            document.getElementById('q-meta-display').innerText = `${q.year || '----'} · JUPEB`;
+            document.getElementById('q-meta-display').innerText = `${q.year || '----'} • JUPEB Series`;
             document.getElementById('q-topic-badge').innerText = q.syllabusTopic || 'General Curriculum';
 
-            // Progress
-            const pct = (currentIndex / currentQuestions.length) * 100;
-            document.getElementById('progress-bar').style.width = `${pct}%`;
+            // Update Progress Bar
+            const progress = ((currentIndex) / currentQuestions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
 
             container.innerHTML = `
-                <div class="max-w-3xl mx-auto space-y-6 sm:space-y-8 fade-up">
-                    <!-- Question Text -->
-                    <h2 class="q-text font-bold text-slate-900 leading-relaxed math-typeset">${q.questionText}</h2>
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-6 md:p-8 rounded-xl space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-500 shadow-premium relative">
+                    <div class="absolute inset-0 grid-pattern opacity-[0.02] pointer-events-none"></div>
+                    <div class="relative z-10">
+                        <h2 id="question-text" class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white leading-relaxed math-typeset">${q.questionText}</h2>
+                    </div>
 
-                    <!-- Options -->
-                    <div class="grid grid-cols-1 gap-3 sm:gap-4">
-                        ${q.options.map((opt, i) => `
-                            <button onclick="checkAnswer(${i})" class="option-btn group w-full flex items-center gap-3 sm:gap-4 rounded-2xl text-left">
-                                <div class="opt-badge rounded-xl bg-slate-50 flex items-center justify-center font-black text-slate-400 group-hover:bg-brand-600 group-hover:text-white transition-all shadow-inner shrink-0">
-                                    ${String.fromCharCode(65 + i)}
-                                </div>
-                                <span class="option-text text-slate-700 font-semibold math-typeset">${opt}</span>
+                    <div class="grid grid-cols-1 gap-3.5 relative z-10">
+                        ${q.options.map((opt, i) => {
+                            const cleanOpt = opt.replace(/\\,\^/g, '^');
+                            return `
+                            <button onclick="checkAnswer(${i})" class="option-btn w-full p-4 border border-slate-100 dark:border-slate-805 rounded-xl text-left font-bold hover:border-brand-300 dark:hover:border-brand-500 hover:bg-brand-50/20 dark:hover:bg-brand-950/10 transition-all active:scale-[0.98] flex items-center">
+                                <span class="inline-block w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-800 text-center leading-8 text-xs font-black text-slate-500 dark:text-slate-450 mr-4 shrink-0">${String.fromCharCode(65 + i)}</span>
+                                <span class="text-sm md:text-base text-slate-800 dark:text-slate-200 math-typeset leading-relaxed">${cleanOpt}</span>
                             </button>
-                        `).join('')}
+                        `}).join('')}
                     </div>
 
-                    <div id="feedback-area" class="hidden"></div>
+                    <!-- Dynamic Hint Box -->
+                    <div id="hint-box" class="hidden bg-brand-50 dark:bg-brand-900/10 border border-brand-100 dark:border-brand-900/40 rounded-xl p-5 text-xs text-brand-700 dark:text-brand-350 font-bold animate-in slide-in-from-top-2 relative z-10">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span>💡</span>
+                            <span class="uppercase tracking-widest text-[9px] text-brand-600 dark:text-brand-400">Hint Insight</span>
+                        </div>
+                        <p id="hint-text" class="font-semibold leading-relaxed"></p>
+                    </div>
+
+                    <div id="feedback-area" class="hidden relative z-10"></div>
                 </div>
             `;
 
-            renderKaTeX(container);
-        }
-
-        // ── Check Answer ────────────────────────────────────
-        window.checkAnswer = async function(idx) {
-            if (isAnswered) return;
-            isAnswered = true;
-            const q = currentQuestions[currentIndex];
-            const btns = document.querySelectorAll('.option-btn');
-
-            if (idx === q.correctAnswerIndex) {
-                btns[idx].classList.add('option-correct');
-                window.sessionScore++;
-            } else {
-                btns[idx].classList.add('option-incorrect');
-                if (btns[q.correctAnswerIndex]) btns[q.correctAnswerIndex].classList.add('option-correct');
-
-                try {
-                    await setDoc(doc(db, "users", currentUser.uid, "weaknessBucket", q.id), {
-                        title: q.questionText.substring(0, 80) + "...",
-                        topic: q.syllabusTopic,
-                        qId: q.id,
-                        addedAt: new Date().toISOString()
-                    }, { merge: true });
-                } catch (e) { console.error("Weakness tracking error:", e); }
-            }
-
-            showFeedback(q);
-
-            if (currentIndex === currentQuestions.length - 1) {
-                savePracticeToHistory();
-            }
-        };
-
-        // ── Show Feedback ───────────────────────────────────
-        function showFeedback(q) {
-            const area = document.getElementById('feedback-area');
-            area.classList.remove('hidden');
-            area.innerHTML = `
-                <div class="feedback-card bg-slate-950 text-white space-y-6 mt-6 fade-up relative overflow-hidden shadow-2xl">
-                    <!-- Header row -->
-                    <div class="flex flex-col sm:flex-row justify-between items-start gap-5 border-b border-white/10 pb-5">
-                        <div class="flex-1 min-w-0">
-                            <div class="inline-flex items-center gap-2 px-3 py-1 bg-brand-600/20 text-brand-400 rounded-lg text-[10px] font-black uppercase tracking-[0.2em] mb-3">
-                                <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
-                                Core Concept
-                            </div>
-                            <h4 class="feedback-title font-black tracking-tight leading-tight">${q.explanation.coreConcept}</h4>
-                        </div>
-                        <div class="bg-white/5 border border-white/10 p-4 rounded-2xl w-full sm:w-56 shrink-0">
-                            <p class="text-[10px] font-black text-rose-400 uppercase tracking-[0.2em] mb-2">⚠ Watch Out</p>
-                            <p class="text-xs text-slate-300 font-medium leading-relaxed italic">"${q.explanation.pitfall}"</p>
-                        </div>
-                    </div>
-
-                    <!-- Steps -->
-                    <div>
-                        <p class="text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-4">Logical Derivation</p>
-                        <div class="feedback-steps text-slate-300 font-medium math-typeset">${q.explanation.steps}</div>
-                    </div>
-
-                    <!-- Continue button -->
-                    <button onclick="nextQuestion()" class="w-full py-4 bg-white text-slate-900 rounded-[1.5rem] font-black uppercase tracking-[0.2em] text-xs shadow-xl hover:bg-brand-50 transition-all active:scale-95">
-                        Commit to Memory & Continue →
-                    </button>
-                </div>
-            `;
-            renderKaTeX(area);
-
-            // Scroll feedback into view on mobile
-            setTimeout(() => {
-                area.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, 100);
-        }
-
-        // ── Navigation ──────────────────────────────────────
-        window.nextQuestion = function() {
-            if (currentIndex < currentQuestions.length - 1) {
-                currentIndex++;
-                renderQuestion();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                alert("Practice Session Complete! Great work.");
-                window.location.href = "dashboard.html";
-            }
-        };
-
-        window.prevQuestion = function() {
-            if (currentIndex > 0) {
-                currentIndex--;
-                renderQuestion();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-        };
-
-        // ── Save History ────────────────────────────────────
-        async function savePracticeToHistory() {
-            try {
-                if (currentUser) {
-                    await addDoc(collection(db, "users", currentUser.uid, "examHistory"), {
-                        subject: "Practice Run",
-                        score: window.sessionScore,
-                        maxScore: window.sessionTotal,
-                        timestamp: new Date().toISOString(),
-                        mode: "Practice Sandbox",
-                    });
-                    await updateAggregateScore(currentUser.uid);
-                }
-            } catch (e) { console.error("History save error:", e); }
-        }
-
-        // ── Hint ────────────────────────────────────────────
-        window.toggleHint = () => {
-            const q = currentQuestions[currentIndex];
-            if (q && q.hints && q.hints.length > 0) alert(q.hints[0]);
-            else alert("Hint: Analyze the relationship between the given variables.");
-        };
-
-        // ── KaTeX Helper ────────────────────────────────────
-        function renderKaTeX(el) {
+            // Robust KaTeX Rendering
             if (window.renderMathInElement) {
-                renderMathInElement(el, {
+                renderMathInElement(container, {
                     delimiters: [
-                        { left: "$$",   right: "$$",   display: true  },
-                        { left: "$",    right: "$",    display: false },
-                        { left: "\\(", right: "\\)",  display: false },
-                        { left: "\\[", right: "\\]",  display: true  }
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false},
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
                     ],
                     throwOnError: false
                 });
             }
         }
 
-        // ── Button bindings ─────────────────────────────────
+        window.checkAnswer = async function(idx) {
+            if (isAnswered) return;
+            isAnswered = true;
+            const q = currentQuestions[currentIndex];
+            const btns = document.querySelectorAll('.option-btn');
+            
+            if (idx === q.correctAnswerIndex) {
+                btns[idx].className += " option-correct";
+                window.sessionScore++;
+            } else {
+                btns[idx].className += " option-incorrect";
+                if(btns[q.correctAnswerIndex]) btns[q.correctAnswerIndex].className += " option-correct";
+                
+                // Track mistake in Weakness Bucket with fullQuestion payload
+                try {
+                    await setDoc(doc(db, "users", currentUser.uid, "weaknessBucket", q.id), {
+                        title: q.questionText.substring(0, 80) + "...",
+                        topic: q.syllabusTopic || "General",
+                        qId: q.id,
+                        addedAt: new Date().toISOString(),
+                        source: "Practice Sandbox",
+                        srsLevel: 1,
+                        nextReviewDate: new Date().toISOString(),
+                        fullQuestion: {
+                            questionText: q.questionText,
+                            options: q.options,
+                            correctAnswerIndex: q.correctAnswerIndex,
+                            explanation: q.explanation || { coreConcept: "Practice Sandbox Concept", steps: "Evaluate basic steps.", pitfall: "Calibrate calculations." },
+                            subjectName: currentSubject.toUpperCase(),
+                            syllabusTopic: q.syllabusTopic || "General"
+                        }
+                    }, { merge: true });
+                } catch (e) { console.error("Weakness tracking error:", e); }
+            }
+            showFeedback(q);
+
+            if (currentIndex === currentQuestions.length - 1) {
+                savePracticeToHistory();
+            }
+        }
+
+        function showFeedback(q) {
+            const area = document.getElementById('feedback-area');
+            if(!area) return;
+            area.classList.remove('hidden');
+            
+            const exp = q.explanation || { coreConcept: "Dynamic Revision", steps: "Derive logically using formulas.", pitfall: "Ensure correct sign and arithmetic." };
+            
+            area.innerHTML = `
+                <div class="p-6 md:p-8 bg-slate-900 dark:bg-slate-950 border border-slate-800 rounded-xl text-white space-y-6 mt-6 animate-in zoom-in duration-300 relative overflow-hidden shadow-xl">
+                    <div class="absolute inset-0 grid-pattern opacity-[0.02] pointer-events-none"></div>
+                    
+                    <div class="relative z-10 flex flex-col md:flex-row justify-between items-start gap-6 border-b border-slate-800 pb-6">
+                        <div class="flex-1">
+                            <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-brand-500/10 text-brand-400 rounded-lg text-[9px] font-black uppercase tracking-widest mb-3">
+                                <span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span>
+                                Core Concept Insight
+                            </div>
+                            <h4 class="text-lg font-bold tracking-tight leading-snug">${exp.coreConcept}</h4>
+                        </div>
+                        <div class="bg-slate-950/80 dark:bg-slate-900 border border-slate-800 p-4 rounded-xl shrink-0 w-full md:w-52">
+                             <p class="text-[9px] font-black text-rose-400 uppercase tracking-widest mb-2">Neural Alert</p>
+                             <p class="text-xs text-slate-350 font-medium leading-relaxed italic">"${exp.pitfall}"</p>
+                        </div>
+                    </div>
+
+                    <div class="relative z-10">
+                        <p class="text-[9px] font-black text-slate-500 uppercase tracking-widest mb-3">Logical Derivation</p>
+                        <div class="text-xs md:text-sm text-slate-300 leading-relaxed font-semibold math-typeset space-y-2 whitespace-pre-line">${exp.steps}</div>
+                    </div>
+
+                    <div class="relative z-10 pt-2">
+                        <button onclick="nextQuestion()" class="w-full py-3.5 bg-white hover:bg-slate-50 text-slate-900 rounded-xl font-black uppercase tracking-widest text-[9px] shadow-md transition-all active:scale-[0.99]">
+                            Commit to Memory & Continue
+                        </button>
+                    </div>
+                </div>
+            `;
+            if (window.renderMathInElement) {
+                renderMathInElement(area, {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false},
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        window.nextQuestion = function() {
+            if (currentIndex < currentQuestions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+                document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                alert("Practice Session Complete!");
+                window.location.href = "dashboard.html";
+            }
+        }
+
+        window.prevQuestion = function() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderQuestion();
+                document.querySelector('main').scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        async function savePracticeToHistory() {
+            try {
+                if (currentUser) {
+                    const percentage = (window.sessionScore / window.sessionTotal) * 100;
+                    let grade = 'F';
+                    if (percentage >= 70) grade = 'A';
+                    else if (percentage >= 60) grade = 'B';
+                    else if (percentage >= 50) grade = 'C';
+                    else if (percentage >= 45) grade = 'D';
+                    else if (percentage >= 40) grade = 'E';
+
+                    await addDoc(collection(db, "users", currentUser.uid, "examHistory"), {
+                        subject: currentSubject.toUpperCase(),
+                        year: currentYear,
+                        score: window.sessionScore,
+                        maxScore: window.sessionTotal,
+                        timestamp: new Date().toISOString(),
+                        mode: "Practice Sandbox",
+                        grade: grade
+                    });
+                    await updateAggregateScore(currentUser.uid);
+                }
+            } catch (e) { console.error("History save error:", e); }
+        }
+
+        window.toggleHint = () => {
+            const hintBox = document.getElementById('hint-box');
+            const hintText = document.getElementById('hint-text');
+            if (hintBox && hintText) {
+                if (hintBox.classList.contains('hidden')) {
+                    const q = currentQuestions[currentIndex];
+                    const rawHint = (q && q.hints && q.hints.length > 0) ? q.hints[0] : "Analyze the relationship between the given variables.";
+                    hintText.innerHTML = rawHint.replace(/\\,\^/g, '^');
+                    hintBox.classList.remove('hidden');
+                    
+                    if (window.renderMathInElement) {
+                        renderMathInElement(hintBox, {
+                            delimiters: [
+                                {left: "$$", right: "$$", display: true},
+                                {left: "$", right: "$", display: false},
+                                {left: "\\(", right: "\\)", display: false},
+                                {left: "\\[", right: "\\]", display: true}
+                            ],
+                            throwOnError: false
+                        });
+                    }
+                } else {
+                    hintBox.classList.add('hidden');
+                }
+            }
+        };
+
         document.getElementById('next-btn').onclick = window.nextQuestion;
         document.getElementById('prev-btn').onclick = window.prevQuestion;
     </script>

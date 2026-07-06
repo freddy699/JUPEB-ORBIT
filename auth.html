@@ -12,6 +12,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
@@ -40,6 +41,17 @@
             }
         }
     </script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('jup_theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
     <style>
         body { 
             font-family: 'Inter', sans-serif; 
@@ -48,6 +60,48 @@
                 radial-gradient(at 0% 0%, rgba(37, 70, 235, 0.05) 0px, transparent 50%),
                 radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
         }
+        
+        /* Dark Mode overrides */
+        html.dark body {
+            background-color: #0B0F19 !important;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(37, 70, 235, 0.02) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.02) 0px, transparent 50%) !important;
+        }
+        html.dark #loading-overlay {
+            background: #0B0F19 !important;
+        }
+        html.dark .bg-white {
+            background-color: #111827 !important;
+            border-color: #1F2937 !important;
+        }
+        html.dark .border-slate-100 {
+            border-color: #1F2937 !important;
+        }
+        html.dark .border-slate-50 {
+            border-color: #1F2937 !important;
+        }
+        html.dark .text-slate-900 {
+            color: #F3F4F6 !important;
+        }
+        html.dark .text-slate-800 {
+            color: #E5E7EB !important;
+        }
+        html.dark .text-slate-500 {
+            color: #94A3B8 !important;
+        }
+        html.dark .text-slate-400 {
+            color: #6B7280 !important;
+        }
+        html.dark .bg-slate-50 {
+            background-color: #1F2937 !important;
+            border-color: #374151 !important;
+        }
+        html.dark .glass {
+            background: rgba(17, 24, 39, 0.7) !important;
+            border-color: rgba(31, 41, 55, 0.3) !important;
+        }
+
         .font-display { font-family: 'Bricolage Grotesque', sans-serif; }
         .transition-all { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         input:focus { box-shadow: 0 0 0 4px rgba(37, 70, 235, 0.1) !important; }
@@ -94,7 +148,7 @@
             <!-- Header/Logo -->
             <div class="p-10">
                 <a href="index.html" class="flex items-center gap-3 group w-fit">
-                    <div class="w-12 h-12 bg-brand-600 rounded-2xl flex items-center justify-center transform group-hover:rotate-[15deg] transition-all duration-300 shadow-lg shadow-brand-100">
+                    <div class="w-12 h-12 bg-white border border-slate-200 dark:border-slate-800 rounded-2xl flex items-center justify-center transform group-hover:rotate-[15deg] transition-all duration-300 shadow-md">
                         <img src="logo.png" alt="Logo" class="w-7 h-7 object-contain">
                     </div>
                 </a>

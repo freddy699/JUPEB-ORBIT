@@ -12,9 +12,22 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
                     colors: {
+                        brand: {
+                            50: '#f0f4ff',
+                            100: '#e0e9fe',
+                            200: '#c1d3fe',
+                            300: '#92b3fd',
+                            400: '#5c89fa',
+                            500: '#345df6',
+                            600: '#2546eb', // Primary
+                            700: '#1d35d8',
+                            800: '#1e2eaf',
+                            900: '#1e2c8a',
+                        },
                         indigo: { 50: '#f5f3ff', 600: '#4F46E5', 700: '#4338CA' },
                         slate: { 50: '#F8FAFC', 100: '#F1F5F9', 200: '#E2E8F0', 400: '#94A3B8', 600: '#475569', 900: '#0F172A' }
                     },
@@ -23,94 +36,139 @@
             }
         }
     </script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('jup_theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (savedTheme === 'dark' || (!savedTheme && systemPrefersDark)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        })();
+    </script>
     <!-- KaTeX -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
     <style>
+        body { font-family: 'Inter', sans-serif; }
+        .font-display { font-family: 'Plus Jakarta Sans', sans-serif; }
         .option-btn { transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
-        .option-correct { border-color: #10B981 !important; background-color: #ECFDF5 !important; color: #065F46 !important; }
-        .option-incorrect { border-color: #EF4444 !important; background-color: #FEF2F2 !important; color: #991B1B !important; }
-        .progress-segment { height: 6px; flex: 1; border-radius: 99px; background-color: #E2E8F0; }
-        .progress-segment.active { background-color: #4F46E5; }
+        
+        .option-correct { 
+            border-color: #10B981 !important; 
+            background-color: #ECFDF5 !important; 
+            color: #065F46 !important; 
+        }
+        .option-incorrect { 
+            border-color: #EF4444 !important; 
+            background-color: #FEF2F2 !important; 
+            color: #991B1B !important; 
+        }
+        
+        html.dark .option-correct { 
+            border-color: #059669 !important; 
+            background-color: rgba(5, 150, 105, 0.15) !important; 
+            color: #34D399 !important; 
+        }
+        html.dark .option-incorrect { 
+            border-color: #EF4444 !important; 
+            background-color: rgba(239, 68, 68, 0.15) !important; 
+            color: #FCA5A5 !important; 
+        }
+
+        .progress-segment { height: 6px; flex: 1; border-radius: 99px; background-color: #E2E8F0; transition: all 0.3s ease; }
+        .progress-segment.active { background-color: #2546eb; }
+        html.dark .progress-segment { background-color: #1F2937; }
+        html.dark .progress-segment.active { background-color: #60a5fa; }
     </style>
 </head>
-<body class="bg-white text-slate-600 antialiased min-h-screen flex flex-col">
+<body class="bg-white dark:bg-slate-950 text-slate-600 dark:text-slate-400 antialiased min-h-screen flex flex-col transition-colors">
 
     <!-- QUIZ HEADER -->
-    <header class="p-6 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white/80 backdrop-blur-md z-50">
+    <header class="p-6 border-b border-slate-100 dark:border-slate-850 flex items-center justify-between sticky top-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md z-50">
         <div class="flex items-center gap-4">
-            <a href="dashboard.html" class="p-2 hover:bg-slate-50 rounded-xl transition-all">
+            <a href="dashboard.html" class="p-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-all">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
             </a>
             <div>
-                <h1 class="font-display text-lg font-extrabold text-slate-900">Breakfast Quiz Loop</h1>
-                <p id="quiz-meta" class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Question 1 of 5</p>
+                <h1 class="font-display text-base font-extrabold text-slate-900 dark:text-white leading-tight">Breakfast Quiz Loop</h1>
+                <p id="quiz-meta" class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">Question 1 of 5</p>
             </div>
         </div>
-        <div id="quiz-progress" class="flex gap-2 w-32 md:w-48">
-            <div class="progress-segment active"></div>
-            <div class="progress-segment"></div>
-            <div class="progress-segment"></div>
-            <div class="progress-segment"></div>
-            <div class="progress-segment"></div>
+        <div class="flex items-center gap-3">
+            <button onclick="toggleQuizTimerSetting()" id="timer-toggle-btn" class="w-7 h-7 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-805 flex items-center justify-center text-xs hover:border-brand-300 dark:hover:border-brand-500 transition-all" title="Toggle Rapid Timer">⏱️</button>
+            <div id="quiz-progress" class="flex gap-2 w-24 md:w-36">
+                <!-- Dynamic segments injected on load -->
+            </div>
         </div>
+        <!-- Progress countdown line -->
+        <div id="quiz-timer-line" class="absolute bottom-0 left-0 h-0.5 bg-brand-500 dark:bg-brand-400 transition-all duration-1000 ease-linear w-full origin-left scale-x-0"></div>
     </header>
 
     <!-- QUIZ CORE -->
-    <main id="quiz-container" class="flex-1 flex flex-col items-center justify-center p-6 max-w-3xl mx-auto w-full">
+    <main id="quiz-container" class="flex-1 flex flex-col items-center justify-center p-5 max-w-3xl mx-auto w-full">
         <div id="loading-state" class="text-center py-20">
-            <div class="w-12 h-12 border-4 border-brand-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <p class="font-bold text-slate-400">Curating your morning topics...</p>
+            <div class="w-10 h-10 border-4 border-brand-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-xs font-black text-slate-400 dark:text-slate-550 uppercase tracking-widest">Curating morning topics...</p>
         </div>
 
-        <div id="question-state" class="hidden w-full">
-            <div class="mb-10">
-                <span id="q-subject" class="inline-block px-2 py-1 bg-brand-50 text-brand-600 text-[10px] font-black uppercase tracking-widest rounded mb-4">Physics</span>
-                <h2 id="q-text" class="text-2xl md:text-3xl font-bold text-slate-900 leading-snug">
+        <div id="question-state" class="hidden w-full space-y-8 animate-in fade-in duration-350">
+            <div>
+                <span id="q-subject" class="inline-block px-2.5 py-1 bg-brand-50 dark:bg-brand-900/20 text-brand-600 dark:text-brand-400 text-[9px] font-black uppercase tracking-widest rounded mb-4">Physics</span>
+                <h2 id="q-text" class="text-xl md:text-2xl font-bold text-slate-900 dark:text-white leading-snug">
                     <!-- Question injected here -->
                 </h2>
             </div>
 
-            <div id="q-options" class="grid grid-cols-1 gap-4 mb-8">
+            <div id="q-options" class="grid grid-cols-1 gap-3.5">
                 <!-- Options injected here -->
             </div>
 
             <!-- FEEDBACK TRAY -->
-            <div id="feedback-tray" class="hidden bg-slate-50 border border-slate-100 rounded-3xl p-6 mb-8 animate-fade-in">
+            <div id="feedback-tray" class="hidden bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 animate-in slide-in-from-bottom-2 duration-300">
                 <div class="flex items-center gap-3 mb-3">
-                    <div id="feedback-icon" class="w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs">✓</div>
-                    <h4 id="feedback-title" class="font-bold text-slate-900">Correct!</h4>
+                    <div id="feedback-icon" class="w-5.5 h-5.5 rounded-full flex items-center justify-center text-white font-bold text-xs shrink-0">✓</div>
+                    <h4 id="feedback-title" class="font-bold text-slate-900 dark:text-white text-sm">Correct!</h4>
                 </div>
-                <p id="q-explanation" class="text-sm leading-relaxed text-slate-600">
+                <p id="q-explanation" class="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
                     <!-- Explanation injected here -->
                 </p>
             </div>
 
-            <button id="next-btn" onclick="handleNext()" disabled class="w-full py-5 bg-slate-900 text-white rounded-2xl font-bold shadow-xl shadow-slate-200 disabled:opacity-50 disabled:cursor-not-allowed transition-all hover:bg-brand-600">
+            <button id="next-btn" onclick="handleNext()" disabled class="w-full py-4.5 bg-slate-900 dark:bg-brand-600 hover:bg-brand-600 dark:hover:bg-brand-700 text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-lg shadow-brand-500/10 disabled:opacity-40 disabled:cursor-not-allowed transition-all hover:scale-[1.01] active:scale-[0.99]">
                 Next Question →
             </button>
         </div>
 
         <!-- COMPLETION SCREEN -->
-        <div id="complete-state" class="hidden text-center py-10 w-full animate-fade-in">
-            <div class="w-24 h-24 bg-emerald-50 rounded-[2.5rem] flex items-center justify-center mx-auto mb-8 shadow-inner">
-                <span class="text-4xl">🚀</span>
+        <div id="complete-state" class="hidden text-center py-10 w-full animate-in fade-in duration-500">
+            <div class="w-20 h-20 bg-emerald-50 dark:bg-emerald-500/10 rounded-2xl flex items-center justify-center mx-auto mb-8 shadow-inner">
+                <span class="text-3xl">🚀</span>
             </div>
-            <h2 class="font-display text-4xl font-extrabold text-slate-900 mb-2">Loop Complete!</h2>
-            <p id="score-text" class="text-slate-500 mb-10">You smashed 4 out of 5 questions. Streak maintained!</p>
+            <h2 class="font-display text-3xl font-extrabold text-slate-900 dark:text-white mb-2 tracking-tight">Loop Complete!</h2>
+            <p id="score-text" class="text-xs text-slate-500 dark:text-slate-400 mb-8 font-medium">You smashed 4 out of 5 questions. Streak maintained!</p>
             
-            <div class="bg-slate-50 border border-slate-100 rounded-3xl p-8 mb-10 text-left max-w-sm mx-auto">
+            <div class="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 mb-4 text-left max-w-xs mx-auto">
                 <div class="flex items-center justify-between mb-4">
-                    <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Streak Bonus</span>
-                    <span class="text-xs font-black text-orange-500 uppercase">+1 DAY</span>
+                    <span class="text-[9px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">Streak Bonus</span>
+                    <span class="text-[9px] font-black text-orange-500 uppercase tracking-widest">+1 DAY</span>
                 </div>
-                <div class="text-3xl font-black text-slate-900 flex items-center gap-3">
-                    <span id="streak-count">--</span> <span class="text-orange-500">🔥</span>
+                <div class="text-2xl font-black text-slate-900 dark:text-white flex items-center gap-2">
+                    <span id="streak-count">--</span> <span class="text-orange-500 text-xl">🔥</span>
                 </div>
             </div>
 
-            <a href="dashboard.html" class="inline-block px-10 py-5 bg-indigo-600 text-white rounded-2xl font-bold shadow-lg shadow-indigo-100 hover:-translate-y-1 transition-all">Return to Flight Deck</a>
+            <!-- Subject breakdown stats -->
+            <div class="bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 rounded-2xl p-6 mb-8 text-left max-w-xs mx-auto">
+                <span class="block text-[9px] font-black text-slate-405 dark:text-slate-550 uppercase tracking-widest mb-3">Topic performance</span>
+                <div id="subject-breakdown" class="space-y-2">
+                    <!-- Dynamic breakdown rows injected -->
+                </div>
+            </div>
+
+            <a href="dashboard.html" class="inline-block px-8 py-4.5 bg-brand-600 hover:bg-brand-700 dark:bg-brand-600 dark:hover:bg-brand-700 text-white rounded-xl font-black text-xs uppercase tracking-widest shadow-lg shadow-brand-600/20 hover:scale-[1.02] active:scale-[0.98] transition-all">Return to Flight Deck</a>
         </div>
     </main>
 
@@ -118,8 +176,21 @@
     <script type="module">
         import { auth, db } from "./firebase-config.js";
         import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
-        import { doc, getDoc, updateDoc, collection, setDoc, addDoc, increment, query, getDocs, limit } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
+        import { doc, getDoc, updateDoc, collection, setDoc, addDoc, increment, query, getDocs, limit, where } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
         import { updateAggregateScore } from "./score-calculator.js";
+
+        // --- THEME ENGINE INITIALIZATION ---
+        function initTheme() {
+            const savedTheme = localStorage.getItem('jup_theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+            if (isDark) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        }
+        initTheme();
 
         let currentUser = null;
         let userData = null;
@@ -127,6 +198,12 @@
         let currentIndex = 0;
         let score = 0;
         let isAnswered = false;
+
+        // Timer State Variables
+        let timerEnabled = true;
+        let timerInterval = null;
+        let timeLeft = 45;
+        const maxTime = 45;
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
@@ -139,6 +216,19 @@
             }
         });
 
+        // Leitner Spaced Repetition interval calculation
+        function calculateNextReviewDate(srsLevel) {
+            const now = new Date();
+            let days = 1;
+            if (srsLevel === 2) days = 3;
+            else if (srsLevel === 3) days = 7;
+            else if (srsLevel === 4) days = 14;
+            else if (srsLevel >= 5) days = 30; // Mastered review gap
+            
+            now.setDate(now.getDate() + days);
+            return now.toISOString();
+        }
+
         async function initQuiz() {
             const loading = document.getElementById('loading-state');
             const qState = document.getElementById('question-state');
@@ -148,45 +238,87 @@
                     throw new Error("No subject combination found in profile.");
                 }
 
-                // 1. Adaptive Weighting: Prioritize subjects with lower mastery
+                // 1. Spaced Repetition Integration: Query due weaknesses client-side to avoid Firestore index dependencies
+                let dueWeaknesses = [];
+                try {
+                    const nowStr = new Date().toISOString();
+                    const wRef = collection(db, "users", currentUser.uid, "weaknessBucket");
+                    const wSnap = await getDocs(wRef);
+                    dueWeaknesses = wSnap.docs
+                        .map(doc => ({ id: doc.id, ...doc.data() }))
+                        .filter(item => item.fullQuestion && item.nextReviewDate && item.nextReviewDate <= nowStr);
+                } catch (err) {
+                    console.error("Error checking due weaknesses:", err);
+                }
+
+                const injectedWeaknesses = dueWeaknesses.sort(() => Math.random() - 0.5).slice(0, 2);
+                injectedWeaknesses.forEach(w => {
+                    w.fullQuestion.isWeaknessReview = true;
+                    w.fullQuestion.weaknessId = w.id;
+                    w.fullQuestion.srsLevel = w.srsLevel || 1;
+                });
+
+                const regularCountNeeded = 5 - injectedWeaknesses.length;
+
+                // 2. Adaptive Weighting: Prioritize subjects with lower mastery
                 const masteryPairs = userData.combination.map(sub => ({
                     name: sub.toLowerCase(),
                     score: userData.mastery?.[sub.toLowerCase()] || 0
                 })).sort((a, b) => a.score - b.score);
 
-                // Weights: Lowest Mastery gets 3 questions, Middle gets 2, Highest gets 1 (Total 6, then we slice to 5)
-                const counts = [3, 2, 1];
+                // Set dynamic distribution based on remaining needed questions
+                let counts = [3, 2, 1];
+                if (regularCountNeeded === 4) counts = [2, 1, 1];
+                else if (regularCountNeeded === 3) counts = [2, 1, 0];
+                else if (regularCountNeeded === 2) counts = [1, 1, 0];
+                else if (regularCountNeeded === 1) counts = [1, 0, 0];
+                else if (regularCountNeeded === 0) counts = [0, 0, 0];
+
                 const pool = [];
                 
-                // 2. Fetch questions from each subject based on weight
-                const commonYears = ["2026", "2025", "2024", "2023", "2022", "2021", "2020"];
-                
+                // 3. Fetch questions from each subject based on weight with multi-year fallback
                 for (let i = 0; i < masteryPairs.length; i++) {
                     const sub = masteryPairs[i].name;
-                    const countNeeded = counts[i] || 1;
+                    const countNeeded = counts[i] || 0;
+                    if (countNeeded <= 0) continue;
 
-                    // Probe for available years
-                    const yearChecks = await Promise.all(commonYears.map(async (y) => {
-                        const qRef = collection(db, "subjects", sub, "years", y, "questions");
-                        const qSnap = await getDocs(query(qRef, limit(1)));
-                        return !qSnap.empty ? y : null;
-                    }));
-                    const availableYears = yearChecks.filter(y => y !== null);
-                    
-                    if (availableYears.length > 0) {
-                        const latestYear = availableYears[0];
-                        const qRef = collection(db, "subjects", sub, "years", latestYear, "questions");
-                        const qSnap = await getDocs(query(qRef, limit(10)));
-                        const questions = qSnap.docs.map(d => ({ ...d.data(), subjectName: sub.toUpperCase() }));
-                        
-                        const picked = questions.sort(() => Math.random() - 0.5).slice(0, countNeeded);
-                        pool.push(...picked);
+                    let availableYears = [];
+                    try {
+                        const yearsSnap = await getDocs(collection(db, "subjects", sub, "years"));
+                        availableYears = yearsSnap.docs.map(doc => doc.id);
+                        availableYears.sort((a, b) => b.localeCompare(a));
+                    } catch (e) {
+                        console.error("Error fetching years for", sub, e);
                     }
+                    
+                    let subjectQuestions = [];
+                    // Fallback to older years if latest year doesn't have enough questions
+                    for (const year of availableYears) {
+                        if (subjectQuestions.length >= countNeeded) break;
+                        try {
+                            const qRef = collection(db, "subjects", sub, "years", year, "questions");
+                            const qSnap = await getDocs(query(qRef, limit(15)));
+                            const questions = qSnap.docs.map(d => ({ ...d.data(), id: d.id, subjectName: sub.toUpperCase() }));
+                            subjectQuestions.push(...questions);
+                        } catch (e) {
+                            console.error("Error fetching questions for", sub, year, e);
+                        }
+                    }
+
+                    const picked = subjectQuestions.sort(() => Math.random() - 0.5).slice(0, countNeeded);
+                    pool.push(...picked);
                 }
 
-                quizQuestions = pool.sort(() => Math.random() - 0.5).slice(0, 5);
+                // Combine regular and injected questions, then shuffle
+                const regularQuestions = pool.sort(() => Math.random() - 0.5).slice(0, regularCountNeeded);
+                const injectedList = injectedWeaknesses.map(w => w.fullQuestion);
+                quizQuestions = [...injectedList, ...regularQuestions].sort(() => Math.random() - 0.5);
                 
                 if (quizQuestions.length === 0) throw new Error("No questions available in the cloud.");
+
+                // Dynamically build progress segments
+                const progressContainer = document.getElementById('quiz-progress');
+                progressContainer.innerHTML = quizQuestions.map((_, idx) => `<div class="progress-segment ${idx === 0 ? 'active' : ''}"></div>`).join('');
 
                 loading.classList.add('hidden');
                 qState.classList.remove('hidden');
@@ -194,7 +326,7 @@
 
             } catch (e) {
                 console.error("Quiz Init Error:", e);
-                loading.innerHTML = `<div class="text-rose-500 font-bold p-8 bg-rose-50 rounded-2xl border border-rose-100">${e.message}<br><a href="dashboard.html" class="mt-4 inline-block text-indigo-600 underline">Return to Dashboard</a></div>`;
+                loading.innerHTML = `<div class="text-rose-500 font-bold p-8 bg-rose-50 rounded-2xl border border-rose-100">${e.message}<br><a href="dashboard.html" class="mt-4 inline-block text-brand-600 underline">Return to Dashboard</a></div>`;
             }
         }
 
@@ -203,7 +335,7 @@
             isAnswered = false;
             
             // Meta & UI
-            document.getElementById('quiz-meta').innerText = `Question ${currentIndex + 1} of 5`;
+            document.getElementById('quiz-meta').innerText = `Question ${currentIndex + 1} of ${quizQuestions.length}`;
             document.getElementById('q-subject').innerText = q.subjectName || "General";
             
             // Clean LaTeX before rendering
@@ -214,9 +346,9 @@
             optionsContainer.innerHTML = q.options.map((opt, i) => {
                 const cleanOpt = opt.replace(/\\,\^/g, '^');
                 return `
-                <button onclick="checkAnswer(${i})" class="option-btn w-full p-5 border-2 border-slate-100 rounded-2xl text-left font-bold hover:border-indigo-200 hover:bg-indigo-50/20">
-                    <span class="inline-block w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 text-center leading-8 text-xs mr-4">${String.fromCharCode(65 + i)}</span>
-                    ${cleanOpt}
+                <button onclick="checkAnswer(${i})" class="option-btn w-full p-4 md:p-5 border-2 border-slate-100 dark:border-slate-800/80 rounded-2xl text-left font-bold hover:border-brand-300 dark:hover:border-brand-500 hover:bg-brand-50/25 dark:hover:bg-brand-950/15 transition-all active:scale-[0.98] flex items-center">
+                    <span class="inline-block w-8 h-8 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 text-center leading-8 text-xs font-black text-slate-500 dark:text-slate-400 mr-4 shrink-0">${String.fromCharCode(65 + i)}</span>
+                    <span class="text-sm md:text-base text-slate-800 dark:text-slate-200 leading-relaxed">${cleanOpt}</span>
                 </button>
             `}).join('');
 
@@ -239,23 +371,83 @@
                     throwOnError: false
                 });
             }
+
+            // Start countdown
+            startTimer();
         }
 
         window.checkAnswer = function(index) {
             if (isAnswered) return;
             isAnswered = true;
             
+            // Clear countdown
+            clearInterval(timerInterval);
+            updateTimerBar(0);
+            
             const q = quizQuestions[currentIndex];
             const btns = document.querySelectorAll('.option-btn');
             
-            if (index === q.correctAnswerIndex) {
-                btns[index].classList.add('option-correct');
+            const isCorrect = (index === q.correctAnswerIndex);
+            q.answeredCorrectly = isCorrect;
+            
+            if (isCorrect) {
+                if (index >= 0 && btns[index]) {
+                    btns[index].classList.add('option-correct');
+                }
                 score++;
                 showFeedback(true);
             } else {
-                btns[index].classList.add('option-incorrect');
-                if (btns[q.correctAnswerIndex]) btns[q.correctAnswerIndex].classList.add('option-correct');
+                if (index >= 0 && btns[index]) {
+                    btns[index].classList.add('option-incorrect');
+                }
+                if (q.correctAnswerIndex >= 0 && btns[q.correctAnswerIndex]) {
+                    btns[q.correctAnswerIndex].classList.add('option-correct');
+                }
                 showFeedback(false);
+            }
+            
+            // Leitner SRS updates
+            if (q.isWeaknessReview) {
+                const wRef = doc(db, "users", currentUser.uid, "weaknessBucket", q.weaknessId);
+                if (isCorrect) {
+                    const nextLevel = q.srsLevel + 1;
+                    updateDoc(wRef, {
+                        srsLevel: nextLevel,
+                        nextReviewDate: calculateNextReviewDate(nextLevel),
+                        lastCorrect: new Date().toISOString()
+                    }).catch(e => console.error("Error updating weakness level:", e));
+                } else {
+                    updateDoc(wRef, {
+                        srsLevel: 1,
+                        nextReviewDate: calculateNextReviewDate(1)
+                    }).catch(e => console.error("Error resetting weakness level:", e));
+                }
+            } else {
+                // Save new weakness if incorrect
+                if (!isCorrect) {
+                    try {
+                        const qId = q.id || `quiz_${Math.random().toString(36).substring(7)}`;
+                        setDoc(doc(db, "users", currentUser.uid, "weaknessBucket", qId), {
+                            title: q.questionText.substring(0, 80) + "...",
+                            topic: q.syllabusTopic || "General",
+                            qId: qId,
+                            addedAt: new Date().toISOString(),
+                            source: "Daily Breakfast Quiz",
+                            srsLevel: 1,
+                            nextReviewDate: calculateNextReviewDate(1),
+                            fullQuestion: {
+                                questionText: q.questionText,
+                                options: q.options,
+                                correctAnswerIndex: q.correctAnswerIndex,
+                                explanation: q.explanation,
+                                subjectName: q.subjectName,
+                                syllabusTopic: q.syllabusTopic || "General"
+                            }
+                        }, { merge: true });
+                    } catch (e) {
+                        console.error("Error logging daily quiz weakness:", e);
+                    }
+                }
             }
 
             document.getElementById('next-btn').disabled = false;
@@ -269,15 +461,14 @@
 
             tray.classList.remove('hidden');
             icon.innerText = isCorrect ? '✓' : '✕';
-            icon.className = isCorrect ? 'w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs bg-emerald-500' : 'w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs bg-rose-500';
+            icon.className = isCorrect ? 'w-5.5 h-5.5 rounded-full flex items-center justify-center text-white font-bold text-xs bg-emerald-500 shrink-0' : 'w-5.5 h-5.5 rounded-full flex items-center justify-center text-white font-bold text-xs bg-rose-500 shrink-0';
             title.innerText = isCorrect ? 'Correct!' : 'Incorrect';
             
-            // Handle new structure
             const explanation = quizQuestions[currentIndex].explanation;
             exp.innerHTML = `
-                <div class="space-y-4">
-                    <div class="font-bold text-indigo-700 italic">"${explanation.coreConcept}"</div>
-                    <div class="text-xs text-slate-500 whitespace-pre-line border-l-2 border-slate-200 pl-4">${explanation.steps}</div>
+                <div class="space-y-4 mt-2">
+                    <div class="font-bold text-brand-600 dark:text-brand-400 italic">"${explanation.coreConcept}"</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400 whitespace-pre-line border-l-2 border-slate-200 dark:border-slate-800 pl-4">${explanation.steps}</div>
                 </div>
             `;
             
@@ -304,10 +495,40 @@
         }
 
         async function finishQuiz() {
+            clearInterval(timerInterval);
+            updateTimerBar(0);
+
             document.getElementById('question-state').classList.add('hidden');
             document.getElementById('complete-state').classList.remove('hidden');
             document.getElementById('score-text').innerText = `You smashed ${score} out of 5 questions. Streak maintained!`;
             
+            // Calculate subject breakdown stats
+            const subjectStats = {};
+            quizQuestions.forEach(q => {
+                const sub = q.subjectName || "GENERAL";
+                if (!subjectStats[sub]) {
+                    subjectStats[sub] = { total: 0, correct: 0 };
+                }
+                subjectStats[sub].total++;
+                if (q.answeredCorrectly) {
+                    subjectStats[sub].correct++;
+                }
+            });
+
+            const breakdownContainer = document.getElementById('subject-breakdown');
+            if (breakdownContainer) {
+                breakdownContainer.innerHTML = Object.entries(subjectStats).map(([sub, stat]) => {
+                    const accuracy = Math.round((stat.correct / stat.total) * 100);
+                    const statusColor = accuracy >= 80 ? 'text-emerald-500 dark:text-emerald-400' : (accuracy >= 50 ? 'text-amber-500 dark:text-amber-400' : 'text-rose-500 dark:text-rose-450');
+                    return `
+                        <div class="flex items-center justify-between text-xs font-bold py-1.5 border-b border-slate-100 dark:border-slate-800 last:border-0">
+                            <span class="text-slate-500 dark:text-slate-400 uppercase tracking-widest text-[10px]">${sub}</span>
+                            <span class="${statusColor} text-[11px]">${stat.correct} / ${stat.total} (${accuracy}%)</span>
+                        </div>
+                    `;
+                }).join('');
+            }
+
             // 1. UPDATE STREAK & DATA
             try {
                 const userRef = doc(db, "users", currentUser.uid);
@@ -348,6 +569,55 @@
                 // 3. UPDATE AGGREGATE SCORE
                 await updateAggregateScore(currentUser.uid);
             } catch (e) { console.error("Finalize error:", e); }
+        }
+
+        // --- TIMER OPERATIONAL ENGINE ---
+        window.toggleQuizTimerSetting = function() {
+            timerEnabled = !timerEnabled;
+            const btn = document.getElementById('timer-toggle-btn');
+            if (btn) {
+                if (timerEnabled) {
+                    btn.classList.remove('opacity-50');
+                    btn.innerHTML = '⏱️';
+                    startTimer();
+                } else {
+                    btn.classList.add('opacity-50');
+                    btn.innerHTML = '⏸️';
+                    clearInterval(timerInterval);
+                    updateTimerBar(0);
+                }
+            }
+        }
+
+        function startTimer() {
+            clearInterval(timerInterval);
+            if (!timerEnabled || isAnswered) {
+                updateTimerBar(0);
+                return;
+            }
+            timeLeft = maxTime;
+            updateTimerBar(1);
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerBar(timeLeft / maxTime);
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    handleTimeout();
+                }
+            }, 1000);
+        }
+
+        function updateTimerBar(ratio) {
+            const bar = document.getElementById('quiz-timer-line');
+            if (bar) {
+                bar.style.transform = `scaleX(${ratio})`;
+            }
+        }
+
+        function handleTimeout() {
+            if (isAnswered) return;
+            checkAnswer(-1);
         }
     </script>
 </body>

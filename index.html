@@ -78,10 +78,17 @@
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.4);
         }
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
         .text-gradient {
-            background: linear-gradient(135deg, #1e2c8a 0%, #2546eb 50%, #7c3aed 100%);
+            background: linear-gradient(135deg, #1e2c8a, #2546eb, #7c3aed, #2546eb);
+            background-size: 300% 300%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            animation: gradient-flow 8s ease infinite;
         }
         .math-typeset { font-family: 'Times New Roman', Times, serif; }
         .grid-pattern {
@@ -114,33 +121,15 @@
 
             <!-- Nav Container -->
             <div class="flex items-center gap-6 relative z-[60] justify-end flex-grow">
-                <!-- Profile Dropdown -->
-                <div class="relative group">
-                    <button onclick="toggleDropdown()" class="flex items-center gap-3 focus:outline-none bg-white p-1 pr-3 rounded-2xl border border-slate-100 shadow-sm hover:border-brand-200 transition-all">
-                        <div class="w-9 h-9 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center font-bold text-slate-500 overflow-hidden">
-                            <img id="nav-user-avatar" src="https://api.dicebear.com/7.x/avataaars/svg?seed=user" alt="Profile" class="w-full h-full object-cover">
-                        </div>
-                        <div class="hidden md:flex flex-col text-left">
-                            <span id="nav-user-name" class="text-xs font-black text-slate-900 leading-none">--</span>
-                            <span id="nav-user-tagline" class="text-[8px] font-black text-slate-400 uppercase tracking-widest mt-1">Candidate</span>
-                        </div>
-                        <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path></svg>
-                    </button>
-                    
-                    <div id="profile-dropdown" class="hidden absolute right-0 mt-3 w-60 bg-white rounded-[2rem] shadow-2xl border border-slate-100 py-3 z-[100] animate-in fade-in slide-in-from-top-2">
-                        <!-- Navigation Links -->
-                        <div class="px-4 py-2 border-b border-slate-50 mb-1">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">Navigation</p>
-                            <a href="dashboard.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Dashboard</a>
-                            <a href="practice.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Practice Hub</a>
-                            <a href="quiz.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Daily Quiz</a>
-                            <a href="exam.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Exam Simulator</a>
-                            <a href="history.html" class="block py-2 text-sm font-bold text-slate-600 hover:text-brand-600">Performance</a>
-                        </div>
-                        <a href="profile.html" class="flex items-center gap-3 px-5 py-3 text-xs font-black uppercase tracking-widest text-slate-500 hover:bg-slate-50 hover:text-brand-600 transition-all">Settings</a>
-                        <button onclick="handleLogout()" class="flex items-center gap-3 px-5 py-3 text-xs font-black uppercase tracking-widest text-rose-500 hover:bg-rose-50 w-full text-left transition-all">Logout Session</button>
-                    </div>
-                </div>
+                <!-- Guest View (Sign In CTA) -->
+                <a href="auth.html" id="guest-nav-btn" class="hidden bg-brand-600 hover:bg-brand-700 text-white rounded-2xl px-6 py-3 text-xs font-black uppercase tracking-widest shadow-lg shadow-brand-100 transition-all hover:scale-105 active:scale-95 animate-slide-up">
+                    Sign In
+                </a>
+
+                <!-- User View (Dashboard CTA) -->
+                <a href="dashboard.html" id="user-dashboard-btn" class="hidden bg-brand-600 hover:bg-brand-700 text-white rounded-2xl px-6 py-3 text-xs font-black uppercase tracking-widest shadow-lg shadow-brand-100 transition-all hover:scale-105 active:scale-95 animate-slide-up">
+                    Launch Cockpit
+                </a>
             </div>
         </div>
     </header>
@@ -223,20 +212,17 @@
                                 A particle of mass <span class="italic">m</span> moves in a horizontal circle of radius <span class="italic">r</span> with a constant speed <span class="italic">v</span>. Which of the following represents the centripetal acceleration?
                             </h3>
 
-                            <div class="space-y-5">
-                                <button class="w-full flex items-center p-6 border-2 border-slate-100 rounded-3xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] group/btn">
-                                    <span class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-xs font-black text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors">A</span>
+                            <div class="space-y-5" id="demo-options">
+                                <button onclick="selectDemoOption('A')" id="demo-opt-A" class="w-full flex items-center p-6 border-2 border-slate-100 rounded-3xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] group/btn bg-white">
+                                    <span id="demo-badge-A" class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-xs font-black text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors bg-slate-50">A</span>
                                     <span class="ml-6 text-slate-700 font-bold math-typeset text-xl italic">v / r</span>
                                 </button>
-                                <button class="w-full flex items-center p-6 border-2 border-brand-600 bg-brand-50/50 rounded-3xl shadow-xl shadow-brand-100/50 transition-all duration-300 transform hover:scale-[1.01]">
-                                    <span class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-xs font-black text-white shadow-lg shadow-brand-200">B</span>
-                                    <span class="ml-6 text-slate-900 font-black math-typeset text-xl italic">v<sup>2</sup> / r</span>
-                                    <div class="ml-auto w-8 h-8 rounded-full bg-brand-600 flex items-center justify-center text-white">
-                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
-                                    </div>
+                                <button onclick="selectDemoOption('B')" id="demo-opt-B" class="w-full flex items-center p-6 border-2 border-slate-100 rounded-3xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] group/btn bg-white">
+                                    <span id="demo-badge-B" class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-xs font-black text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors bg-slate-50">B</span>
+                                    <span class="ml-6 text-slate-700 font-bold math-typeset text-xl italic">v<sup>2</sup> / r</span>
                                 </button>
-                                <button class="w-full flex items-center p-6 border-2 border-slate-100 rounded-3xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] group/btn">
-                                    <span class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-xs font-black text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors">C</span>
+                                <button onclick="selectDemoOption('C')" id="demo-opt-C" class="w-full flex items-center p-6 border-2 border-slate-100 rounded-3xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] group/btn bg-white">
+                                    <span id="demo-badge-C" class="w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-xs font-black text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors bg-slate-50">C</span>
                                     <span class="ml-6 text-slate-700 font-bold math-typeset text-xl italic">m v<sup>2</sup> / r</span>
                                 </button>
                             </div>
@@ -409,7 +395,7 @@
             <div class="mt-32 grid grid-cols-1 md:grid-cols-4 gap-12 border-b border-slate-200 pb-16">
                 <div class="md:col-span-1">
                     <div class="flex items-center gap-3 mb-6">
-                        <div class="w-9 h-9 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg">
+                        <div class="w-9 h-9 bg-white border border-slate-200 rounded-xl flex items-center justify-center shadow-md">
                             <img src="logo.png" alt="Orbit" class="w-6 h-6 object-contain">
                         </div>
                         <span class="font-display text-2xl font-black text-slate-900 tracking-tighter">Orbit</span>
@@ -499,13 +485,92 @@
         // PWA Service Worker Registration
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js');
+                navigator.serviceWorker.register('./sw.js');
             });
         }
         
         window.toggleDropdown = function() {
             document.getElementById('profile-dropdown').classList.toggle('hidden');
         }
+
+        // Dynamic Scroll Navigation Shrink Transition
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('main-nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('top-2', 'h-16', 'bg-white/95');
+                nav.classList.remove('top-6', 'h-20', 'bg-white/75');
+            } else {
+                nav.classList.remove('top-2', 'h-16', 'bg-white/95');
+                nav.classList.add('top-6', 'h-20', 'bg-white/75');
+            }
+        });
+
+        // Centripetal Acceleration Demo Check logic
+        window.selectDemoOption = function(choice) {
+            const btnA = document.getElementById('demo-opt-A');
+            const btnB = document.getElementById('demo-opt-B');
+            const btnC = document.getElementById('demo-opt-C');
+            
+            const badgeA = document.getElementById('demo-badge-A');
+            const badgeB = document.getElementById('demo-badge-B');
+            const badgeC = document.getElementById('demo-badge-C');
+
+            // Reset options
+            [btnA, btnB, btnC].forEach(b => {
+                b.className = "w-full flex items-center p-6 border-2 border-slate-100 rounded-3xl hover:border-brand-200 hover:bg-brand-50/30 transition-all duration-300 transform hover:scale-[1.01] group/btn bg-white";
+            });
+            [badgeA, badgeB, badgeC].forEach((b, i) => {
+                b.className = "w-10 h-10 rounded-xl border border-slate-200 flex items-center justify-center text-xs font-black text-slate-400 group-hover/btn:border-brand-300 group-hover/btn:text-brand-600 transition-colors bg-slate-50";
+                b.innerHTML = String.fromCharCode(65 + i);
+            });
+
+            const svgCheck = `<div class="ml-auto w-8 h-8 rounded-full bg-emerald-600 flex items-center justify-center text-white demo-check"><svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg></div>`;
+            const svgWrong = `<div class="ml-auto w-8 h-8 rounded-full bg-rose-600 flex items-center justify-center text-white demo-check"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12"></path></svg></div>`;
+
+            document.querySelectorAll('.demo-check').forEach(el => el.remove());
+
+            if (choice === 'B') {
+                btnB.className = "w-full flex items-center p-6 border-2 border-emerald-500 bg-emerald-50/50 rounded-3xl shadow-xl shadow-emerald-100/50 transition-all duration-300 transform hover:scale-[1.01]";
+                badgeB.className = "w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-xs font-black text-white shadow-lg shadow-emerald-200";
+                badgeB.innerHTML = "✓";
+                btnB.insertAdjacentHTML('beforeend', svgCheck);
+            } else {
+                const wrongBtn = choice === 'A' ? btnA : btnC;
+                const wrongBadge = choice === 'A' ? badgeA : badgeC;
+                
+                wrongBtn.className = "w-full flex items-center p-6 border-2 border-rose-500 bg-rose-50/50 rounded-3xl shadow-xl shadow-rose-100/50 transition-all duration-300 transform hover:scale-[1.01]";
+                wrongBadge.className = "w-10 h-10 rounded-xl bg-rose-500 flex items-center justify-center text-xs font-black text-white shadow-lg shadow-rose-200";
+                wrongBadge.innerHTML = "✕";
+                wrongBtn.insertAdjacentHTML('beforeend', svgWrong);
+
+                // Highlight B as correct
+                btnB.className = "w-full flex items-center p-6 border-2 border-emerald-500 bg-emerald-50/50 rounded-3xl shadow-xl shadow-emerald-100/50 transition-all duration-300 transform hover:scale-[1.01]";
+                badgeB.className = "w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-xs font-black text-white shadow-lg shadow-emerald-200";
+                badgeB.innerHTML = "✓";
+                btnB.insertAdjacentHTML('beforeend', svgCheck);
+            }
+
+            switchTeaserTab('explanation');
+        };
+    </script>
+
+    <!-- FIREBASE AUTHENTICATION LOGIC FOR HEADER STATE -->
+    <script type="module">
+        import { auth } from "./firebase-config.js";
+        import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-auth.js";
+
+        const guestBtn = document.getElementById('guest-nav-btn');
+        const userBtn = document.getElementById('user-dashboard-btn');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                if (guestBtn) guestBtn.classList.add('hidden');
+                if (userBtn) userBtn.classList.remove('hidden');
+            } else {
+                if (guestBtn) guestBtn.classList.remove('hidden');
+                if (userBtn) userBtn.classList.add('hidden');
+            }
+        });
     </script>
 </body>
 </html>
